@@ -1,35 +1,17 @@
 MatSE485/Phys466/CSE485: Atomic-Scale Simulation
 
 Date 	Topic 	Homework 	Reading 	Slides
-Jan 17 	Introduction 	HW1 	Microscopic Simulations in Physics, FS:ch 1 	Intro
-Jan 19 	Statistical Errors 	  	FS:ch 4, App D, Statistical Formulas (PDF) 	Errors
-Jan 24 	Python review 	  	python tutorial 	Introduction to Python (from Telescope Data Center)
-Jan 26 	Statistical Mechanics 	  	FS: ch 2 	StatMech
-Jan 31 	MD I and MD II 	  	FS: ch 4 	MD
-Feb 2 	Potentials for MD and MC 	HW1 due
-HW2 	FS: App F 	Potentials
-Feb 7 	Potentials for MD and MC 	  	  	Potentials
-Feb 9 	Quantum interactions 	  	  	Quantum Mechanics
-Feb 14 	Scalar Correlations, Dynamical Correlations 	HW2 due 	FS App C 	Correlations, Dynamics
-Feb 16 	Constant Pressure and Temp 	HW3 	FS Ch6; App B, E 	MD Ensembles
-Feb 21 	Probability tools 	  	FS: ch 3 	MC intro
-Feb 23 	Random number generators 	  	  	PRNG
-Feb 28 	Sampling, Importance Sampling 	HW3 due 	Numerical Recipes (see also web version) 	Sampling
-Mar 1 	Markov chains 	HW4 	FS ch 3 	Random Walk
-Mar 6 	Directed MC 	  	FS ch 13 	Smart MC
-Mar 8 	Brownian Dynamics 	  	FS: ch 17 	Brownian
-Mar 13 	Path Integral MC 	HW4 due 	  	[PIMC|^23.PIMC.pdf]
-Mar 15 	Projector Quantum MC 	Teams develop projects 	  	[DMC|^24.DMC.pdf]
-Mar 27 	Long-range Potentials 	  	  	[Ewald|^15.Ewald.pdf], [Ewald Lecture|^EwaldLecture.pdf], [Neighbor Tables|^NeighborTables.pdf]
-Mar 29 	Constraints in MD 	[HW5] 	FS: ch15 	[Constraints|^16.Constraints.pdf]
-Apr 3 	Free Energy Methods 	  	FS: Ch 7,11,12 	[Free Energy|^17.freeenergy.pdf]
+Mar 29 	Constraints in MD 	[HW5] 	FS: ch15 	
+
 Apr 5 	PROJECT PROPOSALS
-Apr 10 	Polymers 	HW5 due 	  	[Polymers|^18.polymers.pdf]
-Apr 12 	Ising model 	[HW6] 	  	[Ising model|^19.Ising.pdf], [Ising model final|^19.Ising-final.pdf]
-Apr 17 	Finite-Size Scaling 	  	  	[Phase transitions|^20.phasetransitions.pdf]
-Apr 19 	Kinetic Monte Carlo 	  	FS Ch 8 	[KMC|^21.KMC.pdf]
+
+Apr 10 	Polymers 	HW5 due
+
+Apr 12 	Ising model 	[HW6] 
 Apr 24 	Optimization 	HW6 due 	  	[Optimize|^22.optimize.pdf]
+
 Apr 26 	Path Integrals bosons 	Extra Credit: [HW7] 	  	[PIMC bosons|^24.PIMC-bosons.pdf]
-May 1 	TBD 	  	  	TBD
+
 May 3 	(Reading day) 	HW 7 due 	  	 
+
 May 10 	Final Project Reports 	  	  	 
