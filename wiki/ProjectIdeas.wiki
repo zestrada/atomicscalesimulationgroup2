@@ -1,0 +1,7 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Here is a list of ideas for our class project
+
+= Details =
