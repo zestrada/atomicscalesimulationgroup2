@@ -12,10 +12,28 @@ properties of simulated annealing, genetic algorithms, and ant-colony approaches
 finding optimal solutions for various travelling salesman problems.  Code will be tested
 to find convergence rate, wall-clock time, and for solution space exploration.  For future studies,
 we will consider looking at parallel and/or GPU solutions to accelerate algorithms.
+
 \subsection{Introduction}
+
 \subsection{Simulated Annealing}
+
 \subsection{Genetic Algorithms}
+
 \subsection{Ant-Colony Approaches}
+
+\subsection{Go with the Winner Approaches}
+Simulated annealing probabilistically convergences to the optimal solution at the rate
+ of $\Omega{\frac{1}{n}}$ where n is the number of independent runs.  
+Using heuristic schemes such as the ``Go with the Winner''~\cite{Aldous1994gwt}, hereby referred to as GWW, 
+one can improve this convergence rate to $\Omega(log \frac{1}{n})$.  In general terms, GWW periodically assets
+each independent simulated annealing run and determines if one is converging upon a losing solution.  Runs with 
+no chance for success are immediately discarded while runs with the best chance of finding an optimal solution
+are replicated; thus, GWW generates an ensemble of independent runs filled with  ``winners''.  
+
 \subsection{Analysis}
+To assess the performance of our optimization schemes, we would
+
+
+\bibliographystyle{plain}
 \bibliography{AtomicScaleProposal}
 \end{document}
