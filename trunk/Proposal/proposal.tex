@@ -16,8 +16,10 @@ we will consider looking at parallel and/or GPU solutions to accelerate algorith
 \subsection{Introduction}
 
 \subsection{Simulated Annealing}
+Simulated annealing is a stochastic approach towards minimizing an energy function.
 
 \subsection{Genetic Algorithms}
+Unlike simulated annealing, genetic algorithms rely on a population approach to 
 
 \subsection{Ant-Colony Approaches}
 
@@ -25,8 +27,7 @@ we will consider looking at parallel and/or GPU solutions to accelerate algorith
 Simulated annealing probabilistically convergences to the optimal solution at the rate
  of $\Omega{\frac{1}{n}}$ where n is the number of independent runs.  
 Using heuristic schemes such as the ``Go with the Winner''~\cite{Aldous1994gwt}, hereby referred to as GWW, 
-one can improve this convergence rate to $\Omega(log \frac{1}{n})$.  In general terms, GWW periodically assets
-each independent simulated annealing run and determines if one is converging upon a losing solution.  Runs with 
+one can improve this convergence rate to $\Omega(log \frac{1}{n})$.  In general terms, the GWW algorithm mirrors that of simulated annealing; however, each independent run is periodically reasseted to determine if one is converging upon a losing solution.  Runs with 
 no chance for success are immediately discarded while runs with the best chance of finding an optimal solution
 are replicated; thus, GWW generates an ensemble of independent runs filled with  ``winners''.  
 
