@@ -19,9 +19,9 @@ to find convergence rate, wall-clock time, and for solution space exploration.  
 we will consider looking at parallel and/or GPU solutions to accelerate algorithms.
 
 \section{Introduction}
-\begin{figure}
+\begin{figure}[!h]
 \centering
-\includegraphics[width=0.75\textwidth]{Figures/amorphousSilicon.png}
+\includegraphics[width=0.4\textwidth]{Figures/amorphousSilicon.png}
 \caption{An example of an amorphous solid under simulation.  A maximum vertex number of 3 is defined, along with minimum and maximum angles and bond lengths; taken from: Ref. \protect\citenum{Peinado1997gwt}}
 \label{fig:amorphousSilicon}
 \end{figure}
@@ -45,8 +45,7 @@ no chance for success are immediately discarded while runs with the best chance 
 are replicated; thus, GWW generates an ensemble of independent runs filled with  ``winners''.  
 
 \section{Analysis}
-To assess the performance of our optimization schemes, we would
-
+To test the performance of these optimization schemes, we will minimize the energy of depositing particles on a surface.  Given that the deposition pattern of particles is not unique, all of the optimization schemes will need to generate an ensemble of models representing local minima on the potential energy surface.  To quantify the phase space coverage of these optimization schemes, we will generate multiple deposition models and study how the results cluster.  Additionally, we will study the convergence rate and wall-clock time for each algorithm.
 
 \bibliographystyle{plain}
 \bibliography{AtomicScaleProposal}
