@@ -1,29 +1,25 @@
-\documentclass[12pt,onecolumn,notitlepage]{article}
-\usepackage[letterpaper,vmargin={1in,1in},hmargin={1in,1in}]{geometry}
+\documentclass[10pt,twocolumn,notitlepage]{article}
+\usepackage[letterpaper,vmargin={0.75in,0.75in},hmargin={0.75in,0.75in}]{geometry}
 \usepackage{graphicx}
 \usepackage{cite}
+\usepackage{titlesec}
 \usepackage[small]{caption}
 \let\endtitlepage\relax
-\def\thesection{\arabic{section}. \normalsize}
-\title{\vspace{-4ex} \textbf{Group 2 Project Proposal}}
+\titleformat{\section}{\normalsize\bfseries}{\thesection.}{1em}{}
+\title{\vspace{-6ex} \textbf{Group 2 Project Proposal}}
 \author{Zachary Estrada \and Chandini Jain \and Jonathan Lai}
 
 \begin{document}
 \maketitle
 
-%%%Thinking of removing abstract
-\textbf{Abstract:} Group 2 proposes to study the convergence
-properties of simulated annealing, genetic algorithms, and ant-colony approaches towards
-finding optimal solutions for various travelling salesman problems.  Code will be tested
-to find convergence rate, wall-clock time, and for solution space exploration.  For future studies,
-we will consider looking at parallel and/or GPU solutions to accelerate algorithms.
-
 \section{Introduction}
-\begin{figure}[!h]
-\centering
-\includegraphics[width=0.4\textwidth]{Figures/amorphousSilicon.png}
-\caption{An example of an amorphous solid under simulation.  A maximum vertex number of 3 is defined, along with minimum and maximum angles and bond lengths; taken from: Ref. \protect\citenum{Peinado1997gwt}}
-\label{fig:amorphousSilicon}
+Group 2 proposes to study the convergence properties of minimization algorithms towards finding optimal solutions for surface reconstruction mapped onto the well-known ``Traveling Salesman Problem.''  Code will be tested to find convergence rate, wall-clock time, and for solution space exploration. Fig. \ref{fig:amorphousSilicon} shows an illustration of the type of problem being considered.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.4\textwidth]{Figures/amorphousSilicon.png}
+	\caption{An example of an amorphous solid under simulation.  A maximum vertex number of 3 is defined, along with minimum and maximum angles and bond lengths; taken from: Ref. \protect\citenum{Peinado1997gwt}}
+	\label{fig:amorphousSilicon}
 \end{figure}
 
 
