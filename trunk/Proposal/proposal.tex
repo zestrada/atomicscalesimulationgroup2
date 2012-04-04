@@ -13,7 +13,7 @@
 \maketitle
 
 \section{Introduction}
-Group 2 proposes to study the convergence properties of minimization algorithms towards finding optimal solutions for surface reconstruction mapped onto the well-known ``Traveling Salesman Problem.''  Code will be tested to find convergence rate, wall-clock time, and for solution space exploration. Fig. \ref{fig:amorphousSilicon} shows an illustration of the type of problem being considered.
+Group 2 proposes to study the convergence properties of minimization algorithms towards finding optimal solutions for surface reconstruction mapped onto the well-known ``Traveling Salesman Problem (TSP).''  Code will be tested to find convergence rate, wall-clock time, and for solution space exploration. Fig. \ref{fig:amorphousSilicon} shows an illustration of the type of problem being considered.
 
 \begin{figure}[h!]
 	\centering
@@ -30,7 +30,7 @@ Simulated annealing is a stochastic approach towards minimizing an energy functi
 Unlike simulated annealing, genetic algorithms rely on a population approach to 
 
 \section{Ant-Colony Approaches}
-Ant Colony Optimization\cite{Dorigo96theant} draws inspiration from the behavior of ants as they develop a path from their nest to a food source.  As ants travel, they deposit pheromones.  These pheromones can be detected by other ants and the ants are more likely to follow a path with higher pheromone concentration.  In addition to the ants depositing pheromones, these pheromones will evaporate over time.  This means that shorter paths will allow larger pheromone concentrations to buildup as ants will be depositing pheromones quicker than they evaporate.  Eventually, the system will converge on a minimum solution.  A global minimum is pursued by starting out with a large number of ants and by tuning the weight at which pheromones influence decisions. 
+Ant Colony Optimization~\cite{Dorigo96theant} draws inspiration from the behavior of ants as they develop a path from their nest to a food source.  As ants travel, they deposit pheromones.  These pheromones can be detected by other ants and the ants are more likely to follow a path with higher pheromone concentration.  In addition to the ants depositing pheromones, these pheromones will evaporate over time.  This means that shorter paths will allow larger pheromone concentrations to buildup as ants will be depositing pheromones quicker than they evaporate.  Eventually, the system will converge on a minimum solution.  A global minimum is pursued by starting out with a large number of ants and by tuning the weight at which pheromones influence decisions. 
 
 \section{Go with the Winner Approaches}
 Simulated annealing probabilistically convergences to the optimal solution at the rate
@@ -41,10 +41,11 @@ no chance for success are immediately discarded while runs with the best chance 
 are replicated; thus, GWW generates an ensemble of independent runs filled with  ``winners''.  
 
 \section{Analysis}
-To test the scientific performance of these optimization schemes, we will minimize the energy of depositing particles on a surface.  Given that the deposition pattern of particles is not unique, all of the optimization schemes will need to generate an ensemble of models representing local minima on the potential energy surface.  To quantify the phase space coverage of these optimization schemes, we will initially start from known particle configurations, such as a square and hexagonal lattices, and generate multiple deposition models.  We will analyze the number and size of the clusters produced by each method to determine their overall optimization performance.  
+To test the scientific performance of these optimization schemes, we will study the convergence properties of minimization on particle reconstruction mapped onto the TSP.  Given that the deposition pattern of particles is not unique, all of the optimization schemes will need to generate an ensemble of possible models.
+To quantify the phase space coverage of these optimization schemes, we will initially start from known particle configurations, such as a square and hexagonal lattices, generate multiple optimization trajectories, and will analyze the number and size of the clusters produced by each method to determine their overall  performance.  
 
 Additionally, we will test the computational effort involved in each optimization scheme, focusing on the wall-clock time and number of alogrithm iterations/replicates are needed to sufficent converge to a reasonable answer.  If time permits, we will also test the ease of formulating these schemes into a parallel computing framework to improve their calculation efficiency.
 
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 \bibliography{AtomicScaleProposal}
 \end{document}
