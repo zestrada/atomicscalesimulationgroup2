@@ -19,7 +19,7 @@ report.ps:
 	dvips -t letter -o $(PROJNAME).ps $(PROJNAME).dvi
 
 pdf:	
-	pdflatex $(PROJNAME) ; bibtex $(PROJNAME); pdflatex $(PROJNAME); pdflatex $(PROJNAME);
+	pdflatex $(PROJNAME) && bibtex $(PROJNAME) && pdflatex $(PROJNAME) && pdflatex $(PROJNAME);
 
 si:
 	 pdflatex $(SINAME) ; bibtex $(SINAME); pdflatex $(SINAME); pdflatex $(SINAME);
