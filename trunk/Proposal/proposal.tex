@@ -45,7 +45,9 @@ no chance for success are immediately discarded while runs with the best chance 
 are replicated; thus, GWW generates an ensemble of independent runs filled with  ``winners''.  
 
 \section{Analysis}
-To test the performance of these optimization schemes, we will minimize the energy of depositing particles on a surface.  Given that the deposition pattern of particles is not unique, all of the optimization schemes will need to generate an ensemble of models representing local minima on the potential energy surface.  To quantify the phase space coverage of these optimization schemes, we will generate multiple deposition models and study how the results cluster.  Additionally, we will study the convergence rate and wall-clock time for each algorithm.
+To test the scientific performance of these optimization schemes, we will minimize the energy of depositing particles on a surface.  Given that the deposition pattern of particles is not unique, all of the optimization schemes will need to generate an ensemble of models representing local minima on the potential energy surface.  To quantify the phase space coverage of these optimization schemes, we will initially start from known particle configurations, such as a square and hexagonal lattices, and generate multiple deposition models.  We will analyze the number and size of the clusters produced by each method to determine their overall optimization performance.  
+
+Additionally, we will test the computational effort involved in each optimization scheme, focusing on the wall-clock time and number of alogrithm iterations/replicates are needed to sufficent converge to a reasonable answer.  If time permits, we will also test the ease of formulating these schemes into a parallel computing framework to improve their calculation efficiency.
 
 \bibliographystyle{plain}
 \bibliography{AtomicScaleProposal}
