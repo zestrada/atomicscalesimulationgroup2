@@ -1,0 +1,11 @@
+#summary A list of what type of code needs to be shared across solutions
+
+= To be written =
+
+* input/output functions
+* final scoring function
+* graphing scripts
+* class for handling intermediate solutions 
+
+= Completed =
+
