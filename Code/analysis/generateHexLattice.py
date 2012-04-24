@@ -3,8 +3,8 @@ import sys,numpy
 import matplotlib.pyplot as plt
 #Generate a Honeycomb Lattice a la Graphene
 #numx, numy refer to copies of 4-atom unit cells
-numx=5
-numy=5
+numx=8
+numy=6
 filename="honeycomb.dat"
 
 #C-C bond length, lattice constant from graphene
@@ -35,5 +35,7 @@ for atom in range(numpoints):
   print "%g %g"%(xpoints[atom],ypoints[atom])
   outfile.write("%g %g\n"%(xpoints[atom],ypoints[atom]))
 plt.plot(xpoints,ypoints,marker="o",ls="")
+plt.ylim(-10,10)
+plt.xlim(-10,10)
 print "Output written to %s" % filename
 plt.show()
