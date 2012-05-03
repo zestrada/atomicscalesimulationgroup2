@@ -25,4 +25,9 @@ public class Cell {
     coords[0] = coords[0]-L[0]*((double)Math.round(coords[0]/L[0]));
     coords[1] = coords[1]-L[1]*((double)Math.round(coords[1]/L[1]));
   }
+
+  public double getL(int idim) {
+    return L[idim];
+  }
+
 }
