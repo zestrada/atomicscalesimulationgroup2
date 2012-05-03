@@ -1,13 +1,11 @@
-public class TestCommon {
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-       String filename = "test.input";
-       TSPCommon common = new TSPCommon();
-       TSPCommon.surface mySurface = common.readData(filename);
+import org.junit.*;
+import junit.framework.*;
 
-       System.out.println(mySurface.getMaxVertex());
+public class TestCommon extends TestCase {
+    public void testTSPCommon() {
+      String filename = "test.input";
+      TSPInOut inout = new TSPInOut();
+      Surface mySurface = inout.readData(filename);
+      assertEquals(3,mySurface.getMaxVertex());
     }
-    
 }

@@ -8,14 +8,15 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
+import java.lang.Math;
 
-public class TSPCommon {
-  public surface readData(String filename) {
+public class TSPInOut {
+  public Surface readData(String filename) {
     String line;
     int npart = 0;
     int nvert = 0;
     double xmin=0, xmax=0, ymin=0, ymax=0;
-    cell myCell;
+    Cell myCell;
 
     ArrayList<Double> xcoord = new ArrayList<Double>();
     ArrayList<Double> ycoord = new ArrayList<Double>();
@@ -107,71 +108,7 @@ public class TSPCommon {
     System.out.printf("Found %d particles with maximum number of %d vertices\n",npart,nvert);
 
     //Need to read in coordinates from file and create a cell
-    myCell = new cell(xmin,xmax,ymin,ymax);
-    return new surface(xcoord, ycoord, nvert, myCell);
-}
-
-/*
- * Class to represent the problem we are working on.
- * This is probably not the most ideal thing to use, but it's a start
- */
-  public class surface {
-
-    //Distance matrix
-    private double[][] distance; 
-    //Array to count number of connections each site currently has
-    private int[] vertices;
-    //Number of sites, vertices per site
-    private int N,maxVertex;
-    //Connection matrix
-    private boolean[][] connection;
-    //Simulation cell
-    private cell cell;
-
-
-    /*
-     * Base constructor
-     */
-    public surface(ArrayList<Double> xcoords, ArrayList<Double> ycoords, int nvertex, cell cell) {
-      this.N = xcoords.size(); //assums xcoords.length==ycoords.length
-      this.cell = cell;
-      this.maxVertex = nvertex; 
-
-      //Allocate matrices
-      this.vertices = new int[N];
-      this.connection = new boolean[N][N];
-
-      //Now, compute distance matrix
-      for(int i=0; i<N;i++) {
-        vertices[i]=0; 
-        for(int j=0; j<N; j++) {
-          connection[i][j] = false;
-        }
-      }
-
-    }
-
-    public int getMaxVertex() {
-      return maxVertex;
-    }
-
-  }
-
-  /*
-   * Class to handle PBC and the like
-   */
-  //TODO: Actually code in PBC and the like
-  public class cell {
-
-    //Boundaries
-    private double xmin,xmax;
-    private double ymin,ymax;
-
-    public cell(double xmin, double xmax, double ymin, double ymax) {
-      this.xmin = xmin;
-      this.xmax = xmax;
-      this.ymin = ymin;
-      this.ymax = ymax;
-    }
+    myCell = new Cell(xmin,xmax,ymin,ymax);
+    return new Surface(xcoord, ycoord, nvert, myCell);
   }
 }

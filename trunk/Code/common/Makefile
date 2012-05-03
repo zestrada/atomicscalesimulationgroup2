@@ -1,16 +1,21 @@
-JJ=javac
+JJ=javac 
+CP=/usr/share/java/junit4.jar:.
 
-TestCommon.class : TSPCommon.class
+TestCommon.class : Cell.class Surface.class
+Surface.class : Cell.class
 
-TSPCommon.class : TSPCommon.java
-	$(JJ) TSPCommon.java
+Cell.class : Cell.java
+	$(JJ) -cp $(CP) Cell.java
 
 TestCommon.class : TestCommon.java
-	$(JJ) TestCommon.java
+	$(JJ) -cp $(CP) TestCommon.java
 
 
 all:
 	TestCommon.class
+
+test:
+	java -cp $(CP) junit.textui.TestRunner TestCommon
 
 clean:
 	rm *.class
