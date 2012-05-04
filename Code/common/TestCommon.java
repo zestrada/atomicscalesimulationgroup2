@@ -86,7 +86,7 @@ public class TestCommon extends TestCase {
       ycoords.add(-0.0625);
 
 
-      Surface surf = new Surface(xcoords, ycoords, 1, cell);
+      Surface surf = new Surface(xcoords, ycoords, 3, cell);
       assertEquals(10, surf.getN());
       assertEquals(0.0, surf.getDist(0,0));
       assertEquals(0.0, surf.getDist(3,3));
@@ -100,5 +100,27 @@ public class TestCommon extends TestCase {
       assertEquals(0.125, surf.getDist(7,6));
       assertEquals(Math.round(100000*1.0/(4.0*Math.sqrt(2.0))), Math.round(100000*surf.getDist(8,9)));
       assertEquals(Math.round(100000*1.0/(4.0*Math.sqrt(2.0))), Math.round(100000*surf.getDist(9,8)));
+
+
+      //Test connections
+      surf.connect(1,2);
+      assertEquals(true, surf.connected(1,2));
+      assertEquals(true, surf.connected(2,1));
+      assertEquals(false, surf.connected(4,1));
+      surf.connect(1,4);
+      surf.disconnect(1,2);
+      assertEquals(false, surf.connected(1,2));
+      assertEquals(false, surf.connected(2,1));
+      assertEquals(true, surf.connected(4,1));
+      assertEquals(false, surf.hasMaxVertex(2));
+      surf.disconnectAll();
+      surf.connect(5,4);
+      surf.connect(5,6);
+      surf.connect(5,3);
+      assertEquals(true, surf.hasMaxVertex(5));
+      assertEquals(false, surf.hasMaxVertex(4));
+      assertEquals(false, surf.hasMaxVertex(6));
+      surf.disconnect(5,3);
+      assertEquals(false, surf.hasMaxVertex(5));
     }
 }
