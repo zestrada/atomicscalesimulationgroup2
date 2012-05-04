@@ -61,6 +61,7 @@ public class Surface {
 
   public double[][] setDistance(int i, int j, double d) {
     distance[i][j] = d;
+    distance[j][i] = d;
     return distance;
   }
 
@@ -69,10 +70,10 @@ public class Surface {
       int countConnections = 0;
       int maxConnectionsPerVertex = 4;
       for(int i=0; i<N; i++) {
-	  countConnections = 0
+	  countConnections = 0;
 	  for(int j=i+1; j<N; j++) {
 	      energy += (connection[i][j] ? 1:0)*(distance[i][j]*distance[i][j]);
-	      countConnections += connection[i][j];
+	      countConnections += connection[i][j] ? 1 : 0;
 	  }
 	  if(countConnections > maxConnectionsPerVertex) {
 	      //This is 2^20.  It is a big number but not so big as to overflow the double buffer.
@@ -84,5 +85,12 @@ public class Surface {
 
   public int getN() {
     return N;
+  }
+
+  public void connect(int i, int j) {
+    connection[i][j] = true;
+    connection[j][i] = true;
+    vertices[i]++;    
+    vertices[j]++;
   }
 }
