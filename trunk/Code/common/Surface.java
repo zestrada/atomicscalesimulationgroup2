@@ -7,7 +7,7 @@ import java.lang.Math;
  * Class to represent the problem we are working on.
  * This is probably not the most ideal thing to use, but it's a start
  */
-public class Surface {
+public class Surface implements Cloneable {
 
   //Distance matrix
   private double[][] distance; 
@@ -57,6 +57,10 @@ public class Surface {
 
   public double getDist(int i, int j) {
     return distance[i][j];
+  }
+
+  public double getDistance(int i, int j) {
+    return getDist(i,j);
   }
 
   public double[][] setDistance(int i, int j, double d) {
@@ -130,5 +134,27 @@ public class Surface {
         connection[i][j] = false;
       }
     }
+  }
+
+  //Returns a list of sites NOT fully connected
+  public int[] getFreeList() {
+    //Not very efficient, but faster might be faster than using an ArrayList
+    //and converting later
+    int[] freeList;
+    int freeCount = 0, counter = 0;
+    for(int i=0;i<N;i++)
+      if(!hasMaxVertex(i)) freeCount++;
+    
+    freeList = new int[freeCount];
+    counter=0;
+    for(int i=0;i<N;i++) {
+      if(!hasMaxVertex(i)) freeList[counter++]=i;
+    }
+
+    return freeList;
+  }
+
+  public Surface clone() throws java.lang.CloneNotSupportedException {
+    return (Surface) super.clone();
   }
 }

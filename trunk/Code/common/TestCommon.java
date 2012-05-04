@@ -101,7 +101,6 @@ public class TestCommon extends TestCase {
       assertEquals(Math.round(100000*1.0/(4.0*Math.sqrt(2.0))), Math.round(100000*surf.getDist(8,9)));
       assertEquals(Math.round(100000*1.0/(4.0*Math.sqrt(2.0))), Math.round(100000*surf.getDist(9,8)));
 
-
       //Test connections
       surf.connect(1,2);
       assertEquals(true, surf.connected(1,2));
@@ -122,5 +121,37 @@ public class TestCommon extends TestCase {
       assertEquals(false, surf.hasMaxVertex(6));
       surf.disconnect(5,3);
       assertEquals(false, surf.hasMaxVertex(5));
+      surf.disconnectAll();
+      assertEquals(0.0,surf.getTotalLength());
+      surf.connect(0,1);
+      assertEquals(0.5,surf.getTotalLength());
+      surf.connect(0,3);
+      assertEquals(1.0,surf.getTotalLength());
+      surf.connect(4,5);
+      assertEquals(1.125,surf.getTotalLength());
+      surf.disconnectAll();
+      assertEquals(0.0,surf.getTotalLength());
+
+      //Test free list
+      surf.disconnectAll();
+      int[] checkList = new int[xcoords.size()];
+      for( int i=0; i<checkList.length;i++)
+        checkList[i]=i;
+      int[] testList = surf.getFreeList();
+      assertEquals(checkList.length,testList.length);
+      for(int i=0; i<testList.length;i++)
+        assertEquals(checkList[i],testList[i]);
+
+      surf.connect(9,8);
+      surf.connect(9,7);
+      surf.connect(9,6);
+      //Particle 9 should no longer be in the free list
+      checkList = new int[xcoords.size()-1];
+      for( int i=0; i<checkList.length;i++)
+        checkList[i]=i;
+      testList = surf.getFreeList();
+      assertEquals(checkList.length,testList.length);
+      for(int i=0; i<testList.length;i++)
+        assertEquals(checkList[i],testList[i]);
     }
 }
