@@ -157,4 +157,14 @@ public class Surface implements Cloneable {
   public Surface clone() throws java.lang.CloneNotSupportedException {
     return (Surface) super.clone();
   }
+
+  public boolean[][] getConnection() {
+    boolean[][] connectCopy = new boolean[N][N];
+    for(int i=0; i<N; i++) {
+      for(int j=0; j<N; j++) {
+        connectCopy[i][j]=connection[i][j];
+      }
+    }
+    return connectCopy;
+  }
 }

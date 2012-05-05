@@ -153,5 +153,12 @@ public class TestCommon extends TestCase {
       assertEquals(checkList.length,testList.length);
       for(int i=0; i<testList.length;i++)
         assertEquals(checkList[i],testList[i]);
+
+      surf.disconnectAll();
+      boolean[][]connCopy = surf.getConnection();
+      assertEquals(false,connCopy[0][1]);
+      surf.connect(0,1);
+      connCopy = surf.getConnection();
+      assertEquals(true,connCopy[0][1]);
     }
 }
