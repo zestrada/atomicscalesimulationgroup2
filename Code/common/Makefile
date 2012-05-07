@@ -1,22 +1,21 @@
 JJ=javac 
-CP=/usr/share/java/junit4.jar:.
+CP=.
+JUNIT=/usr/share/java/junit4.jar
 
-TestCommon.class: Cell.class Surface.class
+sources = $(wildcard *.java)
+classes = $(sources:.java=.class)
 
-Cell.class : Cell.java
-	$(JJ) -cp $(CP) Cell.java
+all: $(classes)
 
-Surface.class : Cell.class Surface.java
-	$(JJ) -cp $(CP) Surface.java
+%.class : %.java
+	$(JJ) -cp $(CP) $<
+  
+TestCommon.class : 
+	echo ""
 
-TestCommon.class : TestCommon.java
-	$(JJ) -cp $(CP) TestCommon.java
-
-all:
-	TestCommon.class
-
-test: TestCommon.class
-	java -cp $(CP) junit.textui.TestRunner TestCommon
-
+test:
+	$(JJ) -cp $(CP):$(JUNIT) TestCommon.java
+	java -cp $(CP):$(JUNIT) junit.textui.TestRunner TestCommon
+  
 clean:
 	rm *.class
