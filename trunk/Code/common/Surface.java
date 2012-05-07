@@ -44,18 +44,20 @@ public class Surface implements Cloneable {
     //Now, compute distance matrix
    //Ideally, we'd use upper triangular storage...
     double[] delta = new double[2];
-    for(int i=0; i<N;i++) {
+    for(int i=0; i<(N-1);i++) {
       vertices[i]=0; 
       xCoordinates[i]=(Double)xcoords.get(i).doubleValue();
       yCoordinates[i]=(Double)ycoords.get(i).doubleValue();
-      for(int j=0; j<N; j++) {
+      for(int j=i+1; j<N; j++) {
         connection[i][j] = false;
         delta[0] = ((Double)xcoords.get(i)).doubleValue() - ((Double)xcoords.get(j)).doubleValue();
         delta[1] = ((Double)ycoords.get(i)).doubleValue() - ((Double)ycoords.get(j)).doubleValue();
         //Minimum image convention
         cell.putInBox(delta);
         distance[i][j] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
+        distance[j][i] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
       }
+      distance[i][i] = Math.sqrt(Double.MAX_VALUE)-1;
     }
 
   }
@@ -80,19 +82,16 @@ public class Surface implements Cloneable {
 
   public double getEnergy() {
     double energy = 0;
-    int countConnections = 0;
     for(int i=0; i<N; i++) {
-	countConnections = 0;
-      for(int j=i+1; j<N; j++) {
-	      energy += (connection[i][j] ? 1:1024)*(distance[i][j]*distance[i][j]);
-	      countConnections += connection[i][j] ? 1 : 0;
-      }
-      if(countConnections != maxVertex) {
-        //This is 2^10.  It is a big number but not so big as to overflow the double buffer.
-     energy += 1024*Math.abs(countConnections - maxVertex);
-	  }
+	for(int j=i+1; j<N; j++) {
+	    energy += (connection[i][j] ? 1:1024)*(distance[i][j]*distance[i][j]);
+	}
+	if(vertices[i] != maxVertex) {
+	    //This is 2^10.  It is a big number but not so big as to overflow the double buffer.
+	    energy += 1024*Math.abs(vertices[i] - maxVertex);
+	}
     }
-      return energy;
+    return energy;
   }
 
   public void minBind(int x) {
@@ -131,9 +130,9 @@ public class Surface implements Cloneable {
 	return maxV;
     }
 
-  public boolean flipConnection(int x, int y) {
+    /*public boolean flipConnection(int x, int y) {
       return (connection[x][y] = !connection[x][y]);
-  }
+      }*/
     
   public void swapConnection(int x1, int y1, int x2, int y2) {
 	boolean tmp1 = connection[x1][y1];
@@ -159,8 +158,21 @@ public class Surface implements Cloneable {
       vertices[i]++;    
       vertices[j]++;
       if(vertices[i]>maxVertex || vertices[j]>maxVertex) {
-        error("connection between "+i+" and "+j+" violate maxVertex of"+maxVertex);
+	  error("connection between "+i+" and "+j+" violate maxVertex of"+maxVertex);
       }
+    }
+  }
+
+  public void connectUnsafe(int i, int j) {
+    if(i==j) return; //noop
+    if(connection[i][j] != connection[j][i]) {
+      error("connection "+i+","+j+" = "+connection[i][j]+"while connection "+j+","+i+" = "+connection[j][i]);
+    }
+    if(connection[i][j]==false) {
+      connection[i][j] = true;
+      connection[j][i] = true;
+      vertices[i]++;    
+      vertices[j]++;
     }
   }
 
@@ -200,6 +212,11 @@ public class Surface implements Cloneable {
       return (vertices[i]>maxVertex);
   }
 
+    //This code returns the number of missing vertices for a given node
+    public int missingVertex(int i) {
+	return (maxVertex - vertices[i]);
+    }
+
   public void disconnectAll() {
     for(int i=0; i<N;i++) {
       vertices[i]=0; 
@@ -225,6 +242,70 @@ public class Surface implements Cloneable {
       }
 
       return freeList;
+    }
+
+    //Returns a sorted list of indices to the shortest distances between i and the NOT fully connected list
+    public int[] getShortestFreeDistance(int x) {
+	int[] freeList = getFreeList();
+	double[] distList = new double[freeList.length];
+	double tmpD;
+	int tmpI,insertPlaceholder;
+	for(int i=0;i<freeList.length;i++) {
+	    distList[i] = distance[x][i];
+	}
+	//bubble sort
+	for(int i =0 ; i < (freeList.length); i++) {
+	    for(int j = 0; j < (freeList.length); j++) {
+		if(distList[i] < distList[j]) {
+		    tmpD = distList[i];
+		    tmpI = freeList[i];
+		    distList[i] = distList[j];
+		    distList[j] = tmpD;
+		    freeList[i] = freeList[j];
+		    freeList[j] = tmpI;
+		}
+	    }
+	}
+	// should replace with insertion sort; I'm too lazy
+	return freeList;
+    }
+
+    public int[] getShortestDistance(int x) {
+	double[] distList = new double[N];
+	int[] shortestDistance = new int[N];
+	double tmpD;
+	int tmpI,insertPlaceholder;
+	for(int i=0;i<N;i++) {
+	    distList[i] = distance[x][i];
+	    shortestDistance[i]=i;
+	}
+	for(int i=0; i<N; i++) {
+	    for(int j=0; j<N; j++) {
+		if(distList[i] < distList[j]) {
+		    tmpD = distList[i];
+		    distList[i] = distList[j];
+		    distList[j] = tmpD;
+		    tmpI = shortestDistance[i];
+		    shortestDistance[i] = shortestDistance[j];
+		    shortestDistance[j] = tmpI;
+		}
+	    }
+	}
+	/*for(int j=0; j<y; j++) {
+	    tmpD = distList[j];
+	    tmpI = j;
+	    // Find the smallest value in the subarray
+	    for(int i=(j+1); i<N; i++) {
+		if(tmpD > distList[i]) {
+		    tmpD = distList[i];
+		    tmpI = i;
+		}
+	    }
+	    distList[j] = distList[tmpI];
+	    distList[tmpI] = tmpD;
+	    shortestDistance[j] = tmpI;
+	    }*/
+	return shortestDistance;
     }
 
     public Surface clone() throws java.lang.CloneNotSupportedException {
