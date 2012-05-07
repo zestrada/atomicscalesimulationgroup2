@@ -92,12 +92,18 @@ public class Surface implements Cloneable {
   }
 
   public void connect(int i, int j) {
-    connection[i][j] = true;
-    connection[j][i] = true;
-    vertices[i]++;    
-    vertices[j]++;
-    if(vertices[i]>maxVertex || vertices[j]>maxVertex) {
-      System.err.println("ERROR: connection between "+i+" and "+j+" violate maxVertex of"+maxVertex);
+    if(i==j) return; //noop
+    if(connection[i][j] != connection[j][i]) {
+      error("connection "+i+","+j+" = "+connection[i][j]+"while connection "+j+","+i+" = "+connection[j][i]);
+    }
+    if(connection[i][j]==false) {
+      connection[i][j] = true;
+      connection[j][i] = true;
+      vertices[i]++;    
+      vertices[j]++;
+      if(vertices[i]>maxVertex || vertices[j]>maxVertex) {
+        error("connection between "+i+" and "+j+" violate maxVertex of"+maxVertex);
+      }
     }
   }
 
@@ -117,10 +123,16 @@ public class Surface implements Cloneable {
   }
 
   public void disconnect(int i, int j) {
-    connection[i][j] = false;
-    connection[j][i] = false;
-    vertices[i]--;    
-    vertices[j]--;
+    if(i==j) return;//noop
+    if(connection[i][j] != connection[j][i]) {
+      error("connection "+i+","+j+" = "+connection[i][j]+"while connection "+j+","+i+" = "+connection[j][i]);
+    }
+    if(connection[i][j]==true) {
+      connection[i][j] = false;
+      connection[j][i] = false;
+      vertices[i]--;    
+      vertices[j]--;
+    }
   }
 
   public boolean hasMaxVertex(int i) {
@@ -131,7 +143,7 @@ public class Surface implements Cloneable {
     for(int i=0; i<N;i++) {
       vertices[i]=0; 
       for(int j=0; j<N; j++) {
-        connection[i][j] = false;
+        disconnect(i,j);
       }
     }
   }
@@ -139,7 +151,7 @@ public class Surface implements Cloneable {
   //Returns a list of sites NOT fully connected
   public int[] getFreeList() {
     //Not very efficient, but faster might be faster than using an ArrayList
-    //and converting later
+    //and converting later. Also avoids needing to sort a stored list
     int[] freeList;
     int freeCount = 0, counter = 0;
     for(int i=0;i<N;i++)
@@ -148,23 +160,28 @@ public class Surface implements Cloneable {
     freeList = new int[freeCount];
     counter=0;
     for(int i=0;i<N;i++) {
-      if(!hasMaxVertex(i)) freeList[counter++]=i;
-    }
-
-    return freeList;
-  }
-
-  public Surface clone() throws java.lang.CloneNotSupportedException {
-    return (Surface) super.clone();
-  }
-
-  public boolean[][] getConnection() {
-    boolean[][] connectCopy = new boolean[N][N];
-    for(int i=0; i<N; i++) {
-      for(int j=0; j<N; j++) {
-        connectCopy[i][j]=connection[i][j];
+        if(!hasMaxVertex(i)) freeList[counter++]=i;
       }
+
+      return freeList;
     }
-    return connectCopy;
-  }
+
+    public Surface clone() throws java.lang.CloneNotSupportedException {
+      return (Surface) super.clone();
+    }
+
+    public boolean[][] getConnection() {
+      boolean[][] connectCopy = new boolean[N][N];
+      for(int i=0; i<N; i++) {
+        for(int j=0; j<N; j++) {
+          connectCopy[i][j]=connection[i][j];
+        }
+      }
+      return connectCopy;
+    }
+
+    public void error(String message) {
+      System.err.println("ERROR "+message);
+      System.exit(1);
+    }
 }

@@ -153,6 +153,16 @@ public class TestCommon extends TestCase {
       assertEquals(checkList.length,testList.length);
       for(int i=0; i<testList.length;i++)
         assertEquals(checkList[i],testList[i]);
+      //Particle 9 should be back in the free list
+      surf.disconnect(8,9);
+      checkList = new int[xcoords.size()];
+      for( int i=0; i<checkList.length;i++)
+        checkList[i]=i;
+      testList = surf.getFreeList();
+      assertEquals(checkList.length,testList.length);
+      for(int i=0; i<testList.length;i++)
+        assertEquals(checkList[i],testList[i]);
+
 
       surf.disconnectAll();
       boolean[][]connCopy = surf.getConnection();
