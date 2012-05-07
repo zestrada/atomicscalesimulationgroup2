@@ -2,6 +2,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.Random;
 
 /*
  * Class to represent the problem we are working on.
@@ -19,7 +20,8 @@ public class Surface implements Cloneable {
   private boolean[][] connection;
   //Simulation cell
   private Cell cell;
-
+  //Random number generator
+  private Random rng;
 
   /*
    * Base constructor - two Lists were chosen over a List of double[2]
@@ -35,7 +37,7 @@ public class Surface implements Cloneable {
     this.distance = new double[N][N];
 
     //Now, compute distance matrix
-    //Ideally, we'd use upper triangular storage...
+   //Ideally, we'd use upper triangular storage...
     double[] delta = new double[2];
     for(int i=0; i<N;i++) {
       vertices[i]=0; 
@@ -72,20 +74,57 @@ public class Surface implements Cloneable {
   public double getEnergy() {
     double energy = 0;
     int countConnections = 0;
-    int maxConnectionsPerVertex = 4;
     for(int i=0; i<N; i++) {
-      countConnections = 0;
+	countConnections = 0;
       for(int j=i+1; j<N; j++) {
-	      energy += (connection[i][j] ? 1:0)*(distance[i][j]*distance[i][j]);
+	      energy += (connection[i][j] ? 1:1024)*(distance[i][j]*distance[i][j]);
 	      countConnections += connection[i][j] ? 1 : 0;
       }
-      if(countConnections > maxConnectionsPerVertex) {
-        //This is 2^20.  It is a big number but not so big as to overflow the double buffer.
-	      energy += 1024*1024;
-      }
+      if(countConnections != maxVertex) {
+        //This is 2^10.  It is a big number but not so big as to overflow the double buffer.
+     energy += 1024*Math.abs(countConnections - maxVertex);
+	  }
     }
       return energy;
   }
+
+  public void minBind(int x) {
+      double maxDistance = -1;
+      int indexMax = -1;
+      for(int i = 0; i < N; i++) {
+	  if(connection[x][i] && distance[x][i] > maxDistance) {
+	      indexMax = i;
+	      maxDistance = distance[x][i];
+	  }
+      }
+      if(indexMax >= 0) {
+	  disconnect(x,indexMax);
+      }
+      return;
+  }
+
+    public int maxVertex() {
+	int maxV = -1;
+	for(int i = 0; i < N; i++) {
+	    if(maxV < vertices[i]) {
+		maxV = vertices[i];
+	    }
+	}
+	return maxV;
+    }
+
+  public boolean flipConnection(int x, int y) {
+      return (connection[x][y] = !connection[x][y]);
+  }
+    
+  public void swapConnection(int x1, int y1, int x2, int y2) {
+	boolean tmp1 = connection[x1][y1];
+	boolean tmp2 = connection[x2][y2];
+	connection[x1][y1] = tmp2;
+	connection[y1][x1] = tmp2;
+	connection[x2][y2] = tmp1;
+	connection[y2][x2] = tmp1;
+	}
 
   public int getN() {
     return N;
@@ -137,6 +176,10 @@ public class Surface implements Cloneable {
 
   public boolean hasMaxVertex(int i) {
     return (vertices[i]==maxVertex);
+  }
+
+  public boolean hasMoreMaxVertex(int i) {
+      return (vertices[i]>maxVertex);
   }
 
   public void disconnectAll() {
