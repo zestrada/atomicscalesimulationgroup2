@@ -22,6 +22,9 @@ public class Surface implements Cloneable {
   private Cell cell;
   //Random number generator
   private Random rng;
+    //xcoordinates
+  private double[] xCoordinates;
+  private double[] yCoordinates;
 
   /*
    * Base constructor - two Lists were chosen over a List of double[2]
@@ -35,12 +38,16 @@ public class Surface implements Cloneable {
     this.vertices = new int[N];
     this.connection = new boolean[N][N];
     this.distance = new double[N][N];
+    this.xCoordinates = new double[N];
+    this.yCoordinates = new double[N];
 
     //Now, compute distance matrix
    //Ideally, we'd use upper triangular storage...
     double[] delta = new double[2];
     for(int i=0; i<N;i++) {
       vertices[i]=0; 
+      xCoordinates[i]=(Double)xcoords.get(i).doubleValue();
+      yCoordinates[i]=(Double)ycoords.get(i).doubleValue();
       for(int j=0; j<N; j++) {
         connection[i][j] = false;
         delta[0] = ((Double)xcoords.get(i)).doubleValue() - ((Double)xcoords.get(j)).doubleValue();
@@ -90,17 +97,28 @@ public class Surface implements Cloneable {
 
   public void minBind(int x) {
       double maxDistance = -1;
+      double minDistance = Double.MAX_VALUE;
       int indexMax = -1;
+      int indexMin = -1;
       for(int i = 0; i < N; i++) {
-	  if(connection[x][i] && distance[x][i] > maxDistance) {
-	      indexMax = i;
-	      maxDistance = distance[x][i];
+	  if(connection[x][i]) {
+	      if (distance[x][i] > maxDistance) {
+		  indexMax = i;
+		  maxDistance = distance[x][i];
+	      }
+	  } else {
+	      if (distance[x][i] < minDistance) {
+		  indexMin = i;
+		  minDistance = distance[x][i];
+	      }
 	  }
       }
       if(indexMax >= 0) {
 	  disconnect(x,indexMax);
       }
-      return;
+      if(indexMin < Double.MAX_VALUE) {
+	  connect(x,indexMax);
+      }
   }
 
     public int maxVertex() {
@@ -226,5 +244,13 @@ public class Surface implements Cloneable {
     public void error(String message) {
       System.err.println("ERROR "+message);
       System.exit(1);
+    }
+    
+    public double[] getXCoords() {
+	return xCoordinates;
+    }
+
+    public double[] getYCoords() {
+	return yCoordinates;
     }
 }

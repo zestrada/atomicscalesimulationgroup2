@@ -12,5 +12,8 @@ all: $(classes)
 run: SAmain.class
 	java -cp $(CP) SAmain
   
+runVerbose: SAmain.class
+	java -verbose -cp $(CP) SAmain
+
 clean:
 	rm *.class
