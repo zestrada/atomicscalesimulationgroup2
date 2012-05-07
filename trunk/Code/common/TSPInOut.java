@@ -99,6 +99,7 @@ public class TSPInOut {
       reader.close();
     } catch (IOException e) {
       e.printStackTrace();
+      System.exit(1);
     }
 
     if(xcoord.size()!=npart) {

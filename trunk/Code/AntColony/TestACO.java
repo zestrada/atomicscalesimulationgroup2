@@ -16,7 +16,7 @@ public class TestACO extends TestCase {
     Pheromone pheromone = new Pheromone(surf.getN());
 
     for(int i=0;i<numAnts;i++) {
-      ants[i] = new Ant(surf.clone(),pheromone);
+      ants[i] = new Ant(surf.clone(),pheromone,1.0,1.0);
     }
 
     
