@@ -16,7 +16,10 @@ foreach line $file_data {
 	if [string equal $tmps "true"] {  
 	    set tmp2 [atomselect top "index $y"]
 	    set com2 [measure center $tmp2]
-	    draw line $com1 $com2
+	    set dist [vecdist $com1 $com2]
+	    if [expr $dist < 8] {
+		draw line $com1 $com2
+	    }
 	    $tmp2 delete
 	} 
 	incr y

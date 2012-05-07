@@ -13,7 +13,8 @@ public class SAmain {
       System.out.println("Init");
       SAInit();
       System.out.println("Running");
-      SARun();
+      //SARun();
+      //SARun2();
       SAFinal();
   }
 
@@ -23,16 +24,19 @@ public class SAmain {
       surface = tsp.readData("../common/test.input");
       N = surface.getN();
       System.out.println("There are: " + N + " particles in simulation");
-      for(int i = 0; i < (N-3); i++) {
-	  for(int j = i+1; j < i+2;j++) {
-	      surface.connect(i,j);
-	      System.out.println("Connecting " + i + " and " + j);
-	  }
+      int[] distIndex;
+      int missingVertex;
+      for(int i = 0; i < N; i++) {
+	  distIndex = surface.getShortestDistance(i);
+	  //missingVertex = surface.missingVertex(i);
+	  for(int j = 0; j < 3; j++) {
+	      System.out.println("Connecting: " + i + " & " + distIndex[j] + " " + surface.getDist(i,distIndex[j]));
+	      surface.connectUnsafe(i,distIndex[j]);
+	  } 
       }
-      System.out.println("All " + N + " particles have been interconnected");
   }
-
-  private static void SARun() {
+    /*
+      private static void SARun() {
       double d1,d2;
       double energy,oldEnergy;
       int x,y,x1,y1;
@@ -60,7 +64,7 @@ public class SAmain {
 		      }
 		      //}
 		      //}
-		  /*
+		      
 		    x = rng.nextInt(N);
 		    if(surface.hasMaxVertex(x)) {
 		    surface.minBind(x);
@@ -78,11 +82,75 @@ public class SAmain {
 		      surface = oldSurface;
 		  } else {
 		      oldEnergy = energy;
-		      } */
+		      } 
 	  }
-	  System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());
-      }
-  }
+	  System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());}
+} 
+*/
+ 
+    private static void SARun() {
+	  double energy,oldEnergy;
+	  int x,y,missingVertex;
+	  int[] listOfShortestDistance;
+	  oldEnergy = energy = surface.getEnergy();
+	  System.out.print("Energy: " + surface.getEnergy() + "\n");
+	  for(int i = 0; i < 0; i++) {
+	      for(int j = 0; j < N; j++) {
+		  x = j;
+		  missingVertex = surface.missingVertex(x);
+		  if(missingVertex > 0) {
+		      listOfShortestDistance = surface.getShortestFreeDistance(x);
+		      for(int k = 0; k < missingVertex; k++) {
+			  if(k < listOfShortestDistance.length && x == listOfShortestDistance[k]) {
+			      missingVertex++;
+			  } else {
+			      System.out.println("Connecting: " + x + " , " +  listOfShortestDistance[k] + " " + surface.getDist(x,listOfShortestDistance[k]));
+			      surface.connect(x,listOfShortestDistance[k]);
+			  }
+		      }
+		  } else {
+		      listOfShortestDistance = surface.getShortestFreeDistance(x);
+		      for(int k = -missingVertex; k > 0; k--) {
+			      System.out.println("Disconnecting: " + x + " , " +  listOfShortestDistance[k] + " " + surface.getDist(x,listOfShortestDistance[k]));
+			      // System.out.println("Disconnecting: " + x + " , " +  listOfShortestDistance[k] + " " + k + " " + missingVertex);
+			  surface.disconnect(x,listOfShortestDistance[k]);
+		      }
+		  }	  
+	      }
+	      System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());
+	      
+	  }
+    }
+      
+    private static void SARun2() {
+	double energy,oldEnergy,d1,d2;
+	int x,y,x1,y1,missingVertex;
+	int[] listOfShortestDistance;
+	oldEnergy = energy = surface.getEnergy();
+	System.out.print("Energy: " + surface.getEnergy() + "\n");
+	for(int i = 0; i < 10000; i++) {
+	    x = rng.nextInt(N);
+	    y = rng.nextInt(N);
+	    d1 = surface.getDist(x,y);
+	    for(int j = 0; j < 10000; j++) {
+		x1 = rng.nextInt(N);
+		y1 = rng.nextInt(N);
+		d2 = surface.getDist(x1,y1);
+		if(d2 < d1) {
+		    try {oldSurface = (Surface)surface.clone();} catch(Exception e) {}
+		    surface.swapConnection(x,y,x1,y1);
+		    energy = surface.getEnergy();
+		    if((energy-oldEnergy) > 0) {
+			surface = oldSurface;
+		    } else {
+			oldEnergy = energy;
+		    }
+		}
+		      
+	      }
+	  System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());     	      
+	  }
+    }
     
     private static void SAFinal() {
 	writeTrajectory();
