@@ -13,9 +13,11 @@ public class SAmain {
 	System.out.println("Init");
 	SAInit();
 	System.out.println("Running");
-	SATest();
-	SATest2();
-	//SARun3();
+	//SATest();
+	//SATest2();
+	
+	SARun3();
+	
 	//SARun();
 	//SARun2();
 	
@@ -23,14 +25,16 @@ public class SAmain {
     }
     
     private static void SATest() {
+	System.out.println("\nStarting Test1");
 	oldSurface=surface;
 	System.out.println(oldSurface.equals(surface));
-	try{oldSurface=(Surface)surface.clone();} catch(Exception e) {}
+	oldSurface=new Surface(surface);
 	System.out.println(oldSurface.equals(surface));
     }
 
     private static void SATest2() {
-	try{oldSurface=(Surface)surface.clone();} catch(Exception e) {}
+	System.out.println("\nStarting Test2");
+	oldSurface=new Surface(surface);
 	System.out.println(surface.getEnergy());
 	surface.swapConnection(0,1,0,2);
 	System.out.println(surface.getEnergy());
@@ -59,18 +63,22 @@ public class SAmain {
 	int x0,y0,x1,y1;
 	double energy,oldEnergy,delta;
 	oldEnergy=surface.getEnergy();
-	for(int i = 0; i < 0; i++) {
+	for(int i = 0; i < 1000; i++) {
 	    for(int j = 0; j < 1000; j++) {
-		x0 = rng.nextInt(N);
-		y0 = rng.nextInt(N);
-		x1 = rng.nextInt(N);
-		y1 = rng.nextInt(N);
-		try {oldSurface=(Surface)surface.clone();} catch(Exception e) {}
+		do {
+		    x0 = rng.nextInt(N);
+		    y0 = rng.nextInt(N);
+		} while(x0 == y0);
+		do {
+		    x1 = rng.nextInt(N);
+		    y1 = rng.nextInt(N);
+		} while(x1 == y1);
+		oldSurface=new Surface(surface);
 		surface.swapConnection(x0,y0,x1,y1);
 		energy=surface.getEnergy();
 		delta=(energy-oldEnergy);
 		if(delta > 0) {
-		    try{surface = (Surface)oldSurface.clone();} catch(Exception e) {};
+		    surface=oldSurface;
 		} else {
 		    oldEnergy = energy;
 		}
@@ -204,35 +212,4 @@ public class SAmain {
 	System.out.print("Final Energy: " + surface.getEnergy() + "\n");
 	System.out.print("DONE\n");
     }
-/*
-    private static void writeTrajectory() {
-	double[] x = surface.getXCoords();
-	double[] y = surface.getYCoords();
-	try {
-	    FileWriter fw = new FileWriter("surface.xyz");
-	    String s = new String(N + "\n\n");
-	    fw.write(s,0,s.length());
-	    for(int i = 0; i < N; i++) {
-		s = new String("C " + x[i] + " " + y[i] + " 0\n");
-		fw.write(s,0,s.length());
-	    }
-	    fw.flush();
-	    fw.close();
-	} catch(Exception e) {
-	    System.out.println("ERROR IN FILEWRITER");
-	}
-    }
-
-    private static void writeConnection() {
-	try {
-	    boolean[][] con = surface.getConnection();    
-	    FileWriter fw = new FileWriter("connection.dat");
-	    String s = Arrays.deepToString(con);
-	    fw.write(s,0,s.length());
-	    fw.flush();
-	    fw.close();
-	} catch(Exception e) {
-	}
-    }
-*/
 }
