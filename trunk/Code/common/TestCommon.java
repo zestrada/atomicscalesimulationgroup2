@@ -179,5 +179,7 @@ public class TestCommon extends TestCase {
       clone.connect(surf.getN()-1,0);
       assertEquals(true,clone.connected(surf.getN()-1,0));
       assertEquals(false,surf.connected(surf.getN()-1,0));
+      assertEquals(clone.getDist(5,4),surf.getDist(5,4));
+      assertEquals(clone.getDist(0,surf.getN()-1),surf.getDist(surf.getN()-1,0));
     }
 }

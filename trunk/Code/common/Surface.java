@@ -12,7 +12,7 @@ import java.*;
  * Class to represent the problem we are working on.
  * This is probably not the most ideal thing to use, but it's a start
  */
-public class Surface implements Cloneable {
+public class Surface {
 
   //Distance matrix
   private double[][] distance; 
@@ -363,10 +363,6 @@ public class Surface implements Cloneable {
 	    shortestDistance[j] = tmpI;
 	    }*/
 	return shortestDistance;
-    }
-
-    public Surface clone() throws java.lang.CloneNotSupportedException {
-      return (Surface) super.clone();
     }
 
     public void error(String message) {

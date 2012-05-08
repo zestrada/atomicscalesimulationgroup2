@@ -13,10 +13,10 @@ public class TestACO extends TestCase {
     Ant[] ants = new Ant[numAnts];
 
     //Initialize pheromone
-    Pheromone pheromone = new Pheromone(surf.getN());
+    Pheromone pheromone = new Pheromone(surf.getN(),0.0);
 
     for(int i=0;i<numAnts;i++) {
-      ants[i] = new Ant(surf.clone(),pheromone,1.0,1.0);
+      ants[i] = new Ant(new Surface(surf),pheromone,1.0,1.0);
     }
 
     
