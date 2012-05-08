@@ -34,20 +34,58 @@ public class Ant {
     return pheromone.get(i,j);
   }
 
-  public Surface getSurface() throws java.lang.CloneNotSupportedException {
-    //FIXME: might not need to clone, get some efficiency
-    return surf.clone();
+  public Surface getSurface() {
+    return surf;
   }
 
   //Do the main work based on Surface, pheromone
   //leaves surface member object modified
   public double constructSolution() {
     double length=0.0;
-    double p;
     boolean done=false;
+    int[] freeList;
+    double[] pList; //Probability of choosing each site
+    double norm,prob,temp; //Normalization, probability, scratch double
     while(!done) {
-       
+      //Not sure if we should define a maximum distance, might improve
+      //convergence greatly
+
+      freeList = surf.getFreeList(); 
+      if(freeList.length<=1) {
+        done = true;
+        break;
+      }
+      //Where our connection will "start" from
+      int source = freeList[randInt(freeList.length)];
+      //Now, build a list of probabilities
+      pList = new double[freeList.length];
+      norm=0.0;
+      for(int i=0;i<freeList.length;i++) {
+        if(i==source || surf.hasMaxVertex(i)) {
+          pList[i]=0.0;
+          continue; //no self connections or over vertices
+        }
+        pList[i] = Math.pow(pheromone.get(source,i),alpha)*Math.pow(eta[source][i],beta);
+        norm+=pList[i];
+      }
+      norm=1.0/norm;
+      temp=Math.random();
+      prob=0.0;
+      //Simple weighted probability distribution
+      for(int i=0;i<freeList.length;i++) {
+        if(i==source) continue;
+        prob+=pList[i]/norm;
+        if(prob>=temp) {
+          surf.connect(i,source);  
+          length+=surf.getDist(i,source);
+          break;
+        }
+      }
     }
     return length;
+  }
+
+  private int randInt(int max) {
+    return (int)(Math.random() * (max));
   }
 }
