@@ -1,6 +1,6 @@
 public class ACOMain {
 
-  private static int numAnts = 8;
+  private static int numAnts = 1;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //length of solution for each ant
@@ -9,7 +9,7 @@ public class ACOMain {
   //Ant System parameters
   private static double alpha;
   private static double beta;
-  private static double Q=100000000.0;
+  private static double Q=1000000.0;
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
   private static double initPher=100.0; //initial value for pheromone matrix
@@ -71,7 +71,7 @@ public class ACOMain {
    */
   private static void updatePheromones() {
     double temp;
-    for(int i=0; i<(pheromone.getN()-1);i++) {
+    for(int i=0; i<pheromone.getN();i++) {
       for(int j=i+1; j<pheromone.getN(); j++) {
         temp = evap*pheromone.get(i,j);
         for(int a=0;a<numAnts;a++) {

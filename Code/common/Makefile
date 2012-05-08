@@ -13,7 +13,7 @@ all: $(classes)
 TestCommon.class : 
 	echo ""
 
-test:
+test: $(classes)
 	$(JJ) -cp $(CP):$(JUNIT) TestCommon.java
 	java -cp $(CP):$(JUNIT) junit.textui.TestRunner TestCommon
   
