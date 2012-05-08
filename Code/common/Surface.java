@@ -3,6 +3,9 @@ import java.util.regex.Matcher;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Random;
+import java.util.*;
+import java.io.*;
+import java.*;
 
 /*
  * Class to represent the problem we are working on.
@@ -48,6 +51,7 @@ public class Surface implements Cloneable {
       vertices[i]=0; 
       xCoordinates[i]=(Double)xcoords.get(i).doubleValue();
       yCoordinates[i]=(Double)ycoords.get(i).doubleValue();
+      distance[i][i] = Math.sqrt(Double.MAX_VALUE)-1;
       for(int j=i+1; j<N; j++) {
         connection[i][j] = false;
         delta[0] = ((Double)xcoords.get(i)).doubleValue() - ((Double)xcoords.get(j)).doubleValue();
@@ -57,9 +61,9 @@ public class Surface implements Cloneable {
         distance[i][j] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
         distance[j][i] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
       }
-      distance[i][i] = Math.sqrt(Double.MAX_VALUE)-1;
     }
-
+    //Because the i-loop doesn't go to N.  It stops at N-1
+    distance[N-1][N-1] = Math.sqrt(Double.MAX_VALUE)-1;
   }
 
   public int getMaxVertex() {
@@ -333,5 +337,40 @@ public class Surface implements Cloneable {
 
     public double[] getYCoords() {
 	return yCoordinates;
+    }
+
+    /**
+     * Visualization type code
+     * It is special so it gets its own comment
+     *
+     */
+    public void writeTrajectory() {
+	double[] x = xCoordinates
+	double[] y = yCoordinates;
+	try {
+	    FileWriter fw = new FileWriter("surface.xyz");
+ 	    String s = new String(N + "\n\n");
+	    fw.write(s,0,s.length());
+	    for(int i = 0; i < N; i++) {
+		s = new String("C " + x[i] + " " + y[i] + " 0\n");
+		fw.write(s,0,s.length());
+	    }
+	    fw.flush();
+ 	    fw.close();
+	}
+	catch(Exception e) {
+	    error("ERROR IN FILEWRITER");
+	}
+    }
+
+    public void writeConnection() {
+	try {
+	    FileWriter fw = new FileWriter("connection.dat");
+	    String s = Arrays.deepToString(connection);
+	    fw.write(s,0,s.length());
+	    fw.flush();
+	    fw.close();
+	}
+	catch(Exception e) {}
     }
 }
