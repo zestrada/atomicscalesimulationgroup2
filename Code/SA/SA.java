@@ -7,7 +7,10 @@ public class SA {
     private Random rng;
     private Surface surface, oldSurface;
     private int N;
+    private double temperature;
+    private int numSteps;
 
+    //Base constructor
     public SA() {
 	System.out.println("Init");
 	SAInit();
@@ -15,7 +18,49 @@ public class SA {
 	SARun3();
 	SAFinal();
     }
-    
+
+    //Super constructor
+    public SA(int i) {
+	System.out.println("Init");
+	SAInit();
+	System.out.println("Running");
+	SARun3();
+	SAFinal();
+    }     
+
+    //Copy constructor
+    public SA(SA obj) {
+	this.rng = obj.getRNG();
+	this.surface = new Surface(obj.getSurface());
+	this.oldSurface = new Surface(obj.getOldSurface());
+	this.N = obj.getN();
+	this.temperature = obj.getTemperature();
+	this.numSteps = obj.getNumSteps();
+    }
+
+    public Random getRNG() {
+	return rng;
+    }
+
+    public Surface getSurface() {
+	return surface;
+    }
+
+    public Surface getOldSurface() {
+	return oldSurface;
+    }
+
+    public int getN() {
+	return N;
+    }
+
+    public double getTemperature() {
+	return temperature;
+    }
+
+    public int getNumSteps() {
+	return numSteps;
+    }
 
     private  void SATest() {
 	System.out.println("\nStarting Test1");
@@ -42,6 +87,7 @@ public class SA {
       System.out.println("There are: " + N + " particles in simulation");
       int[] distIndex;
       int missingVertex;
+      temperature = 1.0;
       for(int i = 0; i < N; i++) {
 	  distIndex = surface.getShortestDistance(i);
 	  //missingVertex = surface.missingVertex(i);
@@ -70,13 +116,23 @@ public class SA {
 		surface.swapConnection(x0,y0,x1,y1);
 		energy=surface.getEnergy();
 		delta=(energy-oldEnergy);
+		//Calculate deltaE
 		if(delta > 0) {
-		    surface=oldSurface;
+		    //If deltaE positive, calculate metropolis
+		    if(rng.nextDouble() < Math.exp(-delta/temperature)) {
+			//Metropolis accepted
+			oldEnergy = energy;
+		    } else {
+			//Metropolis rejected
+			surface=oldSurface;
+		    }
 		} else {
 		    oldEnergy = energy;
 		}
+		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
+		temperature*=0.999999;
 	    }
-	    System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());
+	    System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
 	}
     }
 
