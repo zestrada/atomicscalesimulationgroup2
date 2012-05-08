@@ -3,7 +3,9 @@ mol representation VDW 0.250
 mol color Name
 mol material BrushedMetal
 mol addrep top
-
+color Display Background white
+display rendermode GLSL
+display projection orthographic
 set fp [open "connection.dat" r]; list
 set file_data [split [read $fp] "]"]; list
 set x 0
