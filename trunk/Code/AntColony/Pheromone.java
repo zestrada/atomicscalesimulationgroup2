@@ -11,7 +11,7 @@ public class Pheromone {
     pMatrix = new double[N][N];
     for(int i=0; i<N; i++) {
       for(int j=0; j<N; j++) {
-        pMatrix[i][j]=0.0;
+        pMatrix[i][j]=100.0;
       }
     }
   }

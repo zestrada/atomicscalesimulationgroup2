@@ -48,7 +48,7 @@ public class TestCommon extends TestCase {
       assertEquals(1.0-0.501,testCoords[1]);
     }
 
-    public void testSurface() {
+    public void testSurface() throws CloneNotSupportedException {
 
       //Test distance matrix
       Cell cell = new Cell(-0.5,0.5,-0.5,0.5);
@@ -170,5 +170,11 @@ public class TestCommon extends TestCase {
       surf.connect(0,1);
       connCopy = surf.getConnection();
       assertEquals(true,connCopy[0][1]);
+
+      surf.disconnectAll();
+      Surface clone = surf.clone();
+      clone.connect(0,1);
+      assertEquals(true,clone.connected(0,1));
+      assertEquals(false,surf.connected(0,1));
     }
 }

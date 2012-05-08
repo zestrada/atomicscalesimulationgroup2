@@ -51,6 +51,7 @@ public class Ant {
       //convergence greatly
 
       freeList = surf.getFreeList(); 
+      System.out.println(freeList.length);
       if(freeList.length<=1) {
         done = true;
         break;
@@ -74,7 +75,7 @@ public class Ant {
       //Simple weighted probability distribution
       for(int i=0;i<freeList.length;i++) {
         if(i==source) continue;
-        prob+=pList[i]/norm;
+        prob+=pList[i]*norm;
         if(prob>=temp) {
           surf.connect(i,source);  
           length+=surf.getDist(i,source);

@@ -9,7 +9,7 @@ public class ACOMain {
   //Ant System parameters
   private static double alpha;
   private static double beta;
-  private static double Q=1.0;
+  private static double Q=100000000.0;
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
   
@@ -77,6 +77,7 @@ public class ACOMain {
           if( ((Surface) ants[a].getSurface()).connected(i,j) )
             temp+=Q/solutions[a]; 
         }
+        pheromone.set(i,j,temp);
       }
     }
   }
