@@ -6,12 +6,12 @@ public class Pheromone {
   private double[][] pMatrix;
   private int N;
 
-  public Pheromone(int size) {
+  public Pheromone(int size, double initialValue) {
     N=size;
     pMatrix = new double[N][N];
     for(int i=0; i<N; i++) {
       for(int j=0; j<N; j++) {
-        pMatrix[i][j]=100.0;
+        pMatrix[i][j]=initialValue;
       }
     }
   }

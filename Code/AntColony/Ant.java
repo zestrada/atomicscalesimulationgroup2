@@ -8,7 +8,7 @@ public class Ant {
     this.alpha=alpha;
     this.beta=beta;
     pheromone = inputPheromone;
-    surf = inputSurf.clone(); 
+    surf = new Surface(inputSurf); 
     eta = new double[surf.getN()][surf.getN()];
     for(int i=0; i<surf.getN();i++) {
       for(int j=0; j<surf.getN();j++) {

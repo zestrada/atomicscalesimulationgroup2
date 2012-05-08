@@ -12,6 +12,7 @@ public class ACOMain {
   private static double Q=100000000.0;
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
+  private static double initPher=100.0; //initial value for pheromone matrix
   
   //Here, we use the original Ant System
 
@@ -36,9 +37,9 @@ public class ACOMain {
     System.out.println("\n\nStarting ACO with "+numAnts+" ants "+" alpha="+alpha+" beta="+beta+" evap="+evap);
 
     //Initialize pheromone matrix
-    pheromone = new Pheromone(surf.getN());
+    pheromone = new Pheromone(surf.getN(),initPher);
     for(int i=0;i<numAnts;i++) {
-      ants[i] = new Ant(surf.clone(),pheromone,alpha,beta);
+      ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);
     }
 
     for(int i=0;i<numSteps;i++) {
