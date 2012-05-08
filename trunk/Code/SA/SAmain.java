@@ -9,16 +9,35 @@ public class SAmain {
     private static Surface oldSurface;
     private static int N;
 
-  public static void main(String[] args) {
-      System.out.println("Init");
-      SAInit();
-      System.out.println("Running");
-      //SARun();
-      //SARun2();
-      SAFinal();
-  }
+    public static void main(String[] args) {
+	System.out.println("Init");
+	SAInit();
+	System.out.println("Running");
+	SATest();
+	SATest2();
+	//SARun3();
+	//SARun();
+	//SARun2();
+	
+	SAFinal();
+    }
+    
+    private static void SATest() {
+	oldSurface=surface;
+	System.out.println(oldSurface.equals(surface));
+	try{oldSurface=(Surface)surface.clone();} catch(Exception e) {}
+	System.out.println(oldSurface.equals(surface));
+    }
 
-  public static void SAInit() {
+    private static void SATest2() {
+	try{oldSurface=(Surface)surface.clone();} catch(Exception e) {}
+	System.out.println(surface.getEnergy());
+	surface.swapConnection(0,1,0,2);
+	System.out.println(surface.getEnergy());
+	System.out.println(oldSurface.getEnergy());
+    }
+
+  private static void SAInit() {
       TSPInOut tsp = new TSPInOut();
       rng = new Random();
       surface = tsp.readData("../common/test.input");
@@ -35,6 +54,32 @@ public class SAmain {
 	  } 
       }
   }
+
+    private static void SARun3() {
+	int x0,y0,x1,y1;
+	double energy,oldEnergy,delta;
+	oldEnergy=surface.getEnergy();
+	for(int i = 0; i < 0; i++) {
+	    for(int j = 0; j < 1000; j++) {
+		x0 = rng.nextInt(N);
+		y0 = rng.nextInt(N);
+		x1 = rng.nextInt(N);
+		y1 = rng.nextInt(N);
+		try {oldSurface=(Surface)surface.clone();} catch(Exception e) {}
+		surface.swapConnection(x0,y0,x1,y1);
+		energy=surface.getEnergy();
+		delta=(energy-oldEnergy);
+		if(delta > 0) {
+		    try{surface = (Surface)oldSurface.clone();} catch(Exception e) {};
+		} else {
+		    oldEnergy = energy;
+		}
+	    }
+	    System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());
+	}
+    }
+
+
     /*
       private static void SARun() {
       double d1,d2;
@@ -87,7 +132,7 @@ public class SAmain {
 	  System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());}
 } 
 */
- 
+/* 
     private static void SARun() {
 	  double energy,oldEnergy;
 	  int x,y,missingVertex;
@@ -121,7 +166,8 @@ public class SAmain {
 	      
 	  }
     }
-      
+*/  
+/*    
     private static void SARun2() {
 	double energy,oldEnergy,d1,d2;
 	int x,y,x1,y1,missingVertex;
@@ -151,14 +197,14 @@ public class SAmain {
 	  System.out.println("Step: " + i + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex());     	      
 	  }
     }
-    
+  */  
     private static void SAFinal() {
-	writeTrajectory();
-	writeConnection();
+	surface.writeTrajectory();
+	surface.writeConnection();
 	System.out.print("Final Energy: " + surface.getEnergy() + "\n");
 	System.out.print("DONE\n");
     }
-
+/*
     private static void writeTrajectory() {
 	double[] x = surface.getXCoords();
 	double[] y = surface.getYCoords();
@@ -188,4 +234,5 @@ public class SAmain {
 	} catch(Exception e) {
 	}
     }
+*/
 }
