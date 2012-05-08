@@ -45,4 +45,8 @@ public class Pheromone {
     System.err.println("ERROR "+message);
     System.exit(1);
   }
+
+  public int getN() {
+    return N;
+  }
 }
