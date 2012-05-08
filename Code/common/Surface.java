@@ -1,3 +1,4 @@
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
@@ -88,12 +89,12 @@ public class Surface implements Cloneable {
     double energy = 0;
     for(int i=0; i<N; i++) {
 	for(int j=i+1; j<N; j++) {
-	    energy += (connection[i][j] ? 1:1024)*(distance[i][j]*distance[i][j]);
+	    energy += (connection[i][j] ? 1:0)*(distance[i][j]*distance[i][j]);
 	}
 	if(vertices[i] != maxVertex) {
 	    //This is 2^10.  It is a big number but not so big as to overflow the double buffer.
 	    energy += 1024*Math.abs(vertices[i] - maxVertex);
-	}
+	    }
     }
     return energy;
   }
