@@ -340,12 +340,15 @@ public class Surface implements Cloneable {
     }
 
     /**
-     * Visualization type code
-     * It is special so it gets its own comment
+     * Writes xCoordinates/yCoordinates to a xyz file
      *
+     * By default, all data is saved to the file 'surface.xyz'
+     *
+     * @param none
+     * @return void
      */
     public void writeTrajectory() {
-	double[] x = xCoordinates
+	double[] x = xCoordinates;
 	double[] y = yCoordinates;
 	try {
 	    FileWriter fw = new FileWriter("surface.xyz");
@@ -363,6 +366,14 @@ public class Surface implements Cloneable {
 	}
     }
 
+    /**
+     * Writes connectivity matrix to file
+     *
+     * By default, all data is saved to the file 'connection.dat'
+     *
+     * @param none
+     * @return void
+     */
     public void writeConnection() {
 	try {
 	    FileWriter fw = new FileWriter("connection.dat");
