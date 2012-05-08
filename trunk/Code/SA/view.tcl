@@ -1,9 +1,11 @@
+mol delrep 0 top
+mol representation VDW 0.250
+mol color Name
+mol material BrushedMetal
+mol addrep top
 
 set fp [open "connection.dat" r]; list
 set file_data [split [read $fp] "]"]; list
-#puts [llength $file_data]
-#puts [llength [lindex $file_data 4]]
-#puts [lindex $file_data 4]
 set x 0
 foreach line $file_data {
     set s [split $line ","]; list
@@ -18,6 +20,7 @@ foreach line $file_data {
 	    set com2 [measure center $tmp2]
 	    set dist [vecdist $com1 $com2]
 	    if [expr $dist < 8] {
+		puts [concat $x " " $y " " $dist]
 		draw line $com1 $com2
 	    }
 	    $tmp2 delete
@@ -27,3 +30,5 @@ foreach line $file_data {
     $tmp1 delete
     incr x
 }
+axes location off
+render PostScript output.ps
