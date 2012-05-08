@@ -65,11 +65,67 @@ public class Surface implements Cloneable {
     }
     //Because the i-loop doesn't go to N.  It stops at N-1
     distance[N-1][N-1] = Math.sqrt(Double.MAX_VALUE)-1;
+    xCoordinates[N-1]=(Double)xcoords.get(N-1).doubleValue();
+    yCoordinates[N-1]=(Double)ycoords.get(N-1).doubleValue();
   }
 
-  public int getMaxVertex() {
-    return maxVertex;
-  }
+    public Surface(Surface obj) {
+	this.distance = obj.getDistance();
+	this.vertices = obj.getVertices();
+	this.N = obj.getN();
+	this.maxVertex = obj.getMaxVertex();
+	this.connection = obj.getConnection();
+	this.cell = obj.getCell();
+	this.rng = obj.getRNG();
+	this.xCoordinates = obj.getXCoordinates();
+	this.yCoordinates = obj.getYCoordinates();
+    }
+
+    public double[][] getDistance() {
+	return this.distance;
+    }
+
+    public int[] getVertices() {
+	return this.vertices;
+    }
+
+    public int getN() {
+	return this.N;
+    }
+
+    public int getMaxVertex() {
+	return this.maxVertex;
+    }
+
+    /* public boolean[][] getConnection() {
+	return connection;
+	}*/
+
+    public boolean[][] getConnection() {
+      boolean[][] connectCopy = new boolean[N][N];
+      for(int i=0; i<N; i++) {
+        for(int j=0; j<N; j++) {
+          connectCopy[i][j]=connection[i][j];
+        }
+      }
+      return connectCopy;
+    }
+
+    public Cell getCell() {
+	return cell;
+    }
+
+    public Random getRNG() {
+	return rng;
+    }
+
+    public double[] getXCoordinates() {
+	return xCoordinates;
+    }
+
+    public double[] getYCoordinates() {
+	return yCoordinates;
+    }
 
   public double getDist(int i, int j) {
     return distance[i][j];
@@ -147,10 +203,6 @@ public class Surface implements Cloneable {
 	connection[x2][y2] = tmp1;
 	connection[y2][x2] = tmp1;
 	}
-
-  public int getN() {
-    return N;
-  }
 
   public void connect(int i, int j) {
     if(i==j) return; //noop
@@ -317,28 +369,11 @@ public class Surface implements Cloneable {
       return (Surface) super.clone();
     }
 
-    public boolean[][] getConnection() {
-      boolean[][] connectCopy = new boolean[N][N];
-      for(int i=0; i<N; i++) {
-        for(int j=0; j<N; j++) {
-          connectCopy[i][j]=connection[i][j];
-        }
-      }
-      return connectCopy;
-    }
-
     public void error(String message) {
       System.err.println("ERROR "+message);
       System.exit(1);
     }
     
-    public double[] getXCoords() {
-	return xCoordinates;
-    }
-
-    public double[] getYCoords() {
-	return yCoordinates;
-    }
 
     /**
      * Writes xCoordinates/yCoordinates to a xyz file
