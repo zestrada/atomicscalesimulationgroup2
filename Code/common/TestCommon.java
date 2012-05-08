@@ -172,9 +172,12 @@ public class TestCommon extends TestCase {
       assertEquals(true,connCopy[0][1]);
 
       surf.disconnectAll();
-      Surface clone = surf.clone();
+      Surface clone = new Surface(surf);
       clone.connect(0,1);
       assertEquals(true,clone.connected(0,1));
       assertEquals(false,surf.connected(0,1));
+      clone.connect(surf.getN()-1,0);
+      assertEquals(true,clone.connected(surf.getN()-1,0));
+      assertEquals(false,surf.connected(surf.getN()-1,0));
     }
 }
