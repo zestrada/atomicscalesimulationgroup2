@@ -1,4 +1,3 @@
-
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
@@ -48,13 +47,14 @@ public class Surface {
     //Now, compute distance matrix
    //Ideally, we'd use upper triangular storage...
     double[] delta = new double[2];
-    for(int i=0; i<(N-1);i++) {
+    for(int i=0; i<N;i++) {
       vertices[i]=0; 
       xCoordinates[i]=(Double)xcoords.get(i).doubleValue();
       yCoordinates[i]=(Double)ycoords.get(i).doubleValue();
       distance[i][i] = Math.sqrt(Double.MAX_VALUE)-1;
       for(int j=i+1; j<N; j++) {
         connection[i][j] = false;
+        connection[j][i] = false;
         delta[0] = ((Double)xcoords.get(i)).doubleValue() - ((Double)xcoords.get(j)).doubleValue();
         delta[1] = ((Double)ycoords.get(i)).doubleValue() - ((Double)ycoords.get(j)).doubleValue();
         //Minimum image convention
@@ -63,31 +63,39 @@ public class Surface {
         distance[j][i] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
       }
     }
+    /*
     //Because the i-loop doesn't go to N.  It stops at N-1
     distance[N-1][N-1] = Math.sqrt(Double.MAX_VALUE)-1;
     xCoordinates[N-1]=(Double)xcoords.get(N-1).doubleValue();
     yCoordinates[N-1]=(Double)ycoords.get(N-1).doubleValue();
+    */
   }
 
-    public Surface(Surface obj) {
-	this.distance = obj.getDistance();
-	this.vertices = obj.getVertices();
-	this.N = obj.getN();
-	this.maxVertex = obj.getMaxVertex();
-	this.connection = obj.getConnection();
-	this.cell = obj.getCell();
-	this.rng = obj.getRNG();
-	this.xCoordinates = obj.getXCoordinates();
-	this.yCoordinates = obj.getYCoordinates();
-    }
+  public Surface(Surface obj) {
+    //Things that should be okay with pass-by-reference
+    this.N = obj.getN();
+    this.maxVertex = obj.getMaxVertex();
+    this.rng = obj.getRNG();
+    this.distance = obj.getDistance();
+    this.cell = obj.getCell();
+    this.xCoordinates = obj.getXCoordinates();
+    this.yCoordinates = obj.getYCoordinates();
+
+    //Matrices/Arrays that create copies of themselves
+    this.vertices = obj.getVertices();
+    this.connection = obj.getConnection();
+  }
 
     public double[][] getDistance() {
 	return this.distance;
     }
 
-    public int[] getVertices() {
-	return this.vertices;
-    }
+  public int[] getVertices() {
+    int[] vertCopy = new int[N];
+    for(int i=0;i<N;i++)
+      vertCopy[i]=vertices[i];
+    return vertCopy;
+  }
 
     public int getN() {
 	return this.N;
@@ -215,7 +223,7 @@ public class Surface {
       vertices[i]++;    
       vertices[j]++;
       if(vertices[i]>maxVertex || vertices[j]>maxVertex) {
-	  error("connection between "+i+" and "+j+" violate maxVertex of"+maxVertex);
+	  error("connection between "+i+" and "+j+" violates maxVertex of "+maxVertex);
       }
     }
   }
@@ -276,8 +284,7 @@ public class Surface {
 
   public void disconnectAll() {
     for(int i=0; i<N;i++) {
-      vertices[i]=0; 
-      for(int j=0; j<N; j++) {
+      for(int j=i+1; j<N; j++) {
         disconnect(i,j);
       }
     }
@@ -291,6 +298,8 @@ public class Surface {
     int freeCount = 0, counter = 0;
     for(int i=0;i<N;i++)
       if(!hasMaxVertex(i)) freeCount++;
+
+    if(freeCount==0) return null;
     
     freeList = new int[freeCount];
     counter=0;

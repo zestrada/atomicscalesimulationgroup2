@@ -121,6 +121,8 @@ public class TestCommon extends TestCase {
       assertEquals(false, surf.hasMaxVertex(6));
       surf.disconnect(5,3);
       assertEquals(false, surf.hasMaxVertex(5));
+      surf.connect(5,3);
+      assertEquals(true, surf.hasMaxVertex(5));
       surf.disconnectAll();
       assertEquals(0.0,surf.getTotalLength());
       surf.connect(0,1);
@@ -170,16 +172,89 @@ public class TestCommon extends TestCase {
       surf.connect(0,1);
       connCopy = surf.getConnection();
       assertEquals(true,connCopy[0][1]);
+      assertEquals(true,connCopy[1][0]);
+      surf.disconnect(0,1);
+      assertEquals(true,connCopy[0][1]);
+      assertEquals(true,connCopy[1][0]);
+      connCopy = surf.getConnection();
+      assertEquals(false,connCopy[0][1]);
+      assertEquals(false,connCopy[1][0]);
 
+      //Test copy constructor
       surf.disconnectAll();
       Surface clone = new Surface(surf);
       clone.connect(0,1);
+      assertEquals(2,clone.missingVertex(0));
+      assertEquals(3,surf.missingVertex(0));
       assertEquals(true,clone.connected(0,1));
       assertEquals(false,surf.connected(0,1));
-      clone.connect(surf.getN()-1,0);
-      assertEquals(true,clone.connected(surf.getN()-1,0));
-      assertEquals(false,surf.connected(surf.getN()-1,0));
+      clone.connect(surf.getN()-1,3);
+      assertEquals(true,clone.connected(surf.getN()-1,3));
+      assertEquals(false,surf.connected(surf.getN()-1,3));
+      assertEquals(3,surf.missingVertex(3));
       assertEquals(clone.getDist(5,4),surf.getDist(5,4));
       assertEquals(clone.getDist(0,surf.getN()-1),surf.getDist(surf.getN()-1,0));
-    }
+      assertEquals(false,surf.hasMaxVertex(0));
+      assertEquals(false,clone.hasMaxVertex(0));
+      clone.connect(0,2);
+      assertEquals(1,clone.missingVertex(0));
+      clone.connect(0,3);
+      assertEquals(true,clone.hasMaxVertex(0));
+      assertEquals(false,surf.hasMaxVertex(0));
+      assertEquals(3,surf.missingVertex(0));
+
+
+      //Test freeList and vertices with smaller surface
+      xcoords = new ArrayList<Double>();
+      ycoords = new ArrayList<Double>();
+      //particle 0
+      xcoords.add(-0.25);
+      ycoords.add(0.25);
+      //particle 1
+      xcoords.add(0.25);
+      ycoords.add(0.25);
+      //particle 2
+      xcoords.add(0.25);
+      ycoords.add(-0.25);
+      //particle 3
+      xcoords.add(-0.25);
+      ycoords.add(-0.25);
+      surf = new Surface(xcoords, ycoords, 3, cell);
+      assertEquals(4,surf.getFreeList().length);
+      surf.connect(0,1);
+      surf.connect(0,2);
+      surf.connect(0,3);
+      assertEquals(3,surf.getFreeList().length);
+      surf.connect(1,2);
+      surf.connect(1,3);
+      assertEquals(2,surf.getFreeList().length);
+      surf.connect(2,3);
+      assertEquals(null,surf.getFreeList());
+      surf.disconnectAll();
+      int[] vertices = surf.getVertices();
+      for(int i=0;i<vertices.length;i++)
+        assertEquals(0,vertices[i]);
+      
+      assertEquals(4,surf.getFreeList().length);
+      surf.connect(0,1);
+      surf.connect(0,2);
+      surf.connect(0,3);
+      assertEquals(true,surf.hasMaxVertex(0));
+      assertEquals(3,surf.getFreeList().length);
+      vertices = surf.getVertices();
+      assertEquals(3,vertices[0]);
+      for(int i=1;i<vertices.length;i++)
+        assertEquals(1,vertices[i]);
+      surf.disconnect(0,1);
+      vertices = surf.getVertices();
+      assertEquals(2,vertices[0]);
+      assertEquals(0,vertices[1]);
+      for(int i=2;i<vertices.length;i++)
+        assertEquals(1,vertices[i]);
+      surf.disconnectAll();
+      vertices = surf.getVertices();
+      for(int i=0;i<vertices.length;i++)
+        assertEquals(0,vertices[i]);
+   }
+
 }
