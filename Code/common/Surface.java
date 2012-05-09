@@ -163,6 +163,13 @@ public class Surface {
     return energy;
   }
 
+  public int missingVertices() {
+    int total = 0;
+    for(int i=0;i<N;i++)
+      total += Math.abs(vertices[i] - maxVertex);
+    return total;
+  }
+
   public void minBind(int x) {
       double maxDistance = -1;
       double minDistance = Double.MAX_VALUE;

@@ -130,4 +130,13 @@ public class Ant {
   public double getEnergy() {
     return surf.getEnergy();
   }
+
+  public double getMissingVertices() {
+    return surf.missingVertices();
+  }
+
+  public void finalOutput() {
+    surf.writeConnection();
+    surf.writeTrajectory();
+  }
 }
