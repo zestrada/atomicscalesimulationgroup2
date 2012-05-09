@@ -84,7 +84,7 @@ public class SA {
 	System.out.println("There are: " + N + " particles in simulation");
 	temperature = 1.0;
 	numSteps = 0;
-	preProcessor();
+	//preProcessor();
     }
 
     private void SAInit(double temperature) {
@@ -144,7 +144,8 @@ public class SA {
 		    oldEnergy = energy;
 		}
 		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
-		temperature*=0.999999;
+		//temperature*=0.999999;
+		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
@@ -185,6 +186,48 @@ public class SA {
 		}
 		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
 		temperature*=0.999999;
+	    }
+	    numSteps += (output);
+	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
+	}
+    }
+
+    public void runWithReplacement(int step, int output) {
+	int x0,y0,flag;
+	int tmpStep = step/output;
+	double energy,oldEnergy,delta;
+	oldEnergy=surface.getEnergy();
+	for(int i = 0; i < tmpStep; i++) {
+	    for(int j = 0; j < output; j++) {
+		flag = rng.nextInt(2);
+		do {
+		    x0 = rng.nextInt(N);
+		    y0 = rng.nextInt(N);
+		} while(x0 == y0);
+		oldSurface=new Surface(surface);
+		if(flag == 0) {
+		    surface.connectUnsafe(x0,y0);
+			} else { 
+		    surface.disconnect(x0,y0);
+		}
+		energy=surface.getEnergy();
+		delta=(energy-oldEnergy);
+		//Calculate deltaE
+		if(delta > 0) {
+		    //If deltaE positive, calculate metropolis
+		    if(rng.nextDouble() < Math.exp(-delta/temperature)) {
+			//Metropolis accepted
+			oldEnergy = energy;
+		    } else {
+			//Metropolis rejected
+			surface=oldSurface;
+		    }
+		} else {
+		    oldEnergy = energy;
+		}
+		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
+		//temperature*=0.999999;
+		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
