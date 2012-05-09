@@ -199,6 +199,44 @@ public class Surface {
 	return maxV;
     }
 
+    public int minVertex() {
+	int minV = Integer.MAX_VALUE;
+	for(int i = 0; i < N; i++) {
+	    if(minV > vertices[i]) {
+		minV = vertices[i];
+	    }
+	}
+	return minV;
+    }
+
+    public void testVertices() {
+	int a,b;
+	for(int i = 0; i < N; i++) {
+	    a = 0;
+	    b = 0;
+	    for(int j = 0; j < N; j++) {
+		a += (connection[i][j]) ? 1:0;
+		b += (connection[j][i]) ? 1:0;
+	    }
+	    if( a != b) {
+		System.out.println("Connection Matrix NOT SYMMETRIC");
+		System.exit(1);
+	    } else {
+		if(a != vertices[i]) {
+		    System.out.println(a + " " + vertices[i]);
+		    System.exit(1);
+		}
+	    }	    
+	}
+	System.out.println("TEST SUCCESSFUL");
+    }
+
+    public void printVertices() {
+	for(int i = 0; i < N; i++) {
+	    System.out.println(i+ " " + vertices[i]);
+	}
+    }
+
     /*public boolean flipConnection(int x, int y) {
       return (connection[x][y] = !connection[x][y]);
       }*/
@@ -206,10 +244,19 @@ public class Surface {
   public void swapConnection(int x1, int y1, int x2, int y2) {
 	boolean tmp1 = connection[x1][y1];
 	boolean tmp2 = connection[x2][y2];
-	connection[x1][y1] = tmp2;
-	connection[y1][x1] = tmp2;
-	connection[x2][y2] = tmp1;
-	connection[y2][x2] = tmp1;
+        if(tmp1) {connect(x2,y2);}else{disconnect(x2,y2);}
+	if(tmp2) {connect(x1,y1);}else{disconnect(x1,y1);}
+	//connection[x1][y1] = tmp2;
+	//connection[y1][x1] = tmp2;
+	//connection[x2][y2] = tmp1;
+	//connection[y2][x2] = tmp1;
+	}
+
+  public void swapConnectionUnsafe(int x1, int y1, int x2, int y2) {
+	boolean tmp1 = connection[x1][y1];
+	boolean tmp2 = connection[x2][y2];
+        if(tmp1) {connectUnsafe(x2,y2);}else{disconnect(x2,y2);}
+	if(tmp2) {connectUnsafe(x1,y1);}else{disconnect(x1,y1);}
 	}
 
   public void connect(int i, int j) {

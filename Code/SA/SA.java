@@ -127,7 +127,7 @@ public class SA {
 		    y1 = rng.nextInt(N);
 		} while(x1 == y1);
 		oldSurface=new Surface(surface);
-		surface.swapConnection(x0,y0,x1,y1);
+		surface.swapConnectionUnsafe(x0,y0,x1,y1);
 		energy=surface.getEnergy();
 		delta=(energy-oldEnergy);
 		//Calculate deltaE
@@ -169,7 +169,7 @@ public class SA {
 		    y1 = rng.nextInt(N);
 		} while(x1 == y1);
 		oldSurface=new Surface(surface);
-		surface.swapConnection(x0,y0,x1,y1);
+		surface.swapConnectionUnsafe(x0,y0,x1,y1);
 		energy=surface.getEnergy();
 		delta=(energy-oldEnergy);
 		//Calculate deltaE
@@ -200,7 +200,7 @@ public class SA {
 	oldEnergy=surface.getEnergy();
 	for(int i = 0; i < tmpStep; i++) {
 	    System.gc();
-	    surface.testVertices();
+	    //surface.testVertices();
 	    //surface.printVertices();
 	    for(int j = 0; j < output; j++) {
 		flag = rng.nextInt(2);
