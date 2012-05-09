@@ -148,7 +148,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
-	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
+	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
 	}
     }
 
@@ -158,6 +158,7 @@ public class SA {
 	double energy,oldEnergy,delta;
 	oldEnergy=surface.getEnergy();
 	for(int i = 0; i < tmpStep; i++) {
+	    System.gc();
 	    for(int j = 0; j < output; j++) {
 		do {
 		    x0 = rng.nextInt(N);
@@ -188,7 +189,7 @@ public class SA {
 		temperature*=0.999999;
 	    }
 	    numSteps += (output);
-	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
+	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
 	}
     }
 
@@ -198,6 +199,9 @@ public class SA {
 	double energy,oldEnergy,delta;
 	oldEnergy=surface.getEnergy();
 	for(int i = 0; i < tmpStep; i++) {
+	    System.gc();
+	    surface.testVertices();
+	    //surface.printVertices();
 	    for(int j = 0; j < output; j++) {
 		flag = rng.nextInt(2);
 		do {
@@ -230,7 +234,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
-	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tV: " + surface.maxVertex() + "\t" + temperature);
+	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
 	}
     }
 
