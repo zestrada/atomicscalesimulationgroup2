@@ -153,6 +153,7 @@ public class SA {
 	    }
 	    numSteps += 1000;
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
+	    surface.writeConnection(numSteps);
 	}
     }
 
@@ -233,6 +234,7 @@ public class SA {
 	    }
 	    numSteps += (output);
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
+	    surface.writeConnection(numSteps);
 	}
     }
 
@@ -318,6 +320,7 @@ public class SA {
 	    }
 	    numSteps += (output);
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
+	    surface.writeConnection(numSteps);
 	}
     }
 

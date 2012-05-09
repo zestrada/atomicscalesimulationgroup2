@@ -244,13 +244,9 @@ public class Surface {
   public void swapConnection(int x1, int y1, int x2, int y2) {
 	boolean tmp1 = connection[x1][y1];
 	boolean tmp2 = connection[x2][y2];
-        if(tmp1) {connect(x2,y2);}else{disconnect(x2,y2);}
-	if(tmp2) {connect(x1,y1);}else{disconnect(x1,y1);}
-	//connection[x1][y1] = tmp2;
-	//connection[y1][x1] = tmp2;
-	//connection[x2][y2] = tmp1;
-	//connection[y2][x2] = tmp1;
-	}
+        if(tmp1) { connect(x2,y2); } else { disconnect(x2,y2); }
+	if(tmp2) { connect(x1,y1); } else { disconnect(x1,y1); }
+  }
 
   public void swapConnectionUnsafe(int x1, int y1, int x2, int y2) {
 	boolean tmp1 = connection[x1][y1];
@@ -404,20 +400,6 @@ public class Surface {
 		}
 	    }
 	}
-	/*for(int j=0; j<y; j++) {
-	    tmpD = distList[j];
-	    tmpI = j;
-	    // Find the smallest value in the subarray
-	    for(int i=(j+1); i<N; i++) {
-		if(tmpD > distList[i]) {
-		    tmpD = distList[i];
-		    tmpI = i;
-		}
-	    }
-	    distList[j] = distList[tmpI];
-	    distList[tmpI] = tmpD;
-	    shortestDistance[j] = tmpI;
-	    }*/
 	return shortestDistance;
     }
 
@@ -426,7 +408,6 @@ public class Surface {
       System.exit(1);
     }
     
-
     /**
      * Writes xCoordinates/yCoordinates to a xyz file
      *
@@ -472,4 +453,25 @@ public class Surface {
 	}
 	catch(Exception e) {}
     }
+
+    /**
+     * Overloaded writeConnection function
+     *
+     * By default, all data is saved to the file 'connection.dat'
+     *
+     * @param none
+     * @return void
+     */
+    public void writeConnection(int step) {
+	String s = "connection" + step + ".dat";
+	try {
+	    FileWriter fw = new FileWriter(s);
+	    String s = Arrays.deepToString(connection);
+	    fw.write(s,0,s.length());
+	    fw.flush();
+	    fw.close();
+	}
+	catch(Exception e) {}
+    }
+
 }
