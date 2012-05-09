@@ -88,7 +88,7 @@ public class SA {
 	System.out.println("There are: " + N + " particles in simulation");
 	temperature = 1.0;
 	numSteps = 0;
-	//preProcessor();
+	preProcessor();
     }
 
     private void SAInit(double temperature) {
