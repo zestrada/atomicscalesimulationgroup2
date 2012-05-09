@@ -19,6 +19,9 @@ run: ACOMain.class
 test: Ant.class TestACO.java
 	$(JJ) -cp $(CP):$(JUNIT) TestACO.java
 	java -cp $(CP):$(JUNIT) junit.textui.TestRunner TestACO
+
+debug: 
+	$(JJ) -cp $(CP):$(JUNIT) -g $(sources)
   
 clean:
 	rm *.class

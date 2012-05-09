@@ -1,24 +1,26 @@
 public class ACOMain {
 
-  private static int numAnts = 1;
+  private static int numAnts = 8;
   private static Pheromone pheromone;
   private static Ant[] ants;
-  private static double[] solutions; //length of solution for each ant
-  private static int numSteps=10; //number of steps to run ACO for
+  private static double[] solutions; //energy of solution for each ant
+  private static double[] lengths; //length of solution for each ant
+  private static int numSteps=1000; //number of steps to run ACO for
 
   //Ant System parameters
   private static double alpha;
   private static double beta;
-  private static double Q=1000000.0;
+  private static double Q=100.0;
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
-  private static double initPher=100.0; //initial value for pheromone matrix
+  private static double initPher=1.0; //initial value for pheromone matrix
   
   //Here, we use the original Ant System
 
   public static void main(String[] args) throws java.lang.CloneNotSupportedException {
     ants = new Ant[numAnts];
     solutions = new double[numAnts];
+    lengths = new double[numAnts];
     
     //Poor man's arg parsing:
     //Input file is first argument, alpha and beta are 2nd and 3rd, respectively
@@ -46,22 +48,29 @@ public class ACOMain {
       //This is where we would fork threads
       for(int a=0;a<numAnts;a++) {
         ants[a].reset();
-        solutions[a] = ants[a].constructSolution();
+        lengths[a] = ants[a].constructSolution();
+        solutions[a] = ants[a].getEnergy();
       }
 
       //Find minimum tour length
       int bestAnt=0;
+      int bestEAnt=0; //best energy ant
       double bestlength=Double.MAX_VALUE;
+      double bestenergy=Double.MAX_VALUE;
       for(int a=0;a<numAnts;a++) {
-        if(solutions[a]<bestlength) {
+        if(solutions[a]<bestenergy) {
+          bestEAnt=a;
+          bestenergy=solutions[a];
+        }
+        if(lengths[a]<bestlength) {
           bestAnt=a;
-          bestlength=solutions[a];
+          bestlength=lengths[a];
         }
       }
 
       updatePheromones();
 
-      System.out.println("Step "+(i+1)+"/numSteps complete... best tour length "+bestlength);
+      System.out.println("Step "+(i+1)+"/"+numSteps+" complete... best tour length "+bestlength+" with ant "+bestAnt+" best energy "+bestenergy+" ant "+bestEAnt);
     }
   }
 
