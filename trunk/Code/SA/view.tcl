@@ -25,7 +25,7 @@ foreach line $file_data {
 	    set tmp2 [atomselect top "index $y"]
 	    set com2 [measure center $tmp2]
 	    set dist [vecdist $com1 $com2]
-	    if [expr $dist < 2] {
+	    if [expr $dist < 10000000] {
 		#puts [concat $x " " $y " " $dist]
 		draw line $com1 $com2
 		#incr tmpVertexCount
