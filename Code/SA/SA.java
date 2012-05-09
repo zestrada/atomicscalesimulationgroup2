@@ -35,6 +35,10 @@ public class SA {
 	this.numSteps = obj.getNumSteps();
     }
 
+    public double getEnergy() {
+	return surface.getEnergy();
+    }
+
     public Random getRNG() {
 	return rng;
     }
@@ -152,6 +156,45 @@ public class SA {
 	}
     }
 
+    public void runSilent() {
+	int x0,y0,x1,y1;
+	double energy,oldEnergy,delta;
+	oldEnergy=surface.getEnergy();
+	for(int i = 0; i < 1000; i++) {
+	    for(int j = 0; j < 1000; j++) {
+		do {
+		    x0 = rng.nextInt(N);
+		    y0 = rng.nextInt(N);
+		} while(x0 == y0);
+		do {
+		    x1 = rng.nextInt(N);
+		    y1 = rng.nextInt(N);
+		} while(x1 == y1);
+		oldSurface=new Surface(surface);
+		surface.swapConnectionUnsafe(x0,y0,x1,y1);
+		energy=surface.getEnergy();
+		delta=(energy-oldEnergy);
+		//Calculate deltaE
+		if(delta > 0) {
+		    //If deltaE positive, calculate metropolis
+		    if(rng.nextDouble() < Math.exp(-delta/temperature)) {
+			//Metropolis accepted
+			oldEnergy = energy;
+		    } else {
+			//Metropolis rejected
+			surface=oldSurface;
+		    }
+		} else {
+		    oldEnergy = energy;
+		}
+		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
+		//temperature*=0.999999;
+		temperature*=0.99999999;
+	    }
+	    numSteps += 1000;
+	}
+    }
+
     public void run(int step, int output) {
 	int x0,y0,x1,y1;
 	int tmpStep = step/output;
@@ -190,6 +233,46 @@ public class SA {
 	    }
 	    numSteps += (output);
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
+	}
+    }
+
+    public void runSilent(int step, int output) {
+	int x0,y0,x1,y1;
+	int tmpStep = step/output;
+	double energy,oldEnergy,delta;
+	oldEnergy=surface.getEnergy();
+	for(int i = 0; i < tmpStep; i++) {
+	    System.gc();
+	    for(int j = 0; j < output; j++) {
+		do {
+		    x0 = rng.nextInt(N);
+		    y0 = rng.nextInt(N);
+		} while(x0 == y0);
+		do {
+		    x1 = rng.nextInt(N);
+		    y1 = rng.nextInt(N);
+		} while(x1 == y1);
+		oldSurface=new Surface(surface);
+		surface.swapConnectionUnsafe(x0,y0,x1,y1);
+		energy=surface.getEnergy();
+		delta=(energy-oldEnergy);
+		//Calculate deltaE
+		if(delta > 0) {
+		    //If deltaE positive, calculate metropolis
+		    if(rng.nextDouble() < Math.exp(-delta/temperature)) {
+			//Metropolis accepted
+			oldEnergy = energy;
+		    } else {
+			//Metropolis rejected
+			surface=oldSurface;
+		    }
+		} else {
+		    oldEnergy = energy;
+		}
+		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
+		temperature*=0.999999;
+	    }
+	    numSteps += (output);
 	}
     }
 
@@ -235,6 +318,48 @@ public class SA {
 	    }
 	    numSteps += (output);
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
+	}
+    }
+
+    public void runSilentWithReplacement(int step, int output) {
+	int x0,y0,flag;
+	int tmpStep = step/output;
+	double energy,oldEnergy,delta;
+	oldEnergy=surface.getEnergy();
+	for(int i = 0; i < tmpStep; i++) {
+	    System.gc();
+	    for(int j = 0; j < output; j++) {
+		flag = rng.nextInt(2);
+		do {
+		    x0 = rng.nextInt(N);
+		    y0 = rng.nextInt(N);
+		} while(x0 == y0);
+		oldSurface=new Surface(surface);
+		if(flag == 0) {
+		    surface.connectUnsafe(x0,y0);
+			} else { 
+		    surface.disconnect(x0,y0);
+		}
+		energy=surface.getEnergy();
+		delta=(energy-oldEnergy);
+		//Calculate deltaE
+		if(delta > 0) {
+		    //If deltaE positive, calculate metropolis
+		    if(rng.nextDouble() < Math.exp(-delta/temperature)) {
+			//Metropolis accepted
+			oldEnergy = energy;
+		    } else {
+			//Metropolis rejected
+			surface=oldSurface;
+		    }
+		} else {
+		    oldEnergy = energy;
+		}
+		//Increment temperature (after a 1M steps, the temperature will be 0.36 of the original)
+		//temperature*=0.999999;
+		temperature*=0.99999999;
+	    }
+	    numSteps += (output);
 	}
     }
 
