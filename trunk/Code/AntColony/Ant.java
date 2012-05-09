@@ -5,7 +5,7 @@ public class Ant {
   private Pheromone pheromone;
   private double[][] eta;
   private double alpha, beta;
-  private boolean debug =true;
+  private boolean debug = false;
 
   public Ant(Surface inputSurf, Pheromone inputPheromone, double alpha, double beta) throws java.lang.CloneNotSupportedException {
     this.alpha=alpha;
@@ -59,6 +59,13 @@ public class Ant {
         done = true;
         break;
       }
+      
+      //Bail if the only two choices left are already connected
+      if(freeList.length == 2 && surf.connected(freeList[0],freeList[1])) {
+        done = true;
+        break;
+      }
+
       //Where our connection will "start" from
       int source = freeList[randInt(freeList.length)];
       //Now, build a list of probabilities
@@ -67,14 +74,17 @@ public class Ant {
       for(int i=0;i<freeList.length;i++) {
         if(debug)
           System.out.println(freeList[i]+" missing "+surf.missingVertex(freeList[i])+" has max: "+surf.hasMaxVertex(freeList[i]));
-        if(freeList[i]==source || surf.hasMaxVertex(freeList[i])) {
+        if(freeList[i]==source || surf.connected(freeList[i],source) || surf.hasMaxVertex(freeList[i])) {
           pList[i]=0.0;
           continue; //no self connections or over vertices
         }
         pList[i] = Math.pow(pheromone.get(source,i),alpha)*Math.pow(eta[source][freeList[i]],beta);
         norm+=pList[i];
       }
-      if(norm==0.0) continue;
+      if(norm==0.0) { //No available moves
+        done = true;
+        break;
+      }
       //Normalize pdf
       norm=1.0/norm;
       for(int i=0;i<freeList.length;i++) {
@@ -102,8 +112,10 @@ public class Ant {
         if(prob>=temp) {
           surf.connect(freeList[i],source);  
           length+=surf.getDist(freeList[i],source);
-          if(debug)
+          if(debug) {
             System.out.println("Picked "+freeList[i]+","+source);
+            System.out.println("connected("+freeList[i]+","+source+") "+surf.connected(freeList[i],source));
+          }
           break;
         }
       }
@@ -113,5 +125,9 @@ public class Ant {
 
   private int randInt(int max) {
     return (int)(Math.random() * (max));
+  }
+
+  public double getEnergy() {
+    return surf.getEnergy();
   }
 }

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 public class Pheromone {
   /*
    * Class to hold pheromone matrix. Simple matrix for now, could modify to use
