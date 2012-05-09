@@ -1,5 +1,6 @@
 JJ=javac
-CP=../common:.
+CP=../common:../SA:.
+
 
 sources = $(wildcard *.java)
 classes = $(sources:.java=.class)
