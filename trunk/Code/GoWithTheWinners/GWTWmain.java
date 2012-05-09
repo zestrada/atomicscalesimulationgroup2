@@ -18,6 +18,7 @@ public class GWTWmain {
 	    energyArray[i] = 0;
 	    index[i] = i;
 	}
+	/*
 	for(int step = 0; step < 10; step++) {
 	    for(int i = 0; i < 16; i++) {
 		energyArray[i] = g[i].getEnergyWithReplacement();
@@ -31,8 +32,8 @@ public class GWTWmain {
 		g[result[j]].setSA(sa);
 	    }	    
 	    System.out.println("Steps: " + step + "\tEnergy: " + energy + "\tReplicate: " + lowIndex);
-	}
-	for(int step = 10; step < 20; step++) {
+	    }*/
+	for(int step = 0; step < 20; step++) {
 	    for(int i = 0; i < 16; i++) {
 		energyArray[i] = g[i].getEnergy();
 		index[i] = i;
