@@ -18,6 +18,8 @@ public class ACOMain {
   //Here, we use the original Ant System
 
   public static void main(String[] args) throws java.lang.CloneNotSupportedException {
+    int bestAnt=0;
+    int bestEAnt=0; //best energy ant
     ants = new Ant[numAnts];
     solutions = new double[numAnts];
     lengths = new double[numAnts];
@@ -53,8 +55,6 @@ public class ACOMain {
       }
 
       //Find minimum tour length
-      int bestAnt=0;
-      int bestEAnt=0; //best energy ant
       double bestlength=Double.MAX_VALUE;
       double bestenergy=Double.MAX_VALUE;
       for(int a=0;a<numAnts;a++) {
@@ -70,8 +70,13 @@ public class ACOMain {
 
       updatePheromones();
 
-      System.out.println("Step "+(i+1)+"/"+numSteps+" complete... best tour length "+bestlength+" with ant "+bestAnt+" best energy "+bestenergy+" ant "+bestEAnt);
+      //System.out.println("Step "+(i+1)+"/"+numSteps+" complete... best tour length "+bestlength+" with ant "+bestAnt+" best energy "+bestenergy+" ant "+bestEAnt);
+      System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestenergy+" ant "+bestEAnt+" missing vert "+ants[bestEAnt].getMissingVertices());
     }
+
+    System.out.println("Writing output...");
+    ants[bestEAnt].finalOutput();
+    System.out.println("ACO Done");
   }
 
   /*

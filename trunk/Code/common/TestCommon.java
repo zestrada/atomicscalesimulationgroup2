@@ -220,16 +220,21 @@ public class TestCommon extends TestCase {
       xcoords.add(-0.25);
       ycoords.add(-0.25);
       surf = new Surface(xcoords, ycoords, 3, cell);
+      assertEquals(12,surf.missingVertices());
       assertEquals(4,surf.getFreeList().length);
       surf.connect(0,1);
+      assertEquals(10,surf.missingVertices());
       surf.connect(0,2);
+      assertEquals(8,surf.missingVertices());
       surf.connect(0,3);
+      assertEquals(6,surf.missingVertices());
       assertEquals(3,surf.getFreeList().length);
       surf.connect(1,2);
       surf.connect(1,3);
       assertEquals(2,surf.getFreeList().length);
       surf.connect(2,3);
       assertEquals(null,surf.getFreeList());
+      assertEquals(0,surf.missingVertices());
       surf.disconnectAll();
       int[] vertices = surf.getVertices();
       for(int i=0;i<vertices.length;i++)
