@@ -5,7 +5,7 @@ public class ACOMain {
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=100; //number of steps to run ACO for
+  private static int numSteps=200; //number of steps to run ACO for
   private static int bestAnt=0; //best ant
   private static double bestSeen=Double.MAX_VALUE;
   private static Surface bestSurface;
@@ -53,7 +53,8 @@ public class ACOMain {
     for(int i=0;i<numAnts;i++) {
       ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);
     }
-
+    
+    inout.timerStart();
     for(int i=0;i<numSteps;i++) {
       //One thread per ant
       for(int t=0;t<numThreads;t++) {
@@ -96,6 +97,8 @@ public class ACOMain {
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
       inout.recordEnergy(bestsolution);
     }
+    long time = inout.timerStop();
+    System.out.println("Run finished in "+time+" ms");
     //pheromone.printPheromoneMatrix();
     System.out.println("Writing output...");
     //bestSurface.writeTrajectory();
