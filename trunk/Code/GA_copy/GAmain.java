@@ -9,7 +9,7 @@ public class GAmain {
     public static void main(String[] args) {
         timerStart();
         GeneticAlgorithm = new GA();
-        GeneticAlgorithm.run_noprint(10,10);
+        GeneticAlgorithm.run_noprint(10000,1000);
         GeneticAlgorithm.finalOutput();
         System.out.println("Total Time: "+ timerStop());
         
