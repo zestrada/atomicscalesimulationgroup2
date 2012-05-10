@@ -327,7 +327,12 @@ public class Surface {
         if(tmp1) {connectUnsafe(x2,y2);}else{disconnect(x2,y2);}
 	if(tmp2) {connectUnsafe(x1,y1);}else{disconnect(x1,y1);}
 	}
-
+    
+  public void switchConnection(int x1, int y1) {
+    boolean tmp1 = connection[x1][y1];
+      if(tmp1) {disconnect(x1,y1);}else{connectUnsafe(x1,y1);}
+	}
+    
   public void connect(int i, int j) {
     if(i==j) return; //noop
     if(connection[i][j] != connection[j][i]) {
