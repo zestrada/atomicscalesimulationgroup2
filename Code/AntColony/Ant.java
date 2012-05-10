@@ -7,7 +7,7 @@ public class Ant {
   private double alpha, beta;
   private boolean debug = false;
 
-  public Ant(Surface inputSurf, Pheromone inputPheromone, double alpha, double beta) throws java.lang.CloneNotSupportedException {
+  public Ant(Surface inputSurf, Pheromone inputPheromone, double alpha, double beta) {
     this.alpha=alpha;
     this.beta=beta;
     pheromone = inputPheromone;
@@ -78,7 +78,7 @@ public class Ant {
           pList[i]=0.0;
           continue; //no self connections or over vertices
         }
-        pList[i] = Math.pow(pheromone.get(source,i),alpha)*Math.pow(eta[source][freeList[i]],beta);
+        pList[i] = Math.pow(pheromone.get(source,freeList[i]),alpha)*Math.pow(eta[source][freeList[i]],beta);
         norm+=pList[i];
       }
       if(norm==0.0) { //No available moves
