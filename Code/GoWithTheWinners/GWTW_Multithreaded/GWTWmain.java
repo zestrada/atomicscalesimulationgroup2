@@ -10,24 +10,36 @@ public class GWTWmain {
     private static double energy = 0.0;
     private static int[] index = new int[16];
     private static int lowIndex;
-    private static String structure = new String("../../common/test.input");
-    private static double temperature = 50;
-    private static int steps = 100000;
+    private static String structure = new String("../../common/square.input");
+    private static double temperature = 100;
+    private static int steps = 20;
 
     public static void main(String[] args) {
 	gwtwInit();	
-	for(int step = 0; step < 20; step++) {
+	for(int step = 0; step < 40; step++) {
 	    gwrRun();
 	    gwrWait();
 	    lowestIndex();
 	    sortEnergy();
-	    System.out.println("Step: " + step + " Lowest energy: " + sa[lowIndex].getEnergy() + " in replicate" + lowIndex);
+	    System.out.println("Step: " + step + " Lowest energy: " + sa[lowIndex].getEnergy() + " in replicate" + lowIndex + getEnergy());
+	    gRun();
 	    gWait();
+	    for(int i = 0; i < 16; i++) {
+		//sa[i].finalOutput("Thread_" + i + "_step_" + step + ".dat");
+	    }
 	}
 	for(int i = 0; i < 16; i++) {
-	    sa[i].finalOutput("Thread_" + i);
+	    sa[i].finalOutput("Thread_" + i + "_final.dat");
 	}
 	System.out.print("DONE\n");
+    }
+
+    private static String getEnergy() {
+	String s = new String();
+	for(int i = 0; i < 16; i++) {
+	    s = s + " " + sa[i].getEnergy();
+	}
+	return s;
     }
     
     private static void gwrRun() {
@@ -38,6 +50,8 @@ public class GWTWmain {
     }
 
     private static void gRun() {
+	System.out.println(lowIndex + " " + index[0] + " " + index[1] + " " + index[2] + " " + index[3]);
+	//System.exit(0);
 	for(int j = 0; j < 16/2; j++) {
 	    g[index[j]] = new GWTW(steps,steps,j,sa[lowIndex]);
 	}
@@ -65,6 +79,9 @@ public class GWTWmain {
     private static void sortEnergy() {
 	double tmpE;
 	int tmpI;
+	for(int i = 0; i < 16; i++) {
+	    index[i] = i;
+	}
 	for(int i = 0; i < 16; i++) {
 	    for(int j = 0; j < 16; j++) {
 		if(energyArray[i] < energyArray[j]) {
@@ -94,6 +111,7 @@ public class GWTWmain {
     public static void gwtwInit() {
 	for(int i = 0; i < 16; i++) {
 	    sa[i] = new SA(structure,temperature);
+	    index[i] = i;
 	}
     }
     
