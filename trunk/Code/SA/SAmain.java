@@ -7,11 +7,13 @@ public class SAmain {
     private static SA simulatedAnnealing;
 
     public static void main(String[] args) {
-	simulatedAnnealing = new SA("../common/square.input",50);
-	simulatedAnnealing.setTemperature(5);
-	//simulatedAnnealing.runWithReplacement(2000000,100000);
-	//simulatedAnnealing.setTemperature(50);
-	//simulatedAnnealing.run(2000000,100000);
+	simulatedAnnealing = new SA("../common/test.input",50);
+	simulatedAnnealing.finalOutput();
+	simulatedAnnealing.setTemperature(100);
+	for(int i = 0; i < 10; i++) {
+	    simulatedAnnealing.runWithReplacement(100000,100000);
+	    simulatedAnnealing.run(100000,100000);
+	}
 	simulatedAnnealing.finalOutput();
     }    
 }

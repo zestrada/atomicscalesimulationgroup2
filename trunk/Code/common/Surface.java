@@ -30,6 +30,7 @@ public class Surface {
     //xcoordinates
   private double[] xCoordinates;
   private double[] yCoordinates;
+    private double angleBias = -0.5;
 
   /*
    * Base constructor - two Lists were chosen over a List of double[2]
@@ -187,9 +188,8 @@ public class Surface {
 			yVec1 = yCoordinates[k] - yCoordinates[j];
 			tmp1 = (xVec0*xVec1 + yVec0*yVec1);
 			tmp2 = (distance[j][j]*distance[j][k]);
-			tmp3 = Math.abs(tmp1/tmp2);
-			//angle = Math.abs(Math.acos(tmp3));
-			energy += (tmp3 < 0.3) ? 0 : 256;
+			tmp3 = (tmp1/tmp2);
+			energy += (Math.abs(tmp3 - angleBias) < 0.001 ) ? 0.0078125 : 0;
 		    }
 		}
 		energy += bondEnergy[i][j];
@@ -203,6 +203,32 @@ public class Surface {
     return energy;
   }
 
+  public void getAngles() {
+      System.out.println("Getting Angle");
+      double xVec0,yVec0,dist0,xVec1,yVec1,dist1,tmp1,tmp2,tmp3,angle;
+      for(int i=0; i<N; i++) {
+	  for(int j=i+1; j<N; j++) {
+	      xVec0 = xCoordinates[i] - xCoordinates[j];
+	      yVec0 = yCoordinates[i] - yCoordinates[j];
+	      for(int k=j+1; k<N; k++) {
+		  xVec1 = xCoordinates[k] - xCoordinates[j];
+		  yVec1 = yCoordinates[k] - yCoordinates[j];
+		  tmp1 = (xVec0*xVec1 + yVec0*yVec1);
+		  tmp2 = (distance[i][j] * distance[k][j]);
+		  tmp3 = (tmp1/tmp2);
+		  angle = (Math.acos(tmp3));
+		  if(Math.abs(tmp3) > 0.45) {
+		      //System.out.println( " | " + distance[i][j]);
+		      //System.out.println( " | " + distance[k][j]);
+		      System.out.println(i + " | " + j + " | " + k + " | " + tmp3 + " | " + angle);
+		  }
+	      }
+	  }
+      }
+      
+      System.out.flush();
+  }
+    
   public int missingVertices() {
     int total = 0;
     for(int i=0;i<N;i++)
@@ -511,6 +537,25 @@ public class Surface {
      */
     public void writeConnection(long step) {
 	String s = "connection" + step + ".dat";
+	try {
+	    FileWriter fw = new FileWriter(s);
+	    s = Arrays.deepToString(connection);
+	    fw.write(s,0,s.length());
+	    fw.flush();
+	    fw.close();
+	}
+	catch(Exception e) {}
+    }
+
+    /**
+     * Overloaded writeConnection function
+     *
+     * By default, all data is saved to the file 'connection.dat'
+     *
+     * @param none
+     * @return void
+     */
+    public void writeConnection(String s) {
 	try {
 	    FileWriter fw = new FileWriter(s);
 	    s = Arrays.deepToString(connection);

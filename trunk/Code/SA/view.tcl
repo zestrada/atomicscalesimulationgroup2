@@ -6,7 +6,7 @@ mol addrep top
 color Display Background white
 display rendermode GLSL
 display projection orthographic
-set fp [open "connection.dat" r]; list
+set fp [open "connection2000000.dat" r]; list
 set file_data [split [read $fp] "]"]; list
 set x 0
 #set vertex ""
@@ -25,7 +25,7 @@ foreach line $file_data {
 	    set tmp2 [atomselect top "index $y"]
 	    set com2 [measure center $tmp2]
 	    set dist [vecdist $com1 $com2]
-	    if [expr $dist < 10000000] {
+	    if [expr $dist < 10000] {
 		#puts [concat $x " " $y " " $dist]
 		draw line $com1 $com2
 		#incr tmpVertexCount

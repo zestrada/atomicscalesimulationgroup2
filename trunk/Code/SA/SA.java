@@ -73,7 +73,7 @@ public class SA {
 	for(int i = 0; i < N; i++) {
 	    distIndex = surface.getShortestDistance(i);
 	    for(int j = 0; j < 3; j++) {
-		System.out.println("Connecting: " + i + " & " + distIndex[j] + " " + surface.getDist(i,distIndex[j]));
+		//System.out.println("Connecting: " + i + " & " + distIndex[j] + " " + surface.getDist(i,distIndex[j]));
 		surface.connectUnsafe(i,distIndex[j]);
 	    } 
 	}
@@ -193,6 +193,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
+	    surface.writeConnection(numSteps);
 	}
     }
 
@@ -275,6 +276,7 @@ public class SA {
 		temperature*=0.999999;
 	    }
 	    numSteps += (output);
+	    surface.writeConnection(numSteps);
 	}
     }
 
@@ -363,13 +365,24 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
+	    surface.writeConnection(numSteps);
 	}
     }
 
     public void finalOutput() {
+	//surface.getAngles();
 	surface.writeTrajectory();
 	surface.writeConnection();
 	System.out.print("Final Energy: " + surface.getEnergy() + "\n");
 	System.out.print("DONE\n");
     }
+
+    public void finalOutput(String s) {
+	//surface.getAngles();
+	surface.writeTrajectory();
+	surface.writeConnection(s);
+	System.out.print("Final Energy: " + surface.getEnergy() + "\n");
+	System.out.print("DONE\n");
+    }
+
 }
