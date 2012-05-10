@@ -1,13 +1,9 @@
-#summary One-sentence summary of this page.
+#summary navigation page
 
-= Introduction =
+= Navigation =
 
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+[Overview]
+[Simulated Annealing]
+[Go with the Winners]
+[Ant Colony Optimization]
+[Genetic Algorithms]
