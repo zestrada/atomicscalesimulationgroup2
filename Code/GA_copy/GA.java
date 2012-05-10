@@ -28,13 +28,6 @@ public class GA {
         int tmpStep = step/output;
         int numSteps = 0;
         
-        //initialize children
-        GApopulation[] child = new GApopulation[2];
-        for(int i = 0; i < 2; i++) {
-            child[i] = new GApopulation(i);
-        }
-        //initialize for mutation
-        GApopulation mut = new GApopulation(0);
         
         //run loop
         for(int k = 0; k < tmpStep; k++) {
@@ -44,37 +37,26 @@ public class GA {
                 //calculate system energies
                 for(int i = 0; i < Pop_n; i++) {
                     energyArray[i] = g[i].getEnergy();
-                    System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );    
+                    System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );
+                    //System.out.println("g: " + g[i] );
                 }
                 
                 //select parents and run one reproduction cycle
                 parents = SelectParents(energyArray);
-                Crossover(parents, child);
+                GApopulation[] child =Crossover(parents);
                 System.out.println("Child 0 Energy: " + child[0].getEnergy() );
                 System.out.println("Child 1 Energy: " + child[1].getEnergy() );
-                double mut_prob = 0.05;
+                double mut_prob = 0.1;
                 for(int l = 0; l<Pop_n; l++){
                     double b = rng.nextDouble();
                     //select for mutation with probability 0.05
                     if(b<mut_prob){
                         System.out.println("Mutating: " +l);
-                        System.out.println("Energy l: " +g[l].getEnergy());
-                        System.out.println("Energy l-1: " +g[0].getEnergy());
-                        mut.setSurface(g[l].getSurface());
-                        Mutate(mut);
-                        g[l] = mut;
-                        System.out.println("Energy l: " +g[l].getEnergy());
-                        System.out.println("Energy l-1: " +g[0].getEnergy());
-                        
-                        
+                        Mutate(l);
                     }
                 }
                 
                 // replace least fit parents with children
-                for(int i = 0; i < Pop_n; i++) {
-                    energyArray[i] = g[i].getEnergy();
-                    System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );
-                }
                 double maxE = maxEnergy();
                 if(maxE>child[0].getEnergy()){
                     g[MaxIndex] = child[0];
@@ -87,6 +69,10 @@ public class GA {
                     energyArray[MaxIndex] = child[1].getEnergy();
                     System.out.println("Child 2 replaces: " + MaxIndex);
                 }
+                for(int i = 0; i < Pop_n; i++) {
+                    energyArray[i] = g[i].getEnergy();
+                    System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );
+                }
             
             }
             numSteps += (output);
@@ -96,6 +82,73 @@ public class GA {
 	    
 	}
 	
+    public void run_noprint(int step, int output) {
+        
+        //initialize population
+        for(int i = 0; i < Pop_n; i++) {
+            g[i] = new GApopulation(i);
+            energyArray[i] = g[i].getEnergy();
+        }
+        
+        System.out.println("Initialized Population");
+        
+        N = g[0].getN();
+        int tmpStep = step/output;
+        int numSteps = 0;
+        
+        
+        //run loop
+        for(int k = 0; k < tmpStep; k++) {
+            for(int j = 0; j < output; j++) {
+                int[] parents = new int[2];
+                
+                //calculate system energies
+                for(int i = 0; i < Pop_n; i++) {
+                    energyArray[i] = g[i].getEnergy();
+                    //System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );
+                    //System.out.println("g: " + g[i] );
+                }
+                
+                //select parents and run one reproduction cycle
+                parents = SelectParents(energyArray);
+                GApopulation[] child =Crossover(parents);
+                //System.out.println("Child 0 Energy: " + child[0].getEnergy() );
+                //System.out.println("Child 1 Energy: " + child[1].getEnergy() );
+                double mut_prob = 0.15;
+                for(int l = 0; l<Pop_n; l++){
+                    double b = rng.nextDouble();
+                    //select for mutation with probability 0.05
+                    if(b<mut_prob){
+                        //System.out.println("Mutating: " +l);
+                        Mutate(l);
+                    }
+                }
+                
+                // replace least fit parents with children
+                double maxE = maxEnergy();
+                if(maxE>child[0].getEnergy()){
+                    g[MaxIndex] = child[0];
+                    energyArray[MaxIndex] = child[0].getEnergy();
+                    //System.out.println("Child 1 replaces: " + MaxIndex);
+                }
+                maxE = maxEnergy();
+                if(maxE>child[1].getEnergy()){
+                    g[MaxIndex] = child[1];
+                    energyArray[MaxIndex] = child[1].getEnergy();
+                    //System.out.println("Child 2 replaces: " + MaxIndex);
+                }
+                for(int i = 0; i < Pop_n; i++) {
+                    energyArray[i] = g[i].getEnergy();
+                    //System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );
+                }
+                
+            }
+            numSteps += (output);
+            double minE = minEnergy();
+            System.out.println("Step: " + numSteps + "\tEnergy: " + minE + "\tIndex: " + MinIndex);
+        }
+	    
+	}
 
     public double minEnergy() {
         double MinE = energyArray[0];
@@ -109,8 +162,8 @@ public class GA {
     }
     
     public double maxEnergy() {
-        double MaxE = energyArray[0];
-        for(int i = 1; i < Pop_n; i++) {
+        double MaxE = -1.0;
+        for(int i = 0; i < Pop_n; i++) {
             if(MaxE < energyArray[i]) {
                 MaxE = energyArray[i];
                 MaxIndex = i;
@@ -153,7 +206,13 @@ public class GA {
     }
     
     
-    private void Crossover(int[] parents,GApopulation[] child) {
+    private GApopulation[] Crossover(int[] parents) {
+        //initialize children
+        GApopulation[] child = new GApopulation[2];
+        for(int i = 0; i < 2; i++) {
+            child[i] = new GApopulation(i);
+        }
+        
         Surface s1 = g[parents[0]].getSurface();
         Surface s2 = g[parents[1]].getSurface();
         
@@ -201,9 +260,10 @@ public class GA {
         }
         child[0].setSurface(s1);
         child[1].setSurface(s2);
+        return child;
     }
     
-    private void Mutate(GApopulation mut) {
+    private void Mutate(int l) {
                 int j1 = rng.nextInt(N);
                 int j2 = rng.nextInt(N);
                 if(j1>j2){
@@ -211,8 +271,8 @@ public class GA {
                     j1 = j2;
                     j2 = tmpj;
                 }
-                Surface s = mut.getSurface();
-                double tmp1 = mut.getEnergy();
+                Surface s = g[l].getSurface();
+                double tmp1 = g[l].getEnergy();
                 //make a connection between i and one of it's nearest neighbour
                 for(int i = j1; i < j2; i++) {
                     int [] distIndex = s.getShortestDistance(i);
@@ -243,9 +303,10 @@ public class GA {
                         }
                     }
                 }
-        mut.setSurface(s);
-        System.out.print("Energy at After set: "+mut.getEnergy()+"\tand:"+g[0].getEnergy()+"\n");
-        System.out.print("Mutation: Initial Energy"+ tmp1 + "Final Energy" +mut.getEnergy()+"\n");
+        //System.out.print("Energy at Before set: "+g[l].getEnergy()+"\tand:"+g[0].getEnergy()+"\n");
+        g[l].setSurface(s);
+        //System.out.print("Energy at After set: "+g[l].getEnergy()+"\tand:"+g[0].getEnergy()+"\n");
+        //System.out.print("Mutation: Initial Energy"+ tmp1 + "Final Energy" +g[l].getEnergy()+"\n");
         }
     
 public void finalOutput() {

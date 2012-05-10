@@ -18,11 +18,11 @@ public class GApopulation {
     }
     
     public Surface getSurface() {
-        return surface;
+        return new Surface(surface);
     }
     
     public void setSurface(Surface s) {
-        surface = s1;
+        surface = s;
     }
     
     public int getN() {
@@ -31,7 +31,8 @@ public class GApopulation {
     
     private void GAInit() {
         TSPInOut tsp = new TSPInOut();
-        surface = tsp.readData("../GA_copy/square.input");
+        tsp.disableStdout();
+        surface = tsp.readData("../GA_copy/smallsquare.dat");
         N = surface.getN();
         //System.out.println("Initializing simulation");
         //System.out.println("There are: " + N + " particles in simulation");
@@ -54,7 +55,7 @@ public class GApopulation {
             int a = rng.nextInt(3);
             int tmp = distIndex.length+1;
             int i1 = tmp;
-            for(int j = 0; j < a; j++) {
+            for(int j = 0; j < 3; j++) {
                 //System.out.println("Connecting: " + i + " & " + distIndex[j] + " " + surface.getDist(i,distIndex[j]));
                 while (i1==tmp){
                     i1 = rng.nextInt(distIndex.length);
