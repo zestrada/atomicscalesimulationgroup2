@@ -1,13 +1,5 @@
-#summary Landing page for the wiki
+#summary Home Page for the Project Wiki
 
 = Introduction =
 
-Add your content here.
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+The goal of this project is to provide solutions to surface reconstruction (i.e. drawing bonds) modeled as the traveling salesman problem by using different optimization methods.
