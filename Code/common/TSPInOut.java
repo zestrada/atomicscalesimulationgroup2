@@ -18,16 +18,23 @@ public class TSPInOut {
   Queue <Double> energies;
   int id;
   long startTime;
+  boolean stdout;
 
   public TSPInOut() {
     id=0;
     energies = new LinkedList<Double>();
     startTime = System.currentTimeMillis();
+    stdout=true;
   }
 
   public TSPInOut(int id) {
     this.id=id;
     energies = new LinkedList<Double>();
+    stdout=true;
+  }
+
+  public void disableStdout() {
+    stdout=false;
   }
 
   public Surface readData(String filename) {
@@ -51,7 +58,8 @@ public class TSPInOut {
     //System.out.println(coordPattern.pattern());
     //Actually parse the file
     try {
-      System.out.println("Reading in data from "+filename);
+      if(stdout)
+        System.out.println("Reading in data from "+filename);
       FileReader freader = new FileReader(filename);
       BufferedReader reader = new BufferedReader(freader);
    
@@ -61,7 +69,8 @@ public class TSPInOut {
         if(nvert<=0) {
           Matcher m = vertexPattern.matcher(line);
           if(m.find()) {
-            System.out.println("Number of vertices: " + m.group(1));
+            if(stdout)
+              System.out.println("Number of vertices: " + m.group(1));
             nvert = Integer.parseInt(m.group(1));
             continue;
           }
@@ -71,7 +80,8 @@ public class TSPInOut {
         if(npart<=0) {
           Matcher m = npartPattern.matcher(line);
           if(m.find()) {
-            System.out.println("Number of particles: " + m.group(1));
+            if(stdout)
+              System.out.println("Number of particles: " + m.group(1));
             npart = Integer.parseInt(m.group(1));
             continue;
           }
@@ -80,7 +90,8 @@ public class TSPInOut {
         if(xmax==xmin) {
           Matcher m = xminmaxPattern.matcher(line);
           if(m.find()) {
-            System.out.println("xmin " + m.group(1) + " xmax " +  m.group(2));
+            if(stdout)
+              System.out.println("xmin " + m.group(1) + " xmax " +  m.group(2));
             xmin = Double.parseDouble(m.group(1));
             xmax = Double.parseDouble(m.group(2));
             continue;
@@ -90,7 +101,8 @@ public class TSPInOut {
         if(ymax==ymin) {
           Matcher m = yminmaxPattern.matcher(line);
           if(m.find()) {
-            System.out.println("ymin " + m.group(1) + " ymax " +  m.group(2));
+            if(stdout)
+              System.out.println("ymin " + m.group(1) + " ymax " +  m.group(2));
             ymin = Double.parseDouble(m.group(1));
             ymax = Double.parseDouble(m.group(2));
             continue;
@@ -110,7 +122,8 @@ public class TSPInOut {
             ycoord.add(Double.parseDouble(m.group(2)));
             continue;
           } else {
-            System.out.println(line);
+            if(stdout)
+              System.out.println(line);
           }
         }
 
@@ -125,10 +138,11 @@ public class TSPInOut {
       System.out.println("Found "+(xcoord.size())+" particles, expected to find "+npart); 
       System.exit(1);
     }
-    System.out.printf("Found %d particles with maximum number of %d vertices\n",npart,nvert);
+    if(stdout)
+      System.out.printf("Found %d particles with maximum number of %d vertices\n",npart,nvert);
 
     //Need to read in coordinates from file and create a cell
-    myCell = new Cell(xmin,xmax,ymin,ymax);
+    myCell = new Cell(xmin,xmax,ymin,ymax,stdout);
     return new Surface(xcoord, ycoord, nvert, myCell);
   }
 

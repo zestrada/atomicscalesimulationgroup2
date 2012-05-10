@@ -10,6 +10,12 @@ public class TestCommon extends TestCase {
       TSPInOut inout = new TSPInOut();
       Surface mySurface = inout.readData(filename);
       assertEquals(3,mySurface.getMaxVertex());
+
+      //Should be silent
+      System.out.println("----");
+      inout.disableStdout();
+      mySurface = inout.readData(filename);
+      System.out.println("Finished testing ReadData()");
     }
 
     public void testCell() {
