@@ -1,0 +1,14 @@
+#summary overview of the project
+
+= The problem =
+Given a perfectly arranged lattice, figuring out the bonds that connect the atoms is a trivial problem. For a non-perfect structure, the solution is not obvious and can be viewed as an energy optimization problem
+
+= Verifying the methods =
+In order to verify that the methods we employ are even possible of generating reasonable solutions, we apply them to trivial lattices. Examples of such trial cases are a square lattice or 2D honeycomb (think graphene).
+[http://atomicscalesimulationgroup2.googlecode.com/files/honeycombLattice.png]
+
+
+= Random Lattices =
+Though not based on a specific physical situation, the random arrangement below provides a good test bed for the optimization algorithms as it is a difficult problem to solve.
+
+[http://atomicscalesimulationgroup2.googlecode.com/files/randomLattice.png]
