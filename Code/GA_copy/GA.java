@@ -1,10 +1,11 @@
 import java.util.*;
 import java.*;
 import java.io.*;
+import java.lang.Math;
 public class GA {
   
     private static Surface surface;
-    private static int Pop_n = 16;
+    private static int Pop_n = 32;
     private static GApopulation[] g = new GApopulation[Pop_n];
     private static double[] energyArray = new double[Pop_n];
     private static double energy = 0.0;
@@ -19,6 +20,7 @@ public class GA {
     //initialize population
         for(int i = 0; i < Pop_n; i++) {
             g[i] = new GApopulation(i);
+            writeSurface(i);
             energyArray[i] = g[i].getEnergy();
         }
         
@@ -31,6 +33,7 @@ public class GA {
         
         //run loop
         for(int k = 0; k < tmpStep; k++) {
+            energy = 0;
             for(int j = 0; j < output; j++) {
                 int[] parents = new int[2];
 
@@ -98,7 +101,9 @@ public class GA {
         
         
         //run loop
+        energy = 0;
         for(int k = 0; k < tmpStep; k++) {
+
             for(int j = 0; j < output; j++) {
                 int[] parents = new int[2];
                 
@@ -145,7 +150,15 @@ public class GA {
             }
             numSteps += (output);
             double minE = minEnergy();
-            System.out.println("Step: " + numSteps + "\tEnergy: " + minE + "\tIndex: " + MinIndex);
+            //System.out.println("Old Energy:" + energy + "New Energy:" + minE);
+            if(Math.abs(minE - energy)<0.01){
+                System.out.println("Convergence Achieved in : " + numSteps + " steps");
+                break;
+            }
+            else{
+                System.out.println("Step: " + numSteps + "\tEnergy: " + minE + "\tIndex: " + MinIndex);
+                energy = minE;
+            }
         }
 	    
 	}
@@ -276,11 +289,21 @@ public class GA {
                 //make a connection between i and one of it's nearest neighbour
                 for(int i = j1; i < j2; i++) {
                     int [] distIndex = s.getShortestDistance(i);
-                    int a = rng.nextInt(distIndex.length);
-                    //System.out.print("Connecting: "+i+" , "+distIndex[a]+"\n");
+                    int a = rng.nextInt(distIndex.length/2);
+                    /*double dist = 500.0;
+                    int a = 0;
+                    int j = 0;
+                    while(j < N){
+                        if(s.getDistance(i,j)<dist && s.getDistance(i,j)>0){
+                            dist = s.getDistance(i,j);
+                            a = j;
+                        }
+                        j++;
+                    }*/
                     double tmp = s.getEnergy();
                     //System.out.print("Energy Before: "+tmp+"\n");
                     s.connectUnsafe(distIndex[a],i);
+                    //s.connectUnsafe(a,i);
                     if(s.hasMoreMaxVertex(i)){
                         //reduce farthest connection of i
                         double dist = 0.0;
@@ -309,14 +332,23 @@ public class GA {
         //System.out.print("Mutation: Initial Energy"+ tmp1 + "Final Energy" +g[l].getEnergy()+"\n");
         }
     
-public void finalOutput() {
-    Surface surface = g[MinIndex].getSurface();
-    String traj = "Honeycomb1.xyz";
-    String conn = "Honeycomb_connection1.dat";
-    surface.writeTrajectory_name(traj);
-    surface.writeConnection(conn);
-    System.out.print("Final Energy: " + surface.getEnergy() + "\n");
-    System.out.print("MaxVertex: " + surface.maxVertex() + "\tMinVertex: " + surface.minVertex() +"\n");
-    System.out.print("DONE\n");
-}
+    public void finalOutput() {
+        Surface surface = g[MinIndex].getSurface();
+        String traj = "Square_2.xyz";
+        String conn = "Square_connection_2.dat";
+        surface.writeTrajectory_name(traj);
+        surface.writeConnection_name(conn);
+        System.out.print("Final Energy: " + surface.getEnergy() + "\n");
+        System.out.print("MaxVertex: " + surface.maxVertex() + "\tMinVertex: " + surface.minVertex() +"\n");
+        System.out.print("DONE\n");
+    }
+    
+    public void writeSurface(int i) {
+        Surface surface = g[i].getSurface();
+        String traj = "HoneycombInputSurface" + i;
+        String conn = "HoneycombInputConn" + i;
+        surface.writeTrajectory_name(traj);
+        surface.writeConnection_name(conn);
+        System.out.println("Surface Saved\n");
+    }
 }
