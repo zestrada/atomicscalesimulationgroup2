@@ -1,15 +1,17 @@
 public class ACOMain {
 
-  private static int numAnts = 4;
+  private static int numAnts = 16;
+  private static int numThreads = numAnts;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=1500; //number of steps to run ACO for
+  private static int numSteps=200; //number of steps to run ACO for
 
   //Ant System parameters
   private static double alpha;
   private static double beta;
   private static double Q=100.0;
+  private static final int stepsPerUpdate=10;
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
   private static double initPher=1.0; //initial value for pheromone matrix
@@ -39,7 +41,7 @@ public class ACOMain {
     }
     TSPInOut inout = new TSPInOut();
     Surface surf = inout.readData(infile);
-    System.out.println("\n\nStarting ACO with "+numAnts+" ants "+" alpha="+alpha+" beta="+beta+" evap="+evap);
+    System.out.println("\n\nStarting ACO with "+numAnts+" ants "+numThreads+" threads  alpha="+alpha+" beta="+beta+" evap="+evap);
 
     //Initialize pheromone matrix
     pheromone = new Pheromone(surf.getN(),initPher);
@@ -49,21 +51,20 @@ public class ACOMain {
 
     for(int i=0;i<numSteps;i++) {
       //One thread per ant
-      for(int a=0;a<numAnts;a++) {
-        threads[a] = new AntThread(ants[a],a,solutions); 
-        threads[a].start();
+      for(int t=0;t<numThreads;t++) {
+        threads[t] = new AntThread(ants,t,solutions); 
+        threads[t].start();
       }
 
       //Since we can't have an actual pointer to double in java
-      for(int a=0;a<numAnts;a++) {
+      for(int t=0;t<numThreads;t++) {
         try{
-          threads[a].join();
+          threads[t].join();
         } catch (Exception e) {
           e.printStackTrace();
           System.exit(1);
         }
       }
-      
 
       //Find minimum tour
       double bestsolution=Double.MAX_VALUE;
@@ -105,20 +106,26 @@ public class ACOMain {
   //The only thread-safe procedure is construct solution since the pheromone
   //matrix is shared
   static class AntThread extends Thread {
-    Ant ant;
+    Ant[] ant;
     int tid;
     double[] solutions;
-    public AntThread(Ant ant, int tid, double[] solutions) {
+    public AntThread(Ant[] ants, int tid, double[] solutions) {
       this.ant = ant;
       this.tid = tid;
       this.solutions = solutions;
     }
 
+    //This assumes we always use perfect multiples of ants and threads
     public void run() {
-      ant.reset();
-      solutions[tid] = ant.constructSolution();
-      if(useEnergy)
-        solutions[tid] = ant.getEnergy();
+      int nPerThread=(numAnts/numThreads);
+      int start=(tid)*(nPerThread);
+      int end=start+nPerThread;
+      for(int i=start;i<end;i++) {
+        ants[i].reset();
+        solutions[i] = ants[i].constructSolution();
+        if(useEnergy)
+          solutions[i] = ants[i].getEnergy();
+      }
     }
   }
 
