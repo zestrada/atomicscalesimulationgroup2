@@ -1,0 +1,15 @@
+only 1000 steps
+
+PheromoneAS:
+1.0 1.0 0.90: 1123.8840000000023
+1.0 2.0 0.90: 667.6348000000004
+
+PheromoneBest:
+1.0 2.0 0.90: 669.423
+
+PheromoneBest with preprocessor:
+1.0 2.0 0.90: 628.521999999999
+
+PheromoneBest with preprocessor (dynamicQ):
+1.0 1.0 0.90: 880.9500000000012
+1.0 2.0 0.90: 629.9951999999992

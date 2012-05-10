@@ -1,16 +1,20 @@
 public class ACOMain {
 
-  private static int numAnts = 16;
-  private static int numThreads = numAnts;
+  private static int numAnts = 32;
+  private static int numThreads = 8;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=200; //number of steps to run ACO for
+  private static int numSteps=10000; //number of steps to run ACO for
+  private static int bestAnt=0; //best ant
+  private static double bestSeen=Double.MAX_VALUE;
+  private static Surface bestSurface;
+  private static boolean dynamicQ = true;
 
   //Ant System parameters
-  private static double alpha;
-  private static double beta;
-  private static double Q=100.0;
+  private static double alpha; //pheromone^alpha
+  private static double beta; //(1/distance)^beta
+  private static double Q=Double.MAX_VALUE;
   private static final int stepsPerUpdate=10;
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
@@ -21,7 +25,6 @@ public class ACOMain {
   //Here, we use the original Ant System
 
   public static void main(String[] args) throws java.lang.CloneNotSupportedException {
-    int bestAnt=0;
     AntThread[] threads = new AntThread[numAnts];
     ants = new Ant[numAnts];
     solutions = new double[numAnts];
@@ -45,6 +48,7 @@ public class ACOMain {
 
     //Initialize pheromone matrix
     pheromone = new Pheromone(surf.getN(),initPher);
+    preProcessor(surf); //Bias pheromone matrix to short distances 
     for(int i=0;i<numAnts;i++) {
       ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);
     }
@@ -74,22 +78,33 @@ public class ACOMain {
           bestsolution=solutions[a];
         }
       }
+      
+      if(bestsolution<bestSeen) {
+        bestSeen=bestsolution;
+        bestSurface = new Surface(ants[bestAnt].getSurface());
+        if(dynamicQ)
+          Q=bestSeen;//refactor based on bestsolution
+      }
+      
+      //Initialize to a sensible parameter - best first ant
+      if(Q==Double.MAX_VALUE)
+        Q=bestSeen;
 
-      updatePheromones();
+      updatePheromonesAS();
 
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
     }
-
+    //pheromone.printPheromoneMatrix();
     System.out.println("Writing output...");
-    ants[bestAnt].finalOutput();
-    System.out.println("ACO Done");
+    bestSurface.writeTrajectory();
+    System.out.println("ACO Done ... overall best energy "+bestSeen);
   }
 
   /*
    * Written as a separate function so it would be swapped out with
    * This is regular 'ol Ant System
    */
-  private static void updatePheromones() {
+  private static void updatePheromonesAS() {
     double temp;
     for(int i=0; i<pheromone.getN();i++) {
       for(int j=i+1; j<pheromone.getN(); j++) {
@@ -103,6 +118,56 @@ public class ACOMain {
     }
   }
 
+  /*
+   * Only the best ant updates, all others evaporate - kinda like Max-Min
+   */
+  private static void updatePheromonesBest() {
+    double temp;
+    for(int i=0; i<pheromone.getN();i++) {
+      for(int j=i+1; j<pheromone.getN(); j++) {
+        temp = evap*pheromone.get(i,j);
+        if( ((Surface) ants[bestAnt].getSurface()).connected(i,j) )
+          temp+=Q/solutions[bestAnt]; 
+        pheromone.set(i,j,temp);
+      }
+    }
+  }
+
+  private static void updatePheromonesMaxMin() {
+    double max,min;
+    double temp;
+    max=bestSeen*4;
+    min=initPher;
+    for(int i=0; i<pheromone.getN();i++) {
+      for(int j=i+1; j<pheromone.getN(); j++) {
+        temp = evap*pheromone.get(i,j);
+        if( ((Surface) ants[bestAnt].getSurface()).connected(i,j) )
+          temp+=Q/solutions[bestAnt]; 
+        if(temp>max) {
+          pheromone.set(i,j,max);
+        } else if(temp<min) {
+          pheromone.set(i,j,min);
+        } else {
+          pheromone.set(i,j,temp);
+        }
+      }
+    }
+  }
+
+
+
+
+  private static void preProcessor(Surface surf) {
+    int[] distIndex;
+    int maxVertex = surf.missingVertex(0); //assume unconnected surface
+    for(int i = 0; i < surf.getN(); i++) {
+        distIndex = surf.getShortestDistance(i);
+        for(int j = 0; j < maxVertex; j++) {
+            pheromone.incr(i,distIndex[j],initPher*10);
+        } 
+    }
+  }
+
   //The only thread-safe procedure is construct solution since the pheromone
   //matrix is shared
   static class AntThread extends Thread {
@@ -110,6 +175,7 @@ public class ACOMain {
     int tid;
     double[] solutions;
     public AntThread(Ant[] ants, int tid, double[] solutions) {
+      super("ant"+tid);
       this.ant = ant;
       this.tid = tid;
       this.solutions = solutions;

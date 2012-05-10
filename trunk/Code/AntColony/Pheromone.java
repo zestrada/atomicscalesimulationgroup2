@@ -50,4 +50,8 @@ public class Pheromone {
   public int getN() {
     return N;
   }
+
+  public void printPheromoneMatrix() {
+    System.out.println(Arrays.deepToString(pMatrix));
+  }
 }
