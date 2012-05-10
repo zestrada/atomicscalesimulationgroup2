@@ -512,6 +512,25 @@ public class Surface {
 	    error("ERROR IN FILEWRITER");
 	}
     }
+    
+    public void writeTrajectory_name(String name) {
+        double[] x = xCoordinates;
+        double[] y = yCoordinates;
+        try {
+            FileWriter fw = new FileWriter(name);
+            String s = new String(N + "\n\n");
+            fw.write(s,0,s.length());
+            for(int i = 0; i < N; i++) {
+                s = new String("C " + x[i] + " " + y[i] + " 0\n");
+                fw.write(s,0,s.length());
+            }
+            fw.flush();
+            fw.close();
+        }
+        catch(Exception e) {
+            error("ERROR IN FILEWRITER");
+        }
+    }
 
     /**
      * Writes connectivity matrix to file
@@ -530,6 +549,16 @@ public class Surface {
 	    fw.close();
 	}
 	catch(Exception e) {}
+    }
+    public void writeConnection_name(String name) {
+        try {
+            FileWriter fw = new FileWriter(name);
+            String s = Arrays.deepToString(connection);
+            fw.write(s,0,s.length());
+            fw.flush();
+            fw.close();
+        }
+        catch(Exception e) {}
     }
 
     /**
