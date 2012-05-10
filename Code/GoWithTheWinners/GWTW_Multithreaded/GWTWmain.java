@@ -110,7 +110,7 @@ public class GWTWmain {
 
     public static void gwtwInit() {
 	for(int i = 0; i < 16; i++) {
-	    sa[i] = new SA(structure,temperature);
+	    sa[i] = new SA(structure,temperature,i);
 	    index[i] = i;
 	}
     }
