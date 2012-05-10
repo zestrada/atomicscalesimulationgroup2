@@ -8,7 +8,7 @@ public class GAmain {
     
     public static void main(String[] args) {
 	GeneticAlgorithm = new GA();
-	GeneticAlgorithm.run(1000,50);
+	GeneticAlgorithm.run_noprint(1000,10);
 	GeneticAlgorithm.finalOutput();
     }    
 }
