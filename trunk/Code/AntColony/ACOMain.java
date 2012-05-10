@@ -5,7 +5,7 @@ public class ACOMain {
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=10000; //number of steps to run ACO for
+  private static int numSteps=200; //number of steps to run ACO for
   private static int bestAnt=0; //best ant
   private static double bestSeen=Double.MAX_VALUE;
   private static Surface bestSurface;
@@ -48,7 +48,8 @@ public class ACOMain {
 
     //Initialize pheromone matrix
     pheromone = new Pheromone(surf.getN(),initPher);
-    preProcessor(surf); //Bias pheromone matrix to short distances 
+    //scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
+    //System.out.println("Using Scaled Preprocessor");
     for(int i=0;i<numAnts;i++) {
       ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);
     }
@@ -90,13 +91,16 @@ public class ACOMain {
       if(Q==Double.MAX_VALUE)
         Q=bestSeen;
 
-      updatePheromonesAS();
+      updatePheromonesBest();
 
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
+      inout.recordEnergy(bestsolution);
     }
     //pheromone.printPheromoneMatrix();
     System.out.println("Writing output...");
-    bestSurface.writeTrajectory();
+    //bestSurface.writeTrajectory();
+    ants[bestAnt].finalOutput();
+    inout.outputEnergy();
     System.out.println("ACO Done ... overall best energy "+bestSeen);
   }
 
@@ -167,6 +171,24 @@ public class ACOMain {
         } 
     }
   }
+
+ private static void scaledPreProcessor(Surface surf) {
+    int[] distIndex;
+    int maxVertex = surf.getMaxVertex(); //assume unconnected surface
+    for(int i = 0; i < surf.getN(); i++) {
+        distIndex = surf.getShortestDistance(i);
+        for(int j = 0; j < maxVertex*2; j++) {
+            double scale;
+            if(j<maxVertex)
+              scale = 1.0;
+            else
+              scale = 0.5;
+            pheromone.incr(i,distIndex[j],initPher*(10.0)*scale);
+        } 
+    }
+  }
+
+
 
   //The only thread-safe procedure is construct solution since the pheromone
   //matrix is shared

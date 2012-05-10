@@ -3,14 +3,23 @@
  */
 
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.Queue;
+import java.util.LinkedList;
 
 public class TSPInOut {
+  Queue <Double> energies;
+  public TSPInOut() {
+    energies = new LinkedList<Double>();
+  }
+
   public Surface readData(String filename) {
     String line;
     int npart = 0;
@@ -111,5 +120,27 @@ public class TSPInOut {
     //Need to read in coordinates from file and create a cell
     myCell = new Cell(xmin,xmax,ymin,ymax);
     return new Surface(xcoord, ycoord, nvert, myCell);
+  }
+
+  //Save an energy value per step
+  public void recordEnergy(double energy) {
+    energies.offer(energy);
+  }
+
+  //Outpout the energies
+  public void outputEnergy() {
+    Double temp;
+    try{ 
+      FileWriter fw = new FileWriter("energy.out");
+      BufferedWriter out = new BufferedWriter(fw);
+      while(energies.peek() != null) {
+        temp = energies.poll();
+        out.write(temp.doubleValue()+"\n");
+      }
+      out.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
   }
 }

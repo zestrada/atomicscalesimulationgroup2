@@ -13,3 +13,9 @@ PheromoneBest with preprocessor:
 PheromoneBest with preprocessor (dynamicQ):
 1.0 1.0 0.90: 880.9500000000012
 1.0 2.0 0.90: 629.9951999999992
+
+10000 steps with PheromoneAS:
+678.6273999999999
+
+10000 steps with PheromoneBest:
+636.0467999999994

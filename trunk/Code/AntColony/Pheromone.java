@@ -54,4 +54,8 @@ public class Pheromone {
   public void printPheromoneMatrix() {
     System.out.println(Arrays.deepToString(pMatrix));
   }
+
+  public String toString() {
+    return Arrays.deepToString(pMatrix);
+  }
 }

@@ -135,6 +135,11 @@ public class Ant {
     return surf.missingVertices();
   }
 
+  public void writePheromone() {
+    String outputStr = pheromone.toString();
+
+  }
+
   public void finalOutput() {
     surf.writeConnection();
     surf.writeTrajectory();

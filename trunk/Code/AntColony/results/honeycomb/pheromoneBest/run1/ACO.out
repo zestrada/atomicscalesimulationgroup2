@@ -1,0 +1,112 @@
+Reading in data from ../common/honeycomb.input
+Number of particles: 192
+Number of vertices: 3
+xmin -10.455 xmax 9.225
+ymin -13.58 ymax 9.7
+Found 192 particles with maximum number of 3 vertices
+Created simulation cell 19.68 by 23.28
+
+
+Starting ACO with 32 ants 8 threads  alpha=1.0 beta=2.0 evap=0.9
+Step 1/100 best energy 2334.4654000000023 ant 10 missing vert 0.0
+Step 2/100 best energy 2372.830000000003 ant 12 missing vert 0.0
+Step 3/100 best energy 2420.3128000000024 ant 3 missing vert 0.0
+Step 4/100 best energy 2162.834000000001 ant 31 missing vert 0.0
+Step 5/100 best energy 2159.381800000003 ant 13 missing vert 0.0
+Step 6/100 best energy 1752.5550000000019 ant 13 missing vert 0.0
+Step 7/100 best energy 2277.249000000002 ant 18 missing vert 0.0
+Step 8/100 best energy 2153.1390000000024 ant 4 missing vert 0.0
+Step 9/100 best energy 2099.7386000000024 ant 3 missing vert 0.0
+Step 10/100 best energy 1780.4982000000034 ant 12 missing vert 0.0
+Step 11/100 best energy 1622.6346000000037 ant 27 missing vert 0.0
+Step 12/100 best energy 1748.2738000000024 ant 6 missing vert 0.0
+Step 13/100 best energy 1859.3682000000028 ant 29 missing vert 0.0
+Step 14/100 best energy 2000.9232000000031 ant 17 missing vert 0.0
+Step 15/100 best energy 1716.300200000003 ant 8 missing vert 0.0
+Step 16/100 best energy 1597.4524000000026 ant 20 missing vert 0.0
+Step 17/100 best energy 1640.9138000000023 ant 9 missing vert 0.0
+Step 18/100 best energy 1654.004200000004 ant 26 missing vert 0.0
+Step 19/100 best energy 1375.6830000000032 ant 5 missing vert 0.0
+Step 20/100 best energy 1326.7234000000026 ant 5 missing vert 0.0
+Step 21/100 best energy 1326.445000000003 ant 2 missing vert 0.0
+Step 22/100 best energy 1503.400600000004 ant 15 missing vert 0.0
+Step 23/100 best energy 1515.4118000000033 ant 3 missing vert 0.0
+Step 24/100 best energy 1538.4012000000025 ant 28 missing vert 0.0
+Step 25/100 best energy 1356.501400000003 ant 3 missing vert 0.0
+Step 26/100 best energy 1357.8218000000036 ant 8 missing vert 0.0
+Step 27/100 best energy 1439.5220000000033 ant 2 missing vert 0.0
+Step 28/100 best energy 1425.0782000000042 ant 21 missing vert 0.0
+Step 29/100 best energy 1115.006000000004 ant 18 missing vert 0.0
+Step 30/100 best energy 1275.9376000000032 ant 20 missing vert 0.0
+Step 31/100 best energy 1083.2002000000045 ant 2 missing vert 0.0
+Step 32/100 best energy 1116.8990000000038 ant 12 missing vert 0.0
+Step 33/100 best energy 1235.266200000003 ant 12 missing vert 0.0
+Step 34/100 best energy 1040.5834000000043 ant 31 missing vert 0.0
+Step 35/100 best energy 1194.1664000000044 ant 3 missing vert 0.0
+Step 36/100 best energy 1128.533600000002 ant 15 missing vert 0.0
+Step 37/100 best energy 1071.7076000000036 ant 16 missing vert 0.0
+Step 38/100 best energy 1172.1022000000025 ant 26 missing vert 0.0
+Step 39/100 best energy 1019.8936000000032 ant 28 missing vert 0.0
+Step 40/100 best energy 972.125200000004 ant 5 missing vert 0.0
+Step 41/100 best energy 1054.634400000003 ant 3 missing vert 0.0
+Step 42/100 best energy 1010.6496000000037 ant 22 missing vert 0.0
+Step 43/100 best energy 1053.8650000000014 ant 7 missing vert 0.0
+Step 44/100 best energy 979.1584000000032 ant 25 missing vert 0.0
+Step 45/100 best energy 1082.9656000000036 ant 6 missing vert 0.0
+Step 46/100 best energy 888.6498000000032 ant 23 missing vert 0.0
+Step 47/100 best energy 1072.3182000000043 ant 12 missing vert 0.0
+Step 48/100 best energy 913.7272000000034 ant 10 missing vert 0.0
+Step 49/100 best energy 870.4312000000034 ant 4 missing vert 0.0
+Step 50/100 best energy 946.150800000003 ant 20 missing vert 0.0
+Step 51/100 best energy 731.3654000000017 ant 16 missing vert 0.0
+Step 52/100 best energy 938.6934000000028 ant 4 missing vert 0.0
+Step 53/100 best energy 740.540800000001 ant 31 missing vert 0.0
+Step 54/100 best energy 729.2708000000025 ant 26 missing vert 0.0
+Step 55/100 best energy 677.6632000000004 ant 18 missing vert 0.0
+Step 56/100 best energy 865.6766000000025 ant 18 missing vert 0.0
+Step 57/100 best energy 870.3506000000021 ant 7 missing vert 0.0
+Step 58/100 best energy 580.4447999999993 ant 28 missing vert 0.0
+Step 59/100 best energy 756.5066000000014 ant 10 missing vert 0.0
+Step 60/100 best energy 739.679400000002 ant 19 missing vert 0.0
+Step 61/100 best energy 656.8742000000008 ant 24 missing vert 0.0
+Step 62/100 best energy 558.4773999999991 ant 23 missing vert 0.0
+Step 63/100 best energy 665.8770000000013 ant 0 missing vert 0.0
+Step 64/100 best energy 780.8856000000012 ant 16 missing vert 0.0
+Step 65/100 best energy 859.5306000000035 ant 15 missing vert 0.0
+Step 66/100 best energy 730.8186000000023 ant 2 missing vert 0.0
+Step 67/100 best energy 666.028600000001 ant 1 missing vert 0.0
+Step 68/100 best energy 568.5617999999994 ant 6 missing vert 0.0
+Step 69/100 best energy 738.1792000000016 ant 23 missing vert 0.0
+Step 70/100 best energy 655.2320000000009 ant 19 missing vert 0.0
+Step 71/100 best energy 535.967999999999 ant 10 missing vert 0.0
+Step 72/100 best energy 549.9407999999993 ant 6 missing vert 0.0
+Step 73/100 best energy 549.4745999999991 ant 7 missing vert 0.0
+Step 74/100 best energy 550.0165999999991 ant 5 missing vert 0.0
+Step 75/100 best energy 553.9759999999992 ant 17 missing vert 0.0
+Step 76/100 best energy 542.954399999999 ant 30 missing vert 0.0
+Step 77/100 best energy 549.9407999999991 ant 18 missing vert 0.0
+Step 78/100 best energy 550.0165999999992 ant 5 missing vert 0.0
+Step 79/100 best energy 550.0165999999991 ant 12 missing vert 0.0
+Step 80/100 best energy 535.967999999999 ant 1 missing vert 0.0
+Step 81/100 best energy 542.954399999999 ant 3 missing vert 0.0
+Step 82/100 best energy 535.967999999999 ant 11 missing vert 0.0
+Step 83/100 best energy 535.967999999999 ant 14 missing vert 0.0
+Step 84/100 best energy 535.967999999999 ant 13 missing vert 0.0
+Step 85/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 86/100 best energy 535.967999999999 ant 3 missing vert 0.0
+Step 87/100 best energy 535.967999999999 ant 1 missing vert 0.0
+Step 88/100 best energy 535.967999999999 ant 6 missing vert 0.0
+Step 89/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 90/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 91/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 92/100 best energy 535.967999999999 ant 1 missing vert 0.0
+Step 93/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 94/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 95/100 best energy 535.967999999999 ant 1 missing vert 0.0
+Step 96/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 97/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 98/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Step 99/100 best energy 535.967999999999 ant 1 missing vert 0.0
+Step 100/100 best energy 535.967999999999 ant 0 missing vert 0.0
+Writing output...
+ACO Done ... overall best energy 535.967999999999
