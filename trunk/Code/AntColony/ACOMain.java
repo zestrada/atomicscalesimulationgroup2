@@ -1,11 +1,10 @@
 public class ACOMain {
 
-  private static int numAnts = 8;
+  private static int numAnts = 4;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static double[] lengths; //length of solution for each ant
-  private static int numSteps=1000; //number of steps to run ACO for
+  private static int numSteps=1500; //number of steps to run ACO for
 
   //Ant System parameters
   private static double alpha;
@@ -14,16 +13,18 @@ public class ACOMain {
   //This evaporation rate is (1-rho) as is common in the literature
   private static double evap;
   private static double initPher=1.0; //initial value for pheromone matrix
+
+  private static final boolean useEnergy = true;
   
   //Here, we use the original Ant System
 
   public static void main(String[] args) throws java.lang.CloneNotSupportedException {
     int bestAnt=0;
-    int bestEAnt=0; //best energy ant
+    AntThread[] threads = new AntThread[numAnts];
     ants = new Ant[numAnts];
     solutions = new double[numAnts];
-    lengths = new double[numAnts];
     
+
     //Poor man's arg parsing:
     //Input file is first argument, alpha and beta are 2nd and 3rd, respectively
     String infile = args[0];
@@ -47,35 +48,39 @@ public class ACOMain {
     }
 
     for(int i=0;i<numSteps;i++) {
-      //This is where we would fork threads
+      //One thread per ant
       for(int a=0;a<numAnts;a++) {
-        ants[a].reset();
-        lengths[a] = ants[a].constructSolution();
-        solutions[a] = ants[a].getEnergy();
+        threads[a] = new AntThread(ants[a],a,solutions); 
+        threads[a].start();
       }
 
-      //Find minimum tour length
-      double bestlength=Double.MAX_VALUE;
-      double bestenergy=Double.MAX_VALUE;
+      //Since we can't have an actual pointer to double in java
       for(int a=0;a<numAnts;a++) {
-        if(solutions[a]<bestenergy) {
-          bestEAnt=a;
-          bestenergy=solutions[a];
+        try{
+          threads[a].join();
+        } catch (Exception e) {
+          e.printStackTrace();
+          System.exit(1);
         }
-        if(lengths[a]<bestlength) {
+      }
+      
+
+      //Find minimum tour
+      double bestsolution=Double.MAX_VALUE;
+      for(int a=0;a<numAnts;a++) {
+        if(solutions[a]<bestsolution) {
           bestAnt=a;
-          bestlength=lengths[a];
+          bestsolution=solutions[a];
         }
       }
 
       updatePheromones();
 
-      //System.out.println("Step "+(i+1)+"/"+numSteps+" complete... best tour length "+bestlength+" with ant "+bestAnt+" best energy "+bestenergy+" ant "+bestEAnt);
-      System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestenergy+" ant "+bestEAnt+" missing vert "+ants[bestEAnt].getMissingVertices());
+      System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
     }
 
     System.out.println("Writing output...");
-    ants[bestEAnt].finalOutput();
+    ants[bestAnt].finalOutput();
     System.out.println("ACO Done");
   }
 
@@ -94,6 +99,26 @@ public class ACOMain {
         }
         pheromone.set(i,j,temp);
       }
+    }
+  }
+
+  //The only thread-safe procedure is construct solution since the pheromone
+  //matrix is shared
+  static class AntThread extends Thread {
+    Ant ant;
+    int tid;
+    double[] solutions;
+    public AntThread(Ant ant, int tid, double[] solutions) {
+      this.ant = ant;
+      this.tid = tid;
+      this.solutions = solutions;
+    }
+
+    public void run() {
+      ant.reset();
+      solutions[tid] = ant.constructSolution();
+      if(useEnergy)
+        solutions[tid] = ant.getEnergy();
     }
   }
 
