@@ -11,8 +11,8 @@ public class SAmain {
 	//simulatedAnnealing.finalOutput();
 	simulatedAnnealing.setTemperature(5);
 	for(int i = 0; i < 10; i++) {
-	    simulatedAnnealing.runWithReplacement(100000,100000);
-	    simulatedAnnealing.run(100000,100000);
+	    simulatedAnnealing.runWithReplacement(500000,100000);
+	    simulatedAnnealing.run(500000,100000);
 	}
 	simulatedAnnealing.finalOutput();
     }    
