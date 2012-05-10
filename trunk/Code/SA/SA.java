@@ -23,7 +23,12 @@ public class SA {
 
     //Constructor 
     public SA(String filename, double temperature) {
-	SAInit(filename,temperature);
+	SAInit(filename,temperature,0);
+    }     
+
+    //Constructor 
+    public SA(String filename, double temperature, int id) {
+	SAInit(filename,temperature,id);
     }     
 
     //Copy constructor
