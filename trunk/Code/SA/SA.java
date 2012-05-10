@@ -37,11 +37,11 @@ public class SA {
 	this.tsp = obj.getTsp();
     }
 
-    public TSPInOut getTest() {
+    public TSPInOut getTsp() {
 	return tsp;
     }
 
-    public void setTest(TSPInOut tsp) {
+    public void setTsp(TSPInOut tsp) {
 	this.tsp = tsp;
     }
 
