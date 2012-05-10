@@ -3,7 +3,11 @@
 = Navigation =
 
 [Overview]
+
 [Simulated Annealing]
+
 [Go with the Winners]
+
 [Ant Colony Optimization]
+
 [Genetic Algorithms]
