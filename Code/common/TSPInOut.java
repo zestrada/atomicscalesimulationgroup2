@@ -16,7 +16,14 @@ import java.util.LinkedList;
 
 public class TSPInOut {
   Queue <Double> energies;
+  int id;
   public TSPInOut() {
+    id=0;
+    energies = new LinkedList<Double>();
+  }
+
+  public TSPInOut(int id) {
+    this.id=id;
     energies = new LinkedList<Double>();
   }
 
@@ -131,7 +138,8 @@ public class TSPInOut {
   public void outputEnergy() {
     Double temp;
     try{ 
-      FileWriter fw = new FileWriter("energy.out");
+      String filename = "energy"+id+".out";
+      FileWriter fw = new FileWriter(filename);
       BufferedWriter out = new BufferedWriter(fw);
       while(energies.peek() != null) {
         temp = energies.poll();
