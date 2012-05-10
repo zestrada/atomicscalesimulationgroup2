@@ -9,6 +9,7 @@ public class SA {
     private int N;
     private double temperature;
     private long numSteps;
+    private TSPInOut tsp
 
     //Base constructor
     public SA() {
@@ -80,7 +81,7 @@ public class SA {
     }
 
     private void SAInit() {
-	TSPInOut tsp = new TSPInOut();
+	tsp = new TSPInOut();
 	rng = new Random();
 	surface = tsp.readData("../common/test.input");
 	N = surface.getN();
@@ -92,7 +93,7 @@ public class SA {
     }
 
     private void SAInit(double temperature) {
-	TSPInOut tsp = new TSPInOut();
+	tsp = new TSPInOut();
 	rng = new Random();
 	surface = tsp.readData("../common/test.input");
 	N = surface.getN();
@@ -103,8 +104,8 @@ public class SA {
 	preProcessor();
     }
 
-    private void SAInit(String filename, double temperature) {
-	TSPInOut tsp = new TSPInOut();
+    private void SAInit(String filename, double temperature, int id) {
+	tsp = new TSPInOut(id);
 	rng = new Random();
 	surface = tsp.readData(filename);
 	N = surface.getN();
@@ -116,6 +117,11 @@ public class SA {
 	preProcessor();
     }
     
+    private void finishRun(long i) {
+	tsp.outputEnergy();
+	surface.writeConnection(numSteps);
+    }
+
     public void run() {
 	int x0,y0,x1,y1;
 	double energy,oldEnergy,delta;
@@ -152,9 +158,10 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
+	    tsp.recordEnergy(surface.getEnergy());
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
-	    surface.writeConnection(numSteps);
 	}
+	finishRun(numSteps);
     }
 
     public void runSilent() {
@@ -193,8 +200,9 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
-	    surface.writeConnection(numSteps);
+	    tsp.recordEnergy(surface.getEnergy());
 	}
+	finishRun(numSteps);
     }
 
     public void run(int step, int output) {
@@ -234,9 +242,10 @@ public class SA {
 		temperature*=0.999999;
 	    }
 	    numSteps += (output);
+	    tsp.recordEnergy(surface.getEnergy());
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
-	    surface.writeConnection(numSteps);
 	}
+	finishRun(numSteps);
     }
 
     public void runSilent(int step, int output) {
@@ -276,8 +285,9 @@ public class SA {
 		temperature*=0.999999;
 	    }
 	    numSteps += (output);
-	    surface.writeConnection(numSteps);
+	    tsp.recordEnergy(surface.getEnergy());
 	}
+	finishRun(numSteps);
     }
 
     public void runWithReplacement(int step, int output) {
@@ -321,9 +331,10 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
+	    tsp.recordEnergy(surface.getEnergy());
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
-	    surface.writeConnection(numSteps);
 	}
+	finishRun(numSteps);
     }
 
     public void runSilentWithReplacement(int step, int output) {
@@ -365,8 +376,9 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
-	    surface.writeConnection(numSteps);
+	    tsp.recordEnergy(surface.getEnergy());
 	}
+	finishRun(numSteps);
     }
 
     public void finalOutput() {
