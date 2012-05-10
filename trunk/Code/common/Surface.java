@@ -175,20 +175,21 @@ public class Surface {
 
   public double getEnergyWAngles() {
     double energy = 0;
-    double xVec0,yVec0,xVec1,yVec1,tmp1,tmp2,angle;
+    double xVec0,yVec0,xVec1,yVec1,tmp1,tmp2,tmp3,angle;
     for(int i=0; i<N; i++) {
 	for(int j=i+1; j<N; j++) {
 	    if(connection[i][j]) {
-		xVec0 = x[j] - x[i];
-		yVec0 = y[j] - y[i];
-		for(int k=0; k<N; k++) {
-		    if(connection[i][k]) {
-			xVec1 = x[k] - x[i];
-			yVec1 = y[k] - y[i];
+		xVec0 = xCoordinates[i] - xCoordinates[j];
+		yVec0 = yCoordinates[i] - yCoordinates[j];
+		for(int k=j+1; k<N; k++) {
+		    if(connection[j][k]) {
+			xVec1 = xCoordinates[k] - xCoordinates[j];
+			yVec1 = yCoordinates[k] - yCoordinates[j];
 			tmp1 = (xVec0*xVec1 + yVec0*yVec1);
-			tmp2 = (distance[i][j]*distance[i][k]);
-			angle = Math.acos(tmp1/tmp2);
-			energy += (angle > 0.8) ? 0 : 256;
+			tmp2 = (distance[j][j]*distance[j][k]);
+			tmp3 = Math.abs(tmp1/tmp2);
+			//angle = Math.abs(Math.acos(tmp3));
+			energy += (tmp3 < 0.3) ? 0 : 256;
 		    }
 		}
 		energy += bondEnergy[i][j];
@@ -508,11 +509,11 @@ public class Surface {
      * @param none
      * @return void
      */
-    public void writeConnection(int step) {
+    public void writeConnection(long step) {
 	String s = "connection" + step + ".dat";
 	try {
 	    FileWriter fw = new FileWriter(s);
-	    String s = Arrays.deepToString(connection);
+	    s = Arrays.deepToString(connection);
 	    fw.write(s,0,s.length());
 	    fw.flush();
 	    fw.close();
