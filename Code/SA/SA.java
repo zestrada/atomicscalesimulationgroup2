@@ -9,7 +9,7 @@ public class SA {
     private int N;
     private double temperature;
     private long numSteps;
-    private TSPInOut tsp
+    private TSPInOut tsp;
 
     //Base constructor
     public SA() {
@@ -34,6 +34,15 @@ public class SA {
 	this.N = obj.getN();
 	this.temperature = obj.getTemperature();
 	this.numSteps = obj.getNumSteps();
+	this.tsp = obj.getTsp();
+    }
+
+    public TSPInOut getTest() {
+	return tsp;
+    }
+
+    public void setTest(TSPInOut tsp) {
+	this.tsp = tsp;
     }
 
     public double getEnergy() {
