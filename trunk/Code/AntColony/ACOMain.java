@@ -5,7 +5,7 @@ public class ACOMain {
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=200; //number of steps to run ACO for
+  private static int numSteps=10000; //number of steps to run ACO for
   private static int bestAnt=0; //best ant
   private static double bestSeen=Double.MAX_VALUE;
   private static Surface bestSurface;
@@ -91,7 +91,7 @@ public class ACOMain {
       if(Q==Double.MAX_VALUE)
         Q=bestSeen;
 
-      updatePheromonesBest();
+      updatePheromonesAS();
 
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
       inout.recordEnergy(bestsolution);

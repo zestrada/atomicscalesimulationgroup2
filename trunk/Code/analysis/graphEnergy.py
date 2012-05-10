@@ -2,9 +2,10 @@
 import sys,numpy
 import matplotlib.pyplot as plt
 import re
-#Plot a given lattice configuration
+#plot energy vs. time block
 filename=sys.argv[1]
-title=sys.argv[2]
+#remember to use quotes around second argument if you want a title with spaces
+title=sys.argv[2] 
 energies=numpy.loadtxt(filename)
 plt.plot(energies)
 plt.xlabel("Step")
