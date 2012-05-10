@@ -4,7 +4,7 @@ import java.io.*;
 public class GA {
   
     private static Surface surface;
-    private static int Pop_n = 4;
+    private static int Pop_n = 16;
     private static GApopulation[] g = new GApopulation[Pop_n];
     private static double[] energyArray = new double[Pop_n];
     private static double energy = 0.0;
@@ -311,8 +311,10 @@ public class GA {
     
 public void finalOutput() {
     Surface surface = g[MinIndex].getSurface();
-    surface.writeTrajectory();
-    surface.writeConnection();
+    String traj = "Honeycomb1.xyz";
+    String conn = "Honeycomb_connection1.dat";
+    surface.writeTrajectory_name(traj);
+    surface.writeConnection(conn);
     System.out.print("Final Energy: " + surface.getEnergy() + "\n");
     System.out.print("MaxVertex: " + surface.maxVertex() + "\tMinVertex: " + surface.minVertex() +"\n");
     System.out.print("DONE\n");
