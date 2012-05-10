@@ -14,7 +14,9 @@ import java.*;
 public class Surface {
 
   //Distance matrix
-  private double[][] distance; 
+  private double[][] distance;
+  //BondEnergy matrix
+  private double[][] bondEnergy;
   //Array to count number of connections each site currently has
   private int[] vertices;
   //Number of sites, vertices per site
@@ -41,6 +43,7 @@ public class Surface {
     this.vertices = new int[N];
     this.connection = new boolean[N][N];
     this.distance = new double[N][N];
+    this.bondEnergy = new double[N][N];
     this.xCoordinates = new double[N];
     this.yCoordinates = new double[N];
 
@@ -61,6 +64,8 @@ public class Surface {
         cell.putInBox(delta);
         distance[i][j] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
         distance[j][i] = Math.sqrt(delta[0]*delta[0] + delta[1]*delta[1]);
+	bondEnergy[i][j] = distance[i][j]*distance[i][j];
+	bondEnergy[j][i] = distance[j][i]*distance[j][i];
       }
     }
     /*
@@ -77,6 +82,7 @@ public class Surface {
     this.maxVertex = obj.getMaxVertex();
     this.rng = obj.getRNG();
     this.distance = obj.getDistance();
+    this.bondEnergy = obj.getBondEnergy();
     this.cell = obj.getCell();
     this.xCoordinates = obj.getXCoordinates();
     this.yCoordinates = obj.getYCoordinates();
@@ -88,6 +94,10 @@ public class Surface {
 
     public double[][] getDistance() {
 	return this.distance;
+    }
+
+    public double[][] getBondEnergy() {
+	return this.bondEnergy;
     }
 
   public int[] getVertices() {
@@ -159,6 +169,35 @@ public class Surface {
 	    //This is 2^10.  It is a big number but not so big as to overflow the double buffer.
 	    energy += 1024*Math.abs(vertices[i] - maxVertex);
 	    }
+    }
+    return energy;
+  }
+
+  public double getEnergyWAngles() {
+    double energy = 0;
+    double xVec0,yVec0,xVec1,yVec1,tmp1,tmp2,angle;
+    for(int i=0; i<N; i++) {
+	for(int j=i+1; j<N; j++) {
+	    if(connection[i][j]) {
+		xVec0 = x[j] - x[i];
+		yVec0 = y[j] - y[i];
+		for(int k=0; k<N; k++) {
+		    if(connection[i][k]) {
+			xVec1 = x[k] - x[i];
+			yVec1 = y[k] - y[i];
+			tmp1 = (xVec0*xVec1 + yVec0*yVec1);
+			tmp2 = (distance[i][j]*distance[i][k]);
+			angle = Math.acos(tmp1/tmp2);
+			energy += (angle > 0.8) ? 0 : 256;
+		    }
+		}
+		energy += bondEnergy[i][j];
+	    }
+	}
+	if(vertices[i] != maxVertex) {
+	    //This is 2^10.  It is a big number but not so big as to overflow the double buffer.
+	    energy += 1024*Math.abs(vertices[i] - maxVertex);
+	}
     }
     return energy;
   }
