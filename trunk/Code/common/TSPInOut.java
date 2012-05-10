@@ -17,9 +17,12 @@ import java.util.LinkedList;
 public class TSPInOut {
   Queue <Double> energies;
   int id;
+  long startTime;
+
   public TSPInOut() {
     id=0;
     energies = new LinkedList<Double>();
+    startTime = System.currentTimeMillis();
   }
 
   public TSPInOut(int id) {
@@ -150,5 +153,13 @@ public class TSPInOut {
       e.printStackTrace();
       System.exit(1);
     }
+  }
+
+  public void timerStart() {
+    startTime = System.currentTimeMillis();
+  }
+
+  public long timerStop() {
+    return System.currentTimeMillis()-startTime;
   }
 }
