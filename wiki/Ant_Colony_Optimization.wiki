@@ -20,6 +20,11 @@ The pheromone updates are summarized below:
 
 where r is the evaporation rate, Q is a parameter and L_k is the length of this ant's tour (bond energy in our case).
 
+The probability of each move is then defined as:
+
+<img src="http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/accept_prob.png" width="150"/>
+
+Where Z is a normalization factor, d is is the distance between points i and j, alpha and beta are simulation parameters.
 
 == Classes of Pheromone Updates ==
 === Ant System ===
