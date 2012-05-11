@@ -6,7 +6,7 @@ mol addrep top
 color Display Background white
 display rendermode GLSL
 display projection orthographic
-set fp [open "connection.dat" r]; list
+set fp [open "./trajectory/stepXXX" r]; list
 set file_data [split [read $fp] "]"]; list
 set x 0
 #set vertex ""
@@ -42,4 +42,4 @@ foreach line $file_data {
 #    puts [lindex $vertex $i]
 #}
 axes location off
-render PostScript output.ps
+render PostScript outputXXX.ps

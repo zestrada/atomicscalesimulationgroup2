@@ -6,9 +6,10 @@ mol addrep top
 color Display Background white
 display rendermode GLSL
 display projection orthographic
-for { set num 0 } { $num < 10 } { incr num } {
-    set str "step$num"; list
-    set fp [open $str r]; list
+for { set num 0 } { $num < 1 } { incr num } {
+    set s "trajectory/step$num"
+    puts $s
+    set fp [open $s r]; list
     set file_data [split [read $fp] "]"]; list
     set x 0
     #set vertex ""
@@ -20,8 +21,7 @@ for { set num 0 } { $num < 10 } { incr num } {
 	set tmp1 [atomselect top "index $x"]
 	set com1 [measure center $tmp1]
 	set numPart [llength $val]
-  puts $num
-  for {set i 1} { $i < $numPart } {incr i} {
+	for {set i 1} { $i < $numPart } {incr i} {
 	    set tmpVertexCount 0
 	    set tmps [string trim [lindex $val $i]]
 	    if [string equal $tmps "true"] {  
@@ -30,7 +30,7 @@ for { set num 0 } { $num < 10 } { incr num } {
 		set dist [vecdist $com1 $com2]
 		if [expr $dist < 8] {
 		    #puts [concat $x " " $y " " $dist]
-		    draw cylinder $com1 $com2 radius 2
+		    draw line $com1 $com2
 		    #incr tmpVertexCount
 		}
 		$tmp2 delete
@@ -44,8 +44,7 @@ for { set num 0 } { $num < 10 } { incr num } {
     #for {set i 0} { $i < $numPart } {incr i} {
     #    puts [lindex $vertex $i]
     #}
-    puts $num
     axes location off
-    set str "output$num.ps"
-    render PostScript $str
+    render PostScript output.ps
+    graphics 0 delete all
 }
