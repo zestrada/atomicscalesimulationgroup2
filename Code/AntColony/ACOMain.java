@@ -1,6 +1,6 @@
 public class ACOMain {
 
-  private static int numAnts = 32;
+  private static int numAnts = 128;
   private static int numThreads = 2;
   private static Pheromone pheromone;
   private static Ant[] ants;
