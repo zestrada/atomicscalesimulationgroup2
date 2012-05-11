@@ -41,3 +41,7 @@ ACO can be embarrassingly parallel when ants are assigned to separate threads wh
 
 * ACO is fairly sensitive to the parameters chosen, but it seems than an evaporation rate of 10% at each step seems like a generally good choice
 * beta values of 2-3 work the best
+
+= Citation =
+*M. Dorigo, 1992. Optimization, Learning and Natural Algorithms, PhD thesis, Politecnico di Milano, Italy.
+*Dorigo, M.; Birattari, M.; Stutzle, T.; , "Ant colony optimization," Computational Intelligence Magazine, IEEE , vol.1, no.4, pp.28-39, Nov. 2006 [http://dx.doi.org/10.1109/MCI.2006.329691]
