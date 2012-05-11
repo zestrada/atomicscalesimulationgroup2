@@ -8,7 +8,7 @@ public class GWTW extends Thread {
    
     public GWTW(int ID, double temperature) {
 	this.ID = ID;
-	simulatedAnnealing = new SA();
+	simulatedAnnealing = new SA("",temperature,ID);
 	simulatedAnnealing.setTemperature(temperature);
     }
 
