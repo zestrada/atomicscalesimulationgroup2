@@ -7,3 +7,5 @@ Ant Colony Optimization is an algorithm based on swarm intelligence.  The heuris
 
 [http://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Aco_branches.svg/500px-Aco_branches.svg.png]
 Source: wikipedia
+
+= The Algorithm =
