@@ -18,4 +18,7 @@ public class GWTW extends Thread {
 	simulatedAnnealing.runSilentWithReplacement(steps,output);
     }
 
+    public SA getSA() {
+	return simulatedAnnealing;
+    }
 }
