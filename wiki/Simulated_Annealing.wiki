@@ -4,9 +4,27 @@
 Simulated annealing (SA) is an optimization algorithm based on thermodynamics.  It works by pairing a system to a heat bath.  Initially, energy flows from the heat bath into the system interest, allowing the system to dynamically evolve.  Over time, the flow of energy will reverse and flow from the system into the heat bath.  Effectively, this siphoning of heat causes the system collapse into the nearly energy basin.  Given enough simulated annealing replicates, one will find the global minimum.
 
 = Details =
+
+= Algorithm =
+
+Simulated annealing is a relatively simple algorithm to implement.  It only requires that one have a way to evaluate the energy/fitness/quality of the system and a means to generate random conformations.
+
+In our case, we used a simple Hamiltonian of the following form:
+
+
+As you can see, we only considered bond connectivity and bond distance in our potential.  This is the first requirement.
+
+To generate random conformations, we used two simple move algorithms.
+1) Randomly make/destroy a connection with equal probability
+2) Randomly swap two connections
+
+Once the move was made, we accepted the move using the following probabilities: 
+
+http://atomicscalesimulationgroup2.googlecode.com/files/CosineEqn.png
+
+where the probability to accept an uphill move is given by the Metropolis criterion.
+
 http://atomicscalesimulationgroup2.googlecode.com/files/BackProbability.png
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Note that we chose to use the Metropolis criterion for our uphill moves.  We could have equally likely said that we accept uphill moves with a -1/delta probability or even a heads-tails coin flip!
+
