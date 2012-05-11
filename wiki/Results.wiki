@@ -1,6 +1,6 @@
 #summary Results from Runs
 = Simulation Results =
-On this page, we've included tabulated results for each simulation as well as sample illustrations of the best data from each run.
+On this page, we've included tabulated results for each simulation as well as included sample illustrations of the configurations obtained using each method.
 
 = Honeycomb Lattice =
 
