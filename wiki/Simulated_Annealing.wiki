@@ -8,7 +8,7 @@ Simulated annealing (SA) is an optimization algorithm based on thermodynamics.  
 Simulated annealing is a relatively simple algorithm to implement.  It only requires that one have a way to evaluate the energy/fitness/quality of the system and a means to generate random conformations.
 
 In our case, we used a simple Hamiltonian of the following form:
-
+http://atomicscalesimulationgroup2.googlecode.com/files/Potential.png
 
 As you can see, we only considered bond connectivity and bond distance in our potential.  This is the first requirement.
 
