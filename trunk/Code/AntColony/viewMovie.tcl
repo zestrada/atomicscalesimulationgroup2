@@ -7,8 +7,8 @@ color Display Background white
 display rendermode GLSL
 display projection orthographic
 for { set num 0 } { $num < 10 } { incr num } {
-    set str [concat "step_" $num]; list
-    set fp [open step_$filename r]; list
+    set str "step$num"; list
+    set fp [open $str r]; list
     set file_data [split [read $fp] "]"]; list
     set x 0
     #set vertex ""
@@ -44,6 +44,6 @@ for { set num 0 } { $num < 10 } { incr num } {
     #    puts [lindex $vertex $i]
     #}
     axes location off
-    set str [concat "output_" $num ".ps"]
+    set str "output$num.ps"
     render PostScript $str
 }
