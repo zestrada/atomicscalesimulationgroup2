@@ -12,20 +12,20 @@ public class GWTWmain {
     private static int lowIndex;
     private static String structure = new String("../../common/square.input");
     private static double temperature = 100;
-    private static int steps = 100000;
+    private static int steps = 10000;
 
     public static void main(String[] args) {
 	gwtwInit();	
-	for(int step = 0; step < 20; step++) {
+	for(int step = 0; step < 10; step++) {
 	    gwrRun();
 	    gwrWait();
-	    //lowestIndex();
+	    lowestIndex();
 	    sortEnergy();
 	    System.out.println("Step: " + step + " Lowest energy: " + sa[lowIndex].getEnergy() + " in replicate" + lowIndex + getEnergy());
 	    gRun();
 	    gWait();
 	    for(int i = 0; i < 16; i++) {
-		//sa[i].outputConnection("Thread_" + i + "_step_" + step + ".dat");
+		sa[i].outputConnection("Thread_" + i + "_step_" + step + ".dat");
 	    }
 	}
 	for(int i = 0; i < 16; i++) {
@@ -44,19 +44,21 @@ public class GWTWmain {
     
     private static void gwrRun() {
 	for(int i = 0; i < 16; i++) {
-	    gwr[i] = new GWTWwithReplacement(steps,steps,i,sa[i]);
+	    gwr[i] = new GWTWwithReplacement(steps,steps,i,sa[index[i]]);
 	    gwr[i].start();
 	}      
     }
 
     private static void gRun() {
-	//System.out.println(lowIndex + " " + index[0] + " " + index[1] + " " + index[2] + " " + index[3]);
-	//System.exit(0);
-	for(int j = 0; j < 16/2; j++) {
-	    g[index[j]] = new GWTW(steps,steps,j,sa[index[j]]);
+	for(int j = 0; j < 16; j++) {
+	    SA tmp = new SA(sa[index[j]]);
+	    g[index[j]] = new GWTW(steps,steps,j,tmp);
+	    g[index[j]].start();
 	}
 	for(int j = 16/2; j < 16; j++) {
-	    g[index[j]] = new GWTW(steps,steps,j,sa[lowIndex]);
+	    SA tmp = new SA(sa[lowIndex]);
+	    g[index[j]] = new GWTW(steps,steps,j,tmp);
+	    g[index[j]].start();
 	}
     }
 
@@ -66,6 +68,9 @@ public class GWTWmain {
 		g[i].join();
 	    } catch(Exception e) {}
 	}
+	for(int i = 0; i < 16; i++) {
+	    sa[i] = g[i].getSA();
+	}
     }
 
     private static void gwrWait() {
@@ -73,6 +78,9 @@ public class GWTWmain {
 	    try {
 		gwr[i].join();
 	    } catch(Exception e) {}
+	}
+	for(int i = 0; i < 16; i++) {
+	    sa[i] = gwr[i].getSA();
 	}
     }
 
@@ -94,7 +102,6 @@ public class GWTWmain {
 		}
 	    }
 	}
-	lowIndex = index[0];
     }
     
     private static void lowestIndex() {
@@ -113,6 +120,7 @@ public class GWTWmain {
 	for(int i = 0; i < 16; i++) {
 	    sa[i] = new SA(structure,temperature,i);
 	    index[i] = i;
+	    gwr[i] = new GWTWwithReplacement(1,1,i,sa[i]);
 	}
     }
     
