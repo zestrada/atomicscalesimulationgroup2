@@ -10,13 +10,13 @@ public class GWTWmain {
     private static double energy = 0.0;
     private static int[] index = new int[16];
     private static int lowIndex;
-    private static String structure = new String("../../common/square.input");
-    private static double temperature = 100;
-    private static int steps = 10000;
+    private static String structure = new String("../../common/sheared.input");
+    private static double temperature = 4;
+    private static int steps = 50000;
 
     public static void main(String[] args) {
 	gwtwInit();	
-	for(int step = 0; step < 10; step++) {
+	for(int step = 0; step < 40; step++) {
 	    gwrRun();
 	    gwrWait();
 	    lowestIndex();

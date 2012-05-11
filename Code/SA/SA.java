@@ -136,6 +136,10 @@ public class SA {
 	surface.writeConnection(numSteps);
     }
 
+    public void outputConnection(String s) {
+	surface.writeConnection(s);
+    }
+
     public void run() {
 	int x0,y0,x1,y1;
 	double energy,oldEnergy,delta;
@@ -172,7 +176,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
-	    tsp.recordEnergy(surface.getEnergy());
+	    //tsp.recordEnergy(surface.getEnergy());
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
 	}
 	finishRun(numSteps);
@@ -214,7 +218,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += 1000;
-	    tsp.recordEnergy(surface.getEnergy());
+	    //tsp.recordEnergy(surface.getEnergy());
 	}
 	finishRun(numSteps);
     }
@@ -256,7 +260,7 @@ public class SA {
 		temperature*=0.999999;
 	    }
 	    numSteps += (output);
-	    tsp.recordEnergy(surface.getEnergy());
+	    //tsp.recordEnergy(surface.getEnergy());
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
 	}
 	finishRun(numSteps);
@@ -299,7 +303,7 @@ public class SA {
 		temperature*=0.999999;
 	    }
 	    numSteps += (output);
-	    tsp.recordEnergy(surface.getEnergy());
+	    //tsp.recordEnergy(surface.getEnergy());
 	}
 	finishRun(numSteps);
     }
@@ -345,7 +349,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
-	    tsp.recordEnergy(surface.getEnergy());
+	    //tsp.recordEnergy(surface.getEnergy());
 	    System.out.println("Step: " + numSteps + "\tEnergy: " + surface.getEnergy() + "\tmaxV: " + surface.maxVertex() + "\tminV: " + surface.minVertex() + "\t" + temperature);
 	}
 	finishRun(numSteps);
@@ -390,7 +394,7 @@ public class SA {
 		temperature*=0.99999999;
 	    }
 	    numSteps += (output);
-	    tsp.recordEnergy(surface.getEnergy());
+	    //tsp.recordEnergy(surface.getEnergy());
 	}
 	finishRun(numSteps);
     }
