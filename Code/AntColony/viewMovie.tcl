@@ -20,7 +20,8 @@ for { set num 0 } { $num < 10 } { incr num } {
 	set tmp1 [atomselect top "index $x"]
 	set com1 [measure center $tmp1]
 	set numPart [llength $val]
-	for {set i 1} { $i < $numPart } {incr i} {
+  puts $num
+  for {set i 1} { $i < $numPart } {incr i} {
 	    set tmpVertexCount 0
 	    set tmps [string trim [lindex $val $i]]
 	    if [string equal $tmps "true"] {  
@@ -43,6 +44,7 @@ for { set num 0 } { $num < 10 } { incr num } {
     #for {set i 0} { $i < $numPart } {incr i} {
     #    puts [lindex $vertex $i]
     #}
+    puts $num
     axes location off
     set str "output$num.ps"
     render PostScript $str
