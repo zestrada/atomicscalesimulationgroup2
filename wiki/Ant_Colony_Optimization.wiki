@@ -39,8 +39,11 @@ ACO can be embarrassingly parallel when ants are assigned to separate threads wh
 
 = Observations =
 
-* ACO is fairly sensitive to the parameters chosen, but it seems than an evaporation rate of 10% at each step seems like a generally good choice
+* ACO is fairly sensitive to the parameters chosen, but it seems that an evaporation rate of 10% at each step seems like a generally good choice
+
 * beta values of 2-3 work the best
+
+* While increasing the number of ants helps to escape a local minimum, the run time cost for systems of the sizes considered here do not justify it. 32 ants was found to be adequate for most purposes. 
 
 = Citation =
 
