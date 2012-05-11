@@ -1,6 +1,6 @@
 #summary Results from Runs
 = Simulation Results =
-On this page, we've included tabulated results for each simulation as well as sample plots of the best data from each run. Missing entries in tables correspond to data that was unavailable because of excessive computational burden.
+On this page, we've included tabulated results for each simulation as well as sample illustrations of the best data from each run.
 
 = Honeycomb Lattice =
 
@@ -13,5 +13,8 @@ On this page, we've included tabulated results for each simulation as well as sa
 
 = Sheared Honeycomb Lattice =
 
+[http://atomicscalesimulationgroup2.googlecode.com/files/sheared_results2.png]
 
 = Randomized Square Lattice =
+
+[http://atomicscalesimulationgroup2.googlecode.com/files/random_results2.png]
