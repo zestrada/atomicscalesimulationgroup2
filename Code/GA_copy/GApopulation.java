@@ -32,7 +32,7 @@ public class GApopulation {
     private void GAInit() {
         TSPInOut tsp = new TSPInOut();
         tsp.disableStdout();
-        surface = tsp.readData("../GA_copy/squareRandom.input");
+        surface = tsp.readData("../GA_copy/sheared2.input");
         N = surface.getN();
         //System.out.println("Initializing simulation");
         //System.out.println("There are: " + N + " particles in simulation");
