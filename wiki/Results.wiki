@@ -1,0 +1,12 @@
+#summary Results from Runs
+= Simulation Results =
+On this page, we've included tabulated results for each simulation as well as sample plots of the best data from each run. Missing entries in tables correspond to data that was unavailable because of excessive computational burden.
+
+= Honeycomb Lattice =
+
+[http://atomicscalesimulationgroup2.googlecode.com/files/honeycomb_results2.png]
+
+
+= Square Lattice =
+
+[http://atomicscalesimulationgroup2.googlecode.com/files/square_results1.png]
