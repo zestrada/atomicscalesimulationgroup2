@@ -12,11 +12,19 @@ Source: wikipedia
 
 ACO simulates the behavior of ants finding food by performing random walks over the solution space, biased by pheromone values. These pheromone values are stored in the pheromone matrix, which has an entry for each move. The pheromones are deposited and evaporated throughout the simulation based on certain heuristics (dependent on the method used).
 
-At each step, a certain number of ants is defined. These ants
+At the beginning of the simulation, a number of ants are defined. At each step, every ant constructs a solution and then these solutions are used to update the pheromone matrix. Eventually, through evaporation and deposition of pheromones, all of the ants will be travelling on the same path, and this is the converged solution.
+
+The pheromone updates are summarized below:
+
+<img src="http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/p_update.png" width="200"/>
+
+where r is the evaporation rate, Q is a parameter and L_k is the length of this ant's tour (bond energy in our case).
 
 
 == Classes of Pheromone Updates ==
 === Ant System ===
 
-=== Best ===
+=== Best Ant ===
 This method is designed to allow for faster convergence to a minimum solution
+
+= Specific to this problem =
