@@ -6,10 +6,10 @@
 
 [Overview]
 
-[Simulated Annealing]
+[Simulated_Annealing Simulated Annealing]
 
-[Go with the Winners]
+[Go_with_the_Winners Go with the Winners]
 
-[Ant Colony Optimization]
+[Ant_Colony_Optimization Ant Colony Optimization]
 
-[Genetic Algorithms]
+[Genetic_Algorithms Genetic Algorithms]
