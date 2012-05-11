@@ -12,6 +12,14 @@ Taken from the www.bbc.co.uk/learningzone/clips/5516.preview.jpg
 
 This is inefficient.  Given that years, grants, and graduate students are a limiting reagents, a scientist would want to use a method that would bias the production of global solutions.  One way one can generate global solutions is to find the suboptimal solutions before one spends too much time optimizing them.  By periodically introducing a cheetah into the system, the cheetah can kill off the weaker gazelles (solutions) that are further away from the optimal solution.  This will allow the stronger and better gazelles to reproduce and survive.  Unlike genetic algorithm gazelles, GWTW gazelles are celibate; instead of breeding to generate better solutions, GWTW gazelles merely clone themselves.  Thus, after several generations raising of GWTW gazelles, culling them, and allowing them to optimize, the scientist will eventually find the global solution.  This ends this amusing story.
 
+= Observations =
+
+* GWTWs does accelerate the convergence of SA methods.  It also tends to yield lower energy solutions.
+
+* GWTWs parallelizes fairly well.  Code currently tested up to 32 threads and higher thread count yields lower energy structures.
+
+* Randomly making and breaking bonds is an inefficient way to explore state space.
+
 = Citation =
 
 Citation for GWTW:
