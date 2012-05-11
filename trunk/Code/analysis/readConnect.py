@@ -4,7 +4,7 @@ def str2bol( val ):
     return tmp
 
 # Testing
-testFile = open("connection.dat")
+testFile = open("acoRS.dat")
 testLines = (testFile.read()).replace('[','').replace('],',']').rstrip(',')
 testLine = testLines.split(']')
 tn = len(testLine)
@@ -20,7 +20,7 @@ for ti in testLine:
     tx = tx + 1
 tn = tm
 # Answer
-ansFile = open("answer.dat")
+ansFile = open("gaRS.dat")
 ansLines = (ansFile.read()).replace('[','').replace('],',']').rstrip(',')
 ansLine = ansLines.split(']')
 an = len(testLine)
