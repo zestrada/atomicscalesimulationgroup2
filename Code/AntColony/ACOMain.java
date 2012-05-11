@@ -26,7 +26,7 @@ public class ACOMain {
   //convergence test
   private static int convCounter;
   //number of steps with equal energy before we declare a converged solution
-  private static final int convRequired=100;
+  private static final int convRequired=10;
   
   //Here, we use the original Ant System
 
@@ -54,7 +54,7 @@ public class ACOMain {
 
     //Initialize pheromone matrix
     pheromone = new Pheromone(surf.getN(),initPher);
-    scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
+    //scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
     System.out.println("Using Scaled Preprocessor");
     for(int i=0;i<numAnts;i++) {
       ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);
@@ -117,7 +117,7 @@ public class ACOMain {
 
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
       inout.recordEnergy(bestsolution);
-      ants[bestAnt].getSurface().writeConnection_name("./trajectory/step"+i);
+      ants[bestAnt].getSurface().writeConnection_name("./honeycomb_traj/step"+i);
     }
     long time = inout.timerStop();
     System.out.println("Run finished in "+time+" ms");
