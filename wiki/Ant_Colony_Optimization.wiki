@@ -3,9 +3,20 @@
 
 = Introduction =
 
-Ant Colony Optimization is an algorithm based on swarm intelligence.  The heuristic is derived from the method that ants use to find their food source. As ants travel, they deposit pheromones. These pheromones can be detected by other ants.  Over time, the pheromones evaporate, so paths that take longest will have a lower pheromone concentration.  Shorter paths will build up a stronger pheromone concentration.  This method lends itself very naturally to the traveling salesman problem, so we use it as one of the algorithms in searching for solutions to for our surface optimization problem.
+Ant Colony Optimization (ACO) is an algorithm based on swarm intelligence.  The heuristic is derived from the method that ants use to find their food source. As ants travel, they deposit pheromones. These pheromones can be detected by other ants.  Over time, the pheromones evaporate, so paths that take longest will have a lower pheromone concentration.  Shorter paths will build up a stronger pheromone concentration.  This method lends itself very naturally to the traveling salesman problem, so we use it as one of the algorithms in searching for solutions to for our surface optimization problem.
 
 [http://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Aco_branches.svg/500px-Aco_branches.svg.png]
 Source: wikipedia
 
 = The Algorithm =
+
+ACO simulates the behavior of ants finding food by performing random walks over the solution space, biased by pheromone values. These pheromone values are stored in the pheromone matrix, which has an entry for each move. The pheromones are deposited and evaporated throughout the simulation based on certain heuristics (dependent on the method used).
+
+At each step, a certain number of ants is defined. These ants
+
+
+== Classes of Pheromone Updates ==
+=== Ant System ===
+
+=== Best ===
+This method is designed to allow for faster convergence to a minimum solution
