@@ -25,3 +25,8 @@ where the probability to accept an uphill move is given by the Metropolis criter
 http://atomicscalesimulationgroup2.googlecode.com/files/BackProbability.png
 
 Note that we chose to use the Metropolis criterion for our uphill moves.  We could have equally likely said that we accept uphill moves with a -1/delta probability or even a heads-tails coin flip!
+
+= Observations =
+* Randomly making and destroying connections seem to be an inefficient way to optimize the system.  
+
+* Swapping two random connections is more efficient than randomly making/destroying bonds; however, it can still be easily trapped.
