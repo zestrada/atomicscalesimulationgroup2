@@ -146,19 +146,21 @@ public class GA {
                     energyArray[i] = g[i].getEnergy();
                     //System.out.println("Index: " + i + "\tEnergy: " + energyArray[i] );
                 }
-                
+            
+                numSteps++;
+                if((numSteps%100) == 0){
+                    
+                    double minE = minEnergy();
+                    System.out.println("Step: " + numSteps + "\tEnergy: " + minE + "\tIndex: " + MinIndex);
+                }
             }
-            numSteps += (output);
-            double minE = minEnergy();
+            double minE = minEnergy();        
             //System.out.println("Old Energy:" + energy + "New Energy:" + minE);
             if(Math.abs(minE - energy)<0.01){
                 System.out.println("Convergence Achieved in : " + numSteps + " steps");
                 break;
             }
-            else{
-                System.out.println("Step: " + numSteps + "\tEnergy: " + minE + "\tIndex: " + MinIndex);
-                energy = minE;
-            }
+            else{energy = minE;}
         }
 	    
 	}
@@ -334,8 +336,8 @@ public class GA {
     
     public void finalOutput() {
         Surface surface = g[MinIndex].getSurface();
-        String traj = "Square_2.xyz";
-        String conn = "Square_connection_2.dat";
+        String traj = "Random_5.xyz";
+        String conn = "Random_connection_5.dat";
         surface.writeTrajectory_name(traj);
         surface.writeConnection_name(conn);
         System.out.print("Final Energy: " + surface.getEnergy() + "\n");

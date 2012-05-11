@@ -32,7 +32,7 @@ public class GApopulation {
     private void GAInit() {
         TSPInOut tsp = new TSPInOut();
         tsp.disableStdout();
-        surface = tsp.readData("../GA_copy/square.input");
+        surface = tsp.readData("../GA_copy/squareRandom.input");
         N = surface.getN();
         //System.out.println("Initializing simulation");
         //System.out.println("There are: " + N + " particles in simulation");
@@ -44,7 +44,7 @@ public class GApopulation {
         int[] distIndex;
         for(int i = 0; i < N; i++) {
             distIndex = surface.getShortestDistance(i);
-            int a = 4 - rng.nextInt(3);
+            int a = 3 - rng.nextInt(2);
             for(int j = 0; j < a; j++) {
                 //System.out.println("Connecting: " + i + " & " + distIndex[j] + " " + surface.getDist(i,distIndex[j]));
                 surface.connectUnsafe(i,distIndex[j]);

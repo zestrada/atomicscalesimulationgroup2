@@ -6,7 +6,7 @@ mol addrep top
 color Display Background white
 display rendermode GLSL
 display projection orthographic
-set fp [open "Random_connection_1.dat" r]; list
+set fp [open "Square_connection_i.dat" r]; list
 set file_data [split [read $fp] "]"]; list
 set x 0
 #set vertex ""
