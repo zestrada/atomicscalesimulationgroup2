@@ -47,6 +47,8 @@ ACO can be embarrassingly parallel when ants are assigned to separate threads du
 
 * When running parallel, it's best to use multiple ants per thread as the overhead of starting and joining threads can outweigh the benefit if one is not careful
 
+* The "best ant" strategy typically outperforms regular Ant system in both convergence time and overall quality of solution.
+
 = Citation =
 
 *M. Dorigo, 1992. Optimization, Learning and Natural Algorithms, PhD thesis, Politecnico di Milano, Italy.
