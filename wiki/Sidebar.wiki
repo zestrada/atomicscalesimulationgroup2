@@ -25,6 +25,6 @@
 
 == Media ==
 
-[http://atomicscalesimulationgroup2.googlecode.com/svn/trunk/Presentation/honeycomb_movie.mpg Animation]
+[http://atomicscalesimulationgroup2.googlecode.com/svn/trunk/Presentation/honeycomb_movie.mpg Animation of ACO Honeycomb]
 
 [http://atomicscalesimulationgroup2.googlecode.com/svn/trunk/Presentation/FinalPresentation.pptx Presentation] [http://atomicscalesimulationgroup2.googlecode.com/svn/trunk/Presentation/FinalPresentation.pdf (pdf)]
