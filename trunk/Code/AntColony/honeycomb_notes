@@ -35,3 +35,8 @@ alpha=1.0
 beta=2.0
 
 with no preprocessor
+
+for 32 ants with preprocessor:
+converges in 96
+without preprocessor:
+converges in 148
