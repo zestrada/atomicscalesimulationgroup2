@@ -4,7 +4,7 @@
 Simulated annealing (SA) is an optimization algorithm based on thermodynamics.  It works by pairing a system to a heat bath.  Initially, energy flows from the heat bath into the system interest, allowing the system to dynamically evolve.  Over time, the flow of energy will reverse and flow from the system into the heat bath.  Effectively, this siphoning of heat causes the system collapse into the nearly energy basin.  Given enough simulated annealing replicates, one will find the global minimum.
 
 = Details =
-http://latex.codecogs.com/png.download?\dpi{300}&space;P(e,e%27,T)&space;=&space;\begin{cases}&space;1&space;&&space;e&space;%3E&space;e%27&space;\\&space;f(T)&space;&&space;e&space;%3C&space;e%27)\end{cases}
+http://atomicscalesimulationgroup2.googlecode.com/files/BackProbability.png
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
