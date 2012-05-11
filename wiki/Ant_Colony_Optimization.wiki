@@ -16,20 +16,25 @@ At the beginning of the simulation, a number of ants are defined. At each step, 
 
 The pheromone updates are summarized below:
 
-<img src="http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/p_update.png" width="200"/>
+<img src="http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/p_update.png" width="200"/> (1)
 
-where r is the evaporation rate, Q is a parameter and L_k is the length of this ant's tour (bond energy in our case).
+where k stands for each ant, r is the evaporation rate, Q is a parameter and L_k is the length of this ant's tour (bond energy in our case).
 
 The probability of each move is then defined as:
 
-<img src="http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/accept_prob.png" width="150"/>
+<img src="http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/accept_prob.png" width="150"/> (2)
 
 Where Z is a normalization factor, d is is the distance between points i and j, alpha and beta are simulation parameters.
 
 == Classes of Pheromone Updates ==
 === Ant System ===
+This is the original Ant Colony Optimization algorithm, where each ant k contributes to the pheromone matrix.
 
 === Best Ant ===
-This method is designed to allow for faster convergence to a minimum solution
+This method is designed to allow for faster convergence to a minimum solution. In this case, only the best ant is used for updating the pheromone matrix, so the sum over k in Eq. (1) is replaced by the ant with the best solution for that step.
 
-= Specific to this problem =
+== Parallelism ==
+ACO can be embarrassingly parallel when ants are assigned to separate threads when constructing solutions.  This allows for better exploration of solution space as more ants per step can help ensure a global minimum is reached by not allowing the pheromone matrix to converge on a particular solution too quickly.
+
+
+= Observations =
