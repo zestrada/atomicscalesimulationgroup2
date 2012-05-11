@@ -4,4 +4,4 @@
 
 The goal of this project is to provide solutions to surface reconstruction (i.e. drawing bonds) modeled as the traveling salesman problem by using different optimization methods.
 
-[https://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/random.png]
+<img src="https://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/random.png" style="margin:auto;"/>
