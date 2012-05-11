@@ -1,15 +1,15 @@
 public class ACOMain {
 
   private static int numAnts = 32;
-  private static int numThreads = 8;
+  private static int numThreads = 2;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=200; //number of steps to run ACO for
+  private static int numSteps=10000; //number of steps to run ACO for
   private static int bestAnt=0; //best ant
-  private static double bestSeen=Double.MAX_VALUE;
-  private static Surface bestSurface;
-  private static boolean dynamicQ = true;
+  private static double bestSeen=Double.MAX_VALUE,lastBest=Double.MAX_VALUE; //best energy we've seen
+  //dynmically adjust the pheromone update factor
+  private static boolean dynamicQ = true; 
 
   //Ant System parameters
   private static double alpha; //pheromone^alpha
@@ -21,6 +21,11 @@ public class ACOMain {
   private static double initPher=1.0; //initial value for pheromone matrix
 
   private static final boolean useEnergy = true;
+  
+  //convergence test
+  private static int convCounter;
+  //number of steps with equal energy before we declare a converged solution
+  private static final int convRequired=100;
   
   //Here, we use the original Ant System
 
@@ -44,18 +49,27 @@ public class ACOMain {
     }
     TSPInOut inout = new TSPInOut();
     Surface surf = inout.readData(infile);
-    System.out.println("\n\nStarting ACO with "+numAnts+" ants "+numThreads+" threads  alpha="+alpha+" beta="+beta+" evap="+evap);
+    System.out.println("\n\nStarting ACO with "+numAnts+" ants "+numThreads+" threads  alpha="+alpha+" beta="+beta+" evap="+evap+" dynQ: "+dynamicQ);
 
     //Initialize pheromone matrix
     pheromone = new Pheromone(surf.getN(),initPher);
-    //scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
-    //System.out.println("Using Scaled Preprocessor");
+    scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
+    System.out.println("Using Scaled Preprocessor");
     for(int i=0;i<numAnts;i++) {
       ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);
     }
-    
+   
+    ///////////////
+    //Main ACO LOOP
+    ///////////////
     inout.timerStart();
+    convCounter=0;
     for(int i=0;i<numSteps;i++) {
+      if(convCounter==convRequired) {
+        System.out.println("Energy constant for "+convRequired+" iterations ... solution converged");
+        break;
+      }
+
       //One thread per ant
       for(int t=0;t<numThreads;t++) {
         threads[t] = new AntThread(ants,t,solutions); 
@@ -83,16 +97,22 @@ public class ACOMain {
       
       if(bestsolution<bestSeen) {
         bestSeen=bestsolution;
-        bestSurface = new Surface(ants[bestAnt].getSurface());
         if(dynamicQ)
           Q=bestSeen;//refactor based on bestsolution
       }
+
+      //Check for convergence
+      if(bestsolution==lastBest)
+        convCounter++;
+      else
+        convCounter=0;
+      lastBest=bestsolution;
       
       //Initialize to a sensible parameter - best first ant
       if(Q==Double.MAX_VALUE)
         Q=bestSeen;
 
-      updatePheromonesAS();
+      updatePheromonesBest();
 
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
       inout.recordEnergy(bestsolution);
@@ -101,7 +121,6 @@ public class ACOMain {
     System.out.println("Run finished in "+time+" ms");
     //pheromone.printPheromoneMatrix();
     System.out.println("Writing output...");
-    //bestSurface.writeTrajectory();
     ants[bestAnt].finalOutput();
     inout.outputEnergy();
     System.out.println("ACO Done ... overall best energy "+bestSeen);

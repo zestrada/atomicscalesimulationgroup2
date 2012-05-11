@@ -1,0 +1,11 @@
+Evap rate is a lot like cooling schedule in SA
+beta is very important, but want integer powers for performance
+
+larger number of ants helps pop out of a local minimum, especially with PheromoneBest
+
+pheromoneBest gives convergence, but not always great solution - max/min. Good to have lots of ants.
+
+try using pheromoneAS with high beta - best of both worlds
+
+pheromoneAS behaves best without dynamicQ
+pheromoneBest likes dynamicQ
