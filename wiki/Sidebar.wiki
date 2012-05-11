@@ -14,6 +14,9 @@
 
 [Genetic_Algorithms Genetic Algorithms]
 
+= Code =
+[Usage]
+
 = Media =
 
 [http://atomicscalesimulationgroup2.googlecode.com/svn/trunk/Presentation/honeycomb_movie.mpg Animation]
