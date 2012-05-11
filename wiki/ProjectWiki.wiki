@@ -8,4 +8,4 @@ The goal of this project is to test various optimization methods on their abilit
 
 All optimization methods were tested on their ability to fold four different lattices: hexagonal. square, sheared hexagonal, and randomly displaced square lattices.  
 
-All calculations were conducted in Java 1.6 while analyzes and input generation were handled with Awk, Python, TCL, and other languages. 
+All calculations were conducted in Java 1.6 while analysis and input generation were handled with Awk, Python, TCL [http://www.ks.uiuc.edu/Research/vmd/ (VMD)], and other languages. 
