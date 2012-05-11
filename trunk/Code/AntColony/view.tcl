@@ -25,9 +25,9 @@ foreach line $file_data {
 	    set tmp2 [atomselect top "index $y"]
 	    set com2 [measure center $tmp2]
 	    set dist [vecdist $com1 $com2]
-	    if [expr $dist < 8] {
+	    if [expr $dist < 14] {
 		#puts [concat $x " " $y " " $dist]
-		draw line $com1 $com2
+		draw cylinder $com1 $com2 radius 0.1
 		#incr tmpVertexCount
 	    }
 	    $tmp2 delete
@@ -42,4 +42,4 @@ foreach line $file_data {
 #    puts [lindex $vertex $i]
 #}
 axes location off
-render PostScript outputXXX.ps
+render PostScript honeycomb_frames/outputXXX.ps
