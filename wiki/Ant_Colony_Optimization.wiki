@@ -1,0 +1,10 @@
+#summary Ant Colony Optimization
+
+
+= Introduction =
+
+Ant Colony Optimization is an algorithm based on swarm intelligence.  The heuristic is derived from the method that ants use to find their food source. As ants travel, they deposit pheromones. These pheromones can be detected by other ants.  Over time, the pheromones evaporate, so paths that take longest will have a lower pheromone concentration. 
+
+[http://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Aco_branches.svg/500px-Aco_branches.svg.png]
+
+Source: wikipedia
