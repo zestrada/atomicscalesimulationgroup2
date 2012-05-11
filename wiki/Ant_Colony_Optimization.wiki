@@ -3,8 +3,7 @@
 
 = Introduction =
 
-Ant Colony Optimization is an algorithm based on swarm intelligence.  The heuristic is derived from the method that ants use to find their food source. As ants travel, they deposit pheromones. These pheromones can be detected by other ants.  Over time, the pheromones evaporate, so paths that take longest will have a lower pheromone concentration. 
+Ant Colony Optimization is an algorithm based on swarm intelligence.  The heuristic is derived from the method that ants use to find their food source. As ants travel, they deposit pheromones. These pheromones can be detected by other ants.  Over time, the pheromones evaporate, so paths that take longest will have a lower pheromone concentration.  Shorter paths will build up a stronger pheromone concentration.  This method lends itself very naturally to the traveling salesman problem, so we use it as one of the algorithms in searching for solutions to for our surface optimization problem.
 
 [http://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Aco_branches.svg/500px-Aco_branches.svg.png]
-
 Source: wikipedia
