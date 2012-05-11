@@ -11,12 +11,12 @@ public class GWTWmain {
     private static int[] index = new int[16];
     private static int lowIndex;
     private static String structure = new String("../../common/sheared.input");
-    private static double temperature = 4;
-    private static int steps = 50000;
+    private static double temperature = 1;
+    private static int steps = 10000;
 
     public static void main(String[] args) {
 	gwtwInit();	
-	for(int step = 0; step < 40; step++) {
+	for(int step = 0; step < 20; step++) {
 	    gwrRun();
 	    gwrWait();
 	    lowestIndex();
