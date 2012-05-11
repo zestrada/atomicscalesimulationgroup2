@@ -1,11 +1,11 @@
 public class ACOMain {
 
   private static int numAnts = 32;
-  private static int numThreads = 8;
+  private static int numThreads = 2;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=100000; //number of steps to run ACO for
+  private static int numSteps=1000; //number of steps to run ACO for
   private static int bestAnt=0; //best ant
   private static double bestSeen=Double.MAX_VALUE,lastBest=Double.MAX_VALUE; //best energy we've seen
   //dynmically adjust the pheromone update factor
@@ -54,7 +54,7 @@ public class ACOMain {
 
     //Initialize pheromone matrix
     pheromone = new Pheromone(surf.getN(),initPher);
-    //scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
+    scaledPreProcessor(surf); //Bias pheromone matrix to short distances 
     System.out.println("Using Scaled Preprocessor");
     for(int i=0;i<numAnts;i++) {
       ants[i] = new Ant(new Surface(surf),pheromone,alpha,beta);

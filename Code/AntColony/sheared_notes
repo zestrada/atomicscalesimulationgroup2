@@ -19,3 +19,7 @@ PheromoneBest with preprocessor (dynamicQ):
 
 10000 steps with PheromoneBest:
 636.0467999999994
+
+10000 with PheromoneBest and beta=3.0 (128 ants):
+629.453199999999
+628.0521999999994
