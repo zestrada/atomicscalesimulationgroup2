@@ -336,8 +336,8 @@ public class GA {
     
     public void finalOutput() {
         Surface surface = g[MinIndex].getSurface();
-        String traj = "Random_5.xyz";
-        String conn = "Random_connection_5.dat";
+        String traj = "Random_4.xyz";
+        String conn = "Random_connection_4.dat";
         surface.writeTrajectory_name(traj);
         surface.writeConnection_name(conn);
         System.out.print("Final Energy: " + surface.getEnergy() + "\n");
