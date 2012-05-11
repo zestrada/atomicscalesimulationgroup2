@@ -1,11 +1,11 @@
 public class ACOMain {
 
-  private static int numAnts = 128;
-  private static int numThreads = 2;
+  private static int numAnts = 32;
+  private static int numThreads = 8;
   private static Pheromone pheromone;
   private static Ant[] ants;
   private static double[] solutions; //energy of solution for each ant
-  private static int numSteps=10000; //number of steps to run ACO for
+  private static int numSteps=100000; //number of steps to run ACO for
   private static int bestAnt=0; //best ant
   private static double bestSeen=Double.MAX_VALUE,lastBest=Double.MAX_VALUE; //best energy we've seen
   //dynmically adjust the pheromone update factor
@@ -21,6 +21,7 @@ public class ACOMain {
   private static double initPher=1.0; //initial value for pheromone matrix
 
   private static final boolean useEnergy = true;
+  private static final boolean animate = true; //write trajectories at each step
   
   //convergence test
   private static int convCounter;
@@ -116,6 +117,7 @@ public class ACOMain {
 
       System.out.println("Step "+(i+1)+"/"+numSteps+" best energy "+bestsolution+" ant "+bestAnt+" missing vert "+ants[bestAnt].getMissingVertices());
       inout.recordEnergy(bestsolution);
+      ants[bestAnt].getSurface().writeConnection_name("./trajectory/step"+i);
     }
     long time = inout.timerStop();
     System.out.println("Run finished in "+time+" ms");
