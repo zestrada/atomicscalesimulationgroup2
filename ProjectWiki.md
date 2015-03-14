@@ -1,0 +1,10 @@
+All optimization methods were tested on their ability to fold four different lattice
+# Introduction #
+
+The goal of this project is to test various optimization methods on their ability to reconstruct a surface.  We modeled 2-D surfaces using a simple harmonic energy function and generated fully connected graphs to represent the bond connectivity one could expect from the lattices.
+
+<img src='https://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/random.png' />
+
+All optimization methods were tested on their ability to fold four different lattices: hexagonal. square, sheared hexagonal, and randomly displaced square lattices.
+
+All calculations were conducted in Java 1.6 while analysis and input generation were handled with Awk, Python, TCL [(VMD)](http://www.ks.uiuc.edu/Research/vmd/), and other languages.

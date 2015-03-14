@@ -1,0 +1,13 @@
+# Introduction #
+
+Since it's been a number of years since some of us have worked with java, I'm just starting this page to store things that we may all find helpful
+
+
+# bitmaps #
+
+http://docs.oracle.com/javase/7/docs/api/java/util/BitSet.html
+
+
+# threading #
+
+http://www.tutorialspoint.com/java/java_multithreading.htm

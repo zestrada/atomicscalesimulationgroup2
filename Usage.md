@@ -1,0 +1,37 @@
+# Downloading #
+The code is freely available in our [subversion repository](http://code.google.com/p/atomicscalesimulationgroup2/source/checkout).
+
+# Building #
+Four your convenience, Makefiles have been included for each solution. Please ensure that all relevant parameters are correct. Then the code can be compiled by using
+```
+make
+```
+
+# Testing #
+An active part of this project was to explore using Test-Driven-Development in the JUnit framework. The code in the [common](http://code.google.com/p/atomicscalesimulationgroup2/source/browse/trunk/Code/common/) directory has been extensively tested with this in mind. Note that this requires JUnit to be installed in your system. It should also be added to the classpath in the Makefile. To run the tests yourself, execute
+```
+make test
+```
+
+Successful output should be similar to what's shown below:
+```
+
+javac  -cp .:/usr/share/java/junit4.jar TestCommon.java
+java -cp .:/usr/share/java/junit4.jar junit.textui.TestRunner TestCommon
+.Reading in data from test.input
+Number of particles: 192
+Number of vertices: 3
+xmin -10.455 xmax 9.225
+ymin -13.58 ymax 9.7
+Found 192 particles with maximum number of 3 vertices
+Created simulation cell 19.68 by 23.28
+----
+Finished testing ReadData()
+.Created simulation cell 1.0 by 3.0
+Created simulation cell 1.0 by 1.0
+.Created simulation cell 1.0 by 1.0
+
+Time: 0.097
+
+OK (3 tests)
+```

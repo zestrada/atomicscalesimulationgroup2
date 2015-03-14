@@ -1,0 +1,52 @@
+# Introduction #
+
+Ant Colony Optimization (ACO) is an algorithm based on swarm intelligence.  The heuristic is derived from the method that ants use to find their food source. As ants travel, they deposit pheromones. These pheromones can be detected by other ants.  Over time, the pheromones evaporate, so paths that take longest will have a lower pheromone concentration.  Shorter paths will build up a stronger pheromone concentration.  This method lends itself very naturally to the traveling salesman problem, so we use it as one of the algorithms in searching for solutions to for our surface optimization problem.
+
+![http://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Aco_branches.svg/500px-Aco_branches.svg.png](http://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Aco_branches.svg/500px-Aco_branches.svg.png)
+Source: wikipedia
+
+# The Algorithm #
+
+ACO simulates the behavior of ants finding food by performing random walks over the solution space, biased by pheromone values. These pheromone values are stored in the pheromone matrix, which has an entry for each move. The pheromones are deposited and evaporated throughout the simulation based on certain heuristics (dependent on the method used).
+
+At the beginning of the simulation, a number of ants are defined. At each step, every ant constructs a solution and then these solutions are used to update the pheromone matrix. Eventually, through evaporation and deposition of pheromones, all of the ants will be travelling on the same path, and this is the converged solution.
+
+The pheromone updates are summarized below:
+
+<img src='http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/p_update.png' width='200' /> (1)
+
+where k stands for each ant, r is the evaporation rate, Q is a parameter and L\_k is the length of this ant's tour (bond energy in our case).
+
+The probability of each move is then defined as:
+
+<img src='http://atomicscalesimulationgroup2.googlecode.com/svn/wiki/images/accept_prob.png' width='150' /> (2)
+
+Where Z is a normalization factor, d is is the distance between points i and j, alpha and beta are simulation parameters.
+
+## Classes of Pheromone Updates ##
+### Ant System ###
+This is the original Ant Colony Optimization algorithm, where each ant k contributes to the pheromone matrix.
+
+### Best Ant ###
+This method is designed to allow for faster convergence to a minimum solution. In this case, only the best ant is used for updating the pheromone matrix, so the sum over k in Eq. (1) is replaced by the ant with the best solution for that step.
+
+## Parallelism ##
+ACO can be embarrassingly parallel when ants are assigned to separate threads during the construction of solutions.  This allows for better exploration of configuration space as more ants per step can help ensure a global minimum is reached by not allowing the pheromone matrix to converge on a particular solution too quickly.
+
+
+# Observations #
+
+**ACO is fairly sensitive to the parameters chosen, but it seems that an evaporation rate of 10% at each step seems like a generally good choice**
+
+**beta values of 2-3 work the best. alpha values > 1 tend to lead towards making the system just connect all of the shortest distances.**
+
+**While increasing the number of ants helps to escape a local minimum, the run time cost for systems of the sizes considered here do not justify it. 32 ants was found to be adequate for most purposes.**
+
+**When running parallel, it's best to use multiple ants per thread as the overhead of starting and joining threads can outweigh the benefit if one is not careful**
+
+**The "best ant" strategy typically outperforms regular Ant system in both convergence time and overall quality of solution.**
+
+# Citation #
+
+**M. Dorigo, 1992. Optimization, Learning and Natural Algorithms, PhD thesis, Politecnico di Milano, Italy.**
+

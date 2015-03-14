@@ -1,0 +1,24 @@
+# Introduction #
+
+Go With the Winners (hereby referred to as GWTW) is an optimization scheme first coined by D. Aldous and U. Vazirani (1994).  It is a simple (tractable) technique inspired from natural selection; consider the following example for your amusement:
+
+Imagine that one wants to design a gazelle that could run optimally.  In simulated annealing, the one can modify various parameters -- such as the weight of the gazelle, the strength of its muscles, its aerodynamic properties etc... -- to improve upon its running abilities.  Given sufficiently many years, grants, and graduate students, simulated annealing will eventually create a gazelle that can run very fast. The naive simulated annealing, however, does not care if the gazelle has found the best solution; it only ensures that the gazelle has found a solution.  If a scientist was only interested in the best solution, he would have to wait until simulated annealing found all solutions.
+
+![http://www.bbc.co.uk/learningzone/clips/5516.preview.jpg](http://www.bbc.co.uk/learningzone/clips/5516.preview.jpg)
+
+Taken from the www.bbc.co.uk/learningzone/clips/5516.preview.jpg
+
+This is inefficient.  Given that years, grants, and graduate students are a limiting reagents, a scientist would want to use a method that would bias the production of global solutions.  One way one can generate global solutions is to find the suboptimal solutions before one spends too much time optimizing them.  By periodically introducing a cheetah into the system, the cheetah can kill off the weaker gazelles (solutions) that are further away from the optimal solution.  This will allow the stronger and better gazelles to reproduce and survive.  Unlike genetic algorithm gazelles, GWTW gazelles are celibate; instead of breeding to generate better solutions, GWTW gazelles merely clone themselves.  Thus, after several generations raising of GWTW gazelles, culling them, and allowing them to optimize, the scientist will eventually find the global solution.  This ends this amusing story.
+
+# Observations #
+
+**GWTWs does accelerate the convergence of SA methods.  It also tends to yield lower energy solutions.**
+
+**GWTWs parallelizes fairly well.  Code currently tested up to 32 threads and higher thread count yields lower energy structures.**
+
+**Randomly making and breaking bonds is an inefficient way to explore state space.**
+
+# Citation #
+
+Citation for GWTW:
+D. Aldous and U. Vazirani "Go With the Winners Algorithms" 1994

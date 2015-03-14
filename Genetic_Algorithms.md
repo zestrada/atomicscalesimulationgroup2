@@ -1,0 +1,30 @@
+# Introduction #
+
+Add your content here.
+
+
+# Algorithm #
+
+![http://atomicscalesimulationgroup2.googlecode.com/files/GA_chart.png](http://atomicscalesimulationgroup2.googlecode.com/files/GA_chart.png)
+
+# Generation Rules #
+
+
+•  Selection - Fitness proportionate/roulette-wheel selection:
+> -  Area of the wheel assigned to each parent in proportion to fitness
+•  Crossover - Matrix Crossover Variant:
+> -  Select a column M at random and interchange column data between parents
+> -  After interchange, Vk > V0 for any particle, disconnect from farthest neighbor
+•  Mutation - 2-Opt Operator Variant:
+> -  Connect all particles between two randomly chosen points i1 and i2 with a randomly chosen neighbor
+> -  After interchange, Vk > V0 for any particle, disconnect from farthest neighbor
+
+The following plot shows energy vs. number of iterations for GA.
+![http://atomicscalesimulationgroup2.googlecode.com/files/GAplot.png](http://atomicscalesimulationgroup2.googlecode.com/files/GAplot.png)
+
+# Observations #
+
+**Crossover leads the algorithm towards global minima**
+
+**Mutation pulls the algorithm out of local minima traps**
+
